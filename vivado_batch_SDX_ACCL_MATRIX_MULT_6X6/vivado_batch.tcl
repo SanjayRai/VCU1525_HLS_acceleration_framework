@@ -3,7 +3,7 @@
 source ../device_type.tcl
 
 set TOP_module VU9P_AXI_ICAP_PR_DESIGN_top
-set ROLE_CLK_PERIOD 4.000
+set ROLE_CLK_PERIOD 8.000
 set NORTH_ROLE_NAME IP_SDX_ACCL_MATRIX_MULT_6X6 
 proc synth_hls_pr_NORTH {ARGV_0} { 
 
