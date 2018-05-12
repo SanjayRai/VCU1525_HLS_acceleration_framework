@@ -1,0 +1,5 @@
+pushd .
+cd ~sanjayr/projects/xDMA_driver/Xilinx_Answer_65444_Linux_Files/tests
+sudo ./load_driver.sh
+popd
+sudo lspci -vvv -d :903f

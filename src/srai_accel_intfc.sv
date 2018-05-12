@@ -1,0 +1,181 @@
+`include "srai_accel_intfc.vh"
+
+interface srai_accel_AXI_MM_intfc;
+
+    logic [(`AXI_MM_AW-1):0]AXI_araddr;
+    logic [1:0]AXI_arburst;
+    logic [3:0]AXI_arcache;
+    logic [7:0]AXI_arlen;
+    logic [0:0]AXI_arlock;
+    logic [2:0]AXI_arprot;
+    logic [3:0]AXI_arqos;
+    logic AXI_arready;
+    logic [3:0]AXI_arregion;
+    logic [2:0]AXI_arsize;
+    logic AXI_arvalid;
+    logic [(`AXI_MM_AW-1):0]AXI_awaddr;
+    logic [1:0]AXI_awburst;
+    logic [3:0]AXI_awcache;
+    logic [7:0]AXI_awlen;
+    logic [0:0]AXI_awlock;
+    logic [2:0]AXI_awprot;
+    logic [3:0]AXI_awqos;
+    logic AXI_awready;
+    logic [3:0]AXI_awregion;
+    logic [2:0]AXI_awsize;
+    logic AXI_awvalid;
+    logic AXI_bready;
+    logic [1:0]AXI_bresp;
+    logic AXI_bvalid;
+    logic [(`AXI_MM_DW-1):0]AXI_rdata;
+    logic AXI_rlast;
+    logic AXI_rready;
+    logic [1:0]AXI_rresp;
+    logic AXI_rvalid;
+    logic [(`AXI_MM_DW-1):0]AXI_wdata;
+    logic AXI_wlast;
+    logic AXI_wready;
+    logic [((`AXI_MM_DW/8)-1):0]AXI_wstrb;
+    logic AXI_wvalid;
+
+  modport master (
+      output AXI_araddr,
+      output AXI_arburst,
+      output AXI_arcache,
+      output AXI_arlen,
+      output AXI_arlock,
+      output AXI_arprot,
+      output AXI_arqos,
+      input AXI_arready,
+      output AXI_arregion,
+      output AXI_arsize,
+      output AXI_arvalid,
+      output AXI_awaddr,
+      output AXI_awburst,
+      output AXI_awcache,
+      output AXI_awlen,
+      output AXI_awlock,
+      output AXI_awprot,
+      output AXI_awqos,
+      input AXI_awready,
+      output AXI_awregion,
+      output AXI_awsize,
+      output AXI_awvalid,
+      output AXI_bready,
+      input AXI_bresp,
+      input AXI_bvalid,
+      input AXI_rdata,
+      input AXI_rlast,
+      output AXI_rready,
+      input AXI_rresp,
+      input AXI_rvalid,
+      output AXI_wdata,
+      output AXI_wlast,
+      input AXI_wready,
+      output AXI_wstrb,
+      output AXI_wvalid);
+
+  modport slave (
+      input AXI_araddr,
+      input AXI_arburst,
+      input AXI_arcache,
+      input AXI_arlen,
+      input AXI_arlock,
+      input AXI_arprot,
+      input AXI_arqos,
+      output AXI_arready,
+      input AXI_arregion,
+      input AXI_arsize,
+      input AXI_arvalid,
+      input AXI_awaddr,
+      input AXI_awburst,
+      input AXI_awcache,
+      input AXI_awlen,
+      input AXI_awlock,
+      input AXI_awprot,
+      input AXI_awqos,
+      output AXI_awready,
+      input AXI_awregion,
+      input AXI_awsize,
+      input AXI_awvalid,
+      input AXI_bready,
+      output AXI_bresp,
+      output AXI_bvalid,
+      output AXI_rdata,
+      output AXI_rlast,
+      input AXI_rready,
+      output AXI_rresp,
+      output AXI_rvalid,
+      input AXI_wdata,
+      input AXI_wlast,
+      output AXI_wready,
+      input AXI_wstrb,
+      input AXI_wvalid);
+
+endinterface : srai_accel_AXI_MM_intfc
+
+interface srai_accel_AXI_LITE_intfc;
+    logic [(`AXI_LITE_AW-1):0]AXI_LITE_araddr;
+    logic [2:0]AXI_LITE_arprot;
+    logic AXI_LITE_arready;
+    logic AXI_LITE_arvalid;
+    logic [(`AXI_LITE_AW-1):0]AXI_LITE_awaddr;
+    logic [2:0]AXI_LITE_awprot;
+    logic AXI_LITE_awready;
+    logic AXI_LITE_awvalid;
+    logic AXI_LITE_bready;
+    logic [1:0]AXI_LITE_bresp;
+    logic AXI_LITE_bvalid;
+    logic [(`AXI_LITE_DW-1):0]AXI_LITE_rdata;
+    logic AXI_LITE_rready;
+    logic [1:0]AXI_LITE_rresp;
+    logic AXI_LITE_rvalid;
+    logic [(`AXI_LITE_DW-1):0]AXI_LITE_wdata;
+    logic AXI_LITE_wready;
+    logic [((`AXI_LITE_DW/8)-1):0]AXI_LITE_wstrb;
+    logic AXI_LITE_wvalid;
+
+  modport master (
+      output AXI_LITE_araddr,
+      output AXI_LITE_arprot,
+      input AXI_LITE_arready,
+      output AXI_LITE_arvalid,
+      output AXI_LITE_awaddr,
+      output AXI_LITE_awprot,
+      input AXI_LITE_awready,
+      output AXI_LITE_awvalid,
+      output AXI_LITE_bready,
+      input AXI_LITE_bresp,
+      input AXI_LITE_bvalid,
+      input AXI_LITE_rdata,
+      output AXI_LITE_rready,
+      input AXI_LITE_rresp,
+      input AXI_LITE_rvalid,
+      output AXI_LITE_wdata,
+      input AXI_LITE_wready,
+      output AXI_LITE_wstrb,
+      output AXI_LITE_wvalid);
+
+  modport slave (
+      input AXI_LITE_araddr,
+      input AXI_LITE_arprot,
+      output AXI_LITE_arready,
+      input AXI_LITE_arvalid,
+      input AXI_LITE_awaddr,
+      input AXI_LITE_awprot,
+      output AXI_LITE_awready,
+      input AXI_LITE_awvalid,
+      input AXI_LITE_bready,
+      output AXI_LITE_bresp,
+      output AXI_LITE_bvalid,
+      output AXI_LITE_rdata,
+      input AXI_LITE_rready,
+      output AXI_LITE_rresp,
+      output AXI_LITE_rvalid,
+      input AXI_LITE_wdata,
+      output AXI_LITE_wready,
+      input AXI_LITE_wstrb,
+      input AXI_LITE_wvalid);
+
+
+endinterface : srai_accel_AXI_LITE_intfc
