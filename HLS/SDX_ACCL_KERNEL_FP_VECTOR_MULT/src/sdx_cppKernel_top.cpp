@@ -3,14 +3,16 @@
 #include "sdx_cppKernel_top.h"
 #include "sdx_pack_unpack.h" 
 
-void sdx_cppKernel_top(sdx_data_t *a_in, sdx_data_t *y_out, unsigned int NUMBER_OF_DATA_SETS_t) {
+void sdx_cppKernel_top(sdx_data_t *a_in, sdx_data_t *y_out, unsigned int NUMBER_OF_DATA_SETS_t, bool *start_ker) {
 #pragma HLS INTERFACE m_axi port=a_in offset=slave depth=HLS_AXI_SIM_IN_DEPTH latency=100 bundle=gmem num_read_outstanding=32 num_write_outstanding=32 max_read_burst_length=16 max_write_burst_length=16
 #pragma HLS INTERFACE m_axi port=y_out offset=slave depth=HLS_AXI_SIM_OUT_DEPTH latency=100 bundle=gmem num_read_outstanding=32 num_write_outstanding=32 max_read_burst_length=16 max_write_burst_length=16
 #pragma HLS INTERFACE s_axilite port=a_in bundle=control
 #pragma HLS INTERFACE s_axilite port=y_out bundle=control
 #pragma HLS INTERFACE s_axilite port=NUMBER_OF_DATA_SETS_t bundle=control
-#pragma HLS INTERFACE s_axilite port=return bundle=control
+#pragma HLS INTERFACE ap_ctrl_hs port=return
 
+
+    static unsigned int ker_count = 0;
     sdx_data_t bufa_val[SDX_CU_LOCAL_IN_SIZE];
     sdx_data_t bufy_val[SDX_CU_LOCAL_OUT_SIZE];
     sdx_pack_unpack<srai_conv> my_pack_unpack;
@@ -38,7 +40,10 @@ void sdx_cppKernel_top(sdx_data_t *a_in, sdx_data_t *y_out, unsigned int NUMBER_
         }
         memcpy(y_out, bufy_val, SDX_BUS_WIDTH_BYTES*SDX_CU_LOCAL_OUT_SIZE);
         y_out += SDX_CU_LOCAL_OUT_SIZE;
+        ker_count++;
+
     }
+    *start_ker = (ker_count < NUMBER_OF_DATA_SETS_t) ? 0 : 1;
     return;
 }
 

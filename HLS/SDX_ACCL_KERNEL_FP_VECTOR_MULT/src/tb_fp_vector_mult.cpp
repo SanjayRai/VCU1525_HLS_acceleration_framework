@@ -76,6 +76,7 @@ int main(int argc, char** argv)
   sdx_data_t *y_out_ptr;
 
   bool RESULT_SUCESSFULL;
+  bool dbg_srart_ker;
 
   cout << "Srai_ DBG NUMBER_OF_DATA_SETS  =  " << NUMBER_OF_DATA_SETS << endl;
   cout << "Srai_ DBG GLOBAL_DATA_IN_SIZE  =  " << GLOBAL_DATA_IN_SIZE << endl;
@@ -117,7 +118,7 @@ int main(int argc, char** argv)
 
 #ifdef GPP_ONLY_FLOW  
     startTime = getCPUTime();
-    sdx_cppKernel_top(a_in_ptr, y_out_ptr, (unsigned int)NUMBER_OF_DATA_SETS);
+    sdx_cppKernel_top(a_in_ptr, y_out_ptr, (unsigned int)NUMBER_OF_DATA_SETS, &dbg_srart_ker);
     endTime = getCPUTime();
 
 #elif SRAI__HLS_ACCEL

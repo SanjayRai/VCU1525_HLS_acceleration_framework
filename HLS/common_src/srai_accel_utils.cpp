@@ -142,7 +142,7 @@ void  fpga_run_NORTH_PR(fpga_mmio *fpga_AXI_Lite_ptr, uint32_t AXI_ADDRESS_in0, 
     fpga_AXI_Lite_ptr->fpga_poke<uint32_t>(PR_HLS_NORTH_OUT0_ADDR_OFFSET, (AXI_ADDRESS_RESULTS)); 
     fpga_AXI_Lite_ptr->fpga_poke<uint32_t>(PR_HLS_NORTH_NUMBER_OF_DATA_SETS, NUM_OF_DATA_SETS); 
 /* Write to PR_HLS Control register to set Start bit HLS_PR module in motion */ 
-    fpga_AXI_Lite_ptr->fpga_poke<uint32_t>(PR_HLS_NORTH_CONTROL_REG, 0x00000011); 
+    fpga_AXI_Lite_ptr->fpga_poke<uint32_t>(PR_HLS_NORTH_CONTROL_REG, 0x00000081); 
 }
 
 void  fpga_run_NORTH_PR64(fpga_mmio *fpga_AXI_Lite_ptr, uint64_t AXI_ADDRESS_in0, uint64_t AXI_ADDRESS_RESULTS, uint32_t NUM_OF_DATA_SETS) {

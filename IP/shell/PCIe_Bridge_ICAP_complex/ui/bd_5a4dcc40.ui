@@ -3,71 +3,76 @@
    commentid: "",
    guistr: "# # String gsaved with Nlview 6.8.5  2018-01-30 bk=1.4354 VDI=40 GEI=35 GUI=JA:1.6 TLS
 #  -string -flagsOSRD
-preplace port C1_SYS_CLK -pg 1 -y 80 -defaultsOSRD
-preplace port M_AXI_MM_FROM_HLS_PR_NORTH -pg 1 -y 660 -defaultsOSRD
-preplace port clk_out_PROG -pg 1 -y 450 -defaultsOSRD
-preplace port M_AXI_LITE_TO_HLS_PR_NORTH -pg 1 -y 970 -defaultsOSRD
-preplace port sys_clk -pg 1 -y 1060 -defaultsOSRD
-preplace port pcie_mgt -pg 1 -y 1050 -defaultsOSRD
-preplace port sys_clk_gt -pg 1 -y 1080 -defaultsOSRD
-preplace port c1_ddr4 -pg 1 -y 50 -defaultsOSRD
-preplace port sys_rst_n -pg 1 -y 1100 -defaultsOSRD
-preplace port DDR4_sys_rst -pg 1 -y 160 -defaultsOSRD
-preplace port clk_out_125M -pg 1 -y 860 -defaultsOSRD
-preplace port clk_out_250M -pg 1 -y 1070 -defaultsOSRD
-preplace portBus axi_reset_n_out -pg 1 -y 1090 -defaultsOSRD
-preplace inst rst_125M -pg 1 -lvl 3 -y 1170 -defaultsOSRD
-preplace inst clk_wiz_PROG -pg 1 -lvl 4 -y 470 -defaultsOSRD
-preplace inst xlconstant_0 -pg 1 -lvl 1 -y 1150 -defaultsOSRD
-preplace inst axi_bram_ctrl_0_bram -pg 1 -lvl 6 -y 560 -defaultsOSRD
-preplace inst axi_gpio_0 -pg 1 -lvl 4 -y 630 -defaultsOSRD
-preplace inst FROM_SH_AXI_LITE_NORTH -pg 1 -lvl 4 -y 990 -defaultsOSRD
-preplace inst system_ila_AXI_MM -pg 1 -lvl 4 -y 320 -defaultsOSRD
-preplace inst xdma_0 -pg 1 -lvl 2 -y 1090 -defaultsOSRD
-preplace inst rst_ddr4_0_300M -pg 1 -lvl 2 -y 330 -defaultsOSRD
-preplace inst system_ila_AXIL -pg 1 -lvl 2 -y 860 -defaultsOSRD
-preplace inst ddr4_1 -pg 1 -lvl 4 -y 100 -defaultsOSRD
-preplace inst axi_pcie3_0_axi_periph -pg 1 -lvl 3 -y 390 -defaultsOSRD
-preplace inst axi_interconnect_0 -pg 1 -lvl 3 -y 760 -defaultsOSRD
-preplace inst axi_hwicap_0 -pg 1 -lvl 4 -y 800 -defaultsOSRD
-preplace inst clk_wiz_0 -pg 1 -lvl 3 -y 980 -defaultsOSRD
-preplace inst axi_bram_ctrl_0 -pg 1 -lvl 5 -y 560 -defaultsOSRD
-preplace inst TO_SH_AXI_MM_NORTH -pg 1 -lvl 2 -y 680 -defaultsOSRD
-preplace netloc axi_pcie3_0_axi_periph_M03_AXI 1 3 1 1090
-preplace netloc sys_rst_1 1 0 4 10J 140 NJ 140 NJ 140 NJ
-preplace netloc C0_SYS_CLK_1 1 0 4 10J 60 NJ 60 NJ 60 NJ
-preplace netloc FROM_SH_AXI_LITE_rp_AXI_LITE_TO_HLS_PR_0 1 4 3 NJ 990 N 990 2190
-preplace netloc fifo_generator_1_M_AXI 1 2 1 640
-preplace netloc axi_pcie3_0_axi_aresetn 1 1 2 190 770 670
-preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 5 1 N
-preplace netloc axi_bram_ctrl_0_BRAM_PORTB 1 5 1 N
-preplace netloc xdma_0_user_lnk_up 1 2 1 590
-preplace netloc clk_wiz_0_clk_out_62_5M 1 3 1 1150
-preplace netloc sys_clk_1 1 0 2 NJ 1060 NJ
-preplace netloc sys_rst_n_1 1 0 2 10J 1210 190J
-preplace netloc ddr4_0_c0_ddr4_ui_clk_sync_rst 1 1 4 180 -60 NJ -60 NJ -60 1610
-preplace netloc axi_pcie3_0_axi_periph_M00_AXI 1 3 1 1070
-preplace netloc rst_ddr4_0_300M1_peripheral_aresetn 1 2 5 710 130 1130 -30 1620J 480 NJ 480 2180
-preplace netloc axi_pcie3_0_axi_periph_M04_AXI 1 3 1 1140
-preplace netloc xlconstant_0_dout 1 1 3 210 1240 680J 910 1160
-preplace netloc S00_AXI_1 1 1 2 210 780 600
-preplace netloc clk_wiz_1_clk_out1 1 4 3 NJ 460 N 460 2180
-preplace netloc S00_AXI_2 1 2 1 630
-preplace netloc axi_interconnect_0_M00_AXI 1 3 1 1080
-preplace netloc ddr4_1_addn_ui_clkout1 1 2 3 690 -50 NJ -50 1600
-preplace netloc axi_pcie3_0_axi_aclk 1 1 6 180 760 620 1060 1080J 1080 NJ 1080 NJ 1080 2200
-preplace netloc xdma_0_pcie_mgt 1 2 5 600J 1070 NJ 1070 NJ 1070 NJ 1070 2190
-preplace netloc axi_pcie3_0_axi_periph_M05_AXI 1 3 2 1100 240 1590J
-preplace netloc clk_wiz_0_clk_out_125M 1 2 5 700 170 1120 230 1600J 470 NJ 470 2190
-preplace netloc ddr4_0_C0_DDR4 1 4 3 NJ 30 N 30 2180
-preplace netloc sys_clk_gt_1 1 0 2 NJ 1080 NJ
-preplace netloc rst_ddr4_0_300M_peripheral_aresetn 1 2 2 660 160 1170
-preplace netloc M_AXI_MM_FROM_HLS_PR_0_1 1 0 2 10J 650 NJ
-preplace netloc axi_pcie3_0_axi_periph_M02_AXI 1 3 1 1150
-preplace netloc axi_pcie3_0_axi_periph_M01_AXI 1 3 1 1110
-preplace netloc xlslice_0_Dout 1 1 4 200 940 610J 1050 1170 900 1610
-preplace netloc ddr4_0_c0_ddr4_ui_clk 1 1 4 210 430 650 150 1160 -40 1590
-levelinfo -pg 1 -10 100 410 890 1390 1770 2050 2220 -top -70 -bot 1270
+preplace port C1_SYS_CLK -pg 1 -y 230 -defaultsOSRD
+preplace port clk_out_PROG -pg 1 -y 630 -defaultsOSRD
+preplace port M_AXI_LITE_TO_HLS_PR_NORTH -pg 1 -y 980 -defaultsOSRD
+preplace port sys_clk -pg 1 -y 1250 -defaultsOSRD
+preplace port S_AXI_MM_FROM_HLS_PR_NORTH -pg 1 -y 520 -defaultsOSRD
+preplace port pcie_mgt -pg 1 -y 1230 -defaultsOSRD
+preplace port sys_clk_gt -pg 1 -y 1270 -defaultsOSRD
+preplace port M_AXI_MM_TO_HLS_PR_NORTH -pg 1 -y 1150 -defaultsOSRD
+preplace port c1_ddr4 -pg 1 -y 200 -defaultsOSRD
+preplace port sys_rst_n -pg 1 -y 1290 -defaultsOSRD
+preplace port DDR4_sys_rst -pg 1 -y 250 -defaultsOSRD
+preplace port clk_out_125M -pg 1 -y 1250 -defaultsOSRD
+preplace port clk_out_250M -pg 1 -y 1060 -defaultsOSRD
+preplace portBus axi_reset_n_out -pg 1 -y 1390 -defaultsOSRD
+preplace inst rst_125M -pg 1 -lvl 4 -y 1686 -defaultsOSRD
+preplace inst clk_wiz_PROG -pg 1 -lvl 4 -y 640 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 1 -y 1350 -defaultsOSRD
+preplace inst axi_bram_ctrl_0_bram -pg 1 -lvl 5 -y 490 -defaultsOSRD
+preplace inst axi_gpio_0 -pg 1 -lvl 4 -y 800 -defaultsOSRD
+preplace inst FROM_SH_AXI_LITE_NORTH -pg 1 -lvl 4 -y 980 -defaultsOSRD
+preplace inst system_ila_AXI_MM -pg 1 -lvl 4 -y 80 -defaultsOSRD
+preplace inst xdma_0 -pg 1 -lvl 2 -y 1280 -defaultsOSRD
+preplace inst rst_ddr4_0_300M -pg 1 -lvl 2 -y 350 -defaultsOSRD
+preplace inst FROM_SH_AXI_MM_NORTH -pg 1 -lvl 4 -y 1150 -defaultsOSRD
+preplace inst system_ila_AXIL -pg 1 -lvl 3 -y 1040 -defaultsOSRD
+preplace inst ddr4_1 -pg 1 -lvl 4 -y 270 -defaultsOSRD
+preplace inst axi_pcie3_0_axi_periph -pg 1 -lvl 3 -y 730 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 3 -y 380 -defaultsOSRD
+preplace inst axi_hwicap_0 -pg 1 -lvl 4 -y 1500 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 4 -y 1320 -defaultsOSRD
+preplace inst system_management_wiz_0 -pg 1 -lvl 6 -y 1600 -defaultsOSRD
+preplace inst axi_bram_ctrl_0 -pg 1 -lvl 4 -y 490 -defaultsOSRD
+preplace inst TO_SH_AXI_MM_NORTH -pg 1 -lvl 2 -y 550 -defaultsOSRD
+preplace netloc axi_pcie3_0_axi_periph_M03_AXI 1 3 1 1210
+preplace netloc sys_rst_1 1 0 4 NJ 250 190J 230 NJ 230 1260J
+preplace netloc C0_SYS_CLK_1 1 0 4 NJ 230 180J 220 NJ 220 1280J
+preplace netloc FROM_SH_AXI_LITE_rp_AXI_LITE_TO_HLS_PR_0 1 4 3 NJ 980 NJ 980 NJ
+preplace netloc axi_pcie3_0_axi_aresetn 1 1 3 210 460 740 1160 1240
+preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 4 1 N
+preplace netloc axi_bram_ctrl_0_BRAM_PORTB 1 4 1 N
+preplace netloc xdma_0_user_lnk_up 1 2 2 NJ 1250 1200
+preplace netloc clk_wiz_0_clk_out_62_5M 1 3 2 1290 1786 1770
+preplace netloc sys_clk_1 1 0 2 NJ 1250 NJ
+preplace netloc sys_rst_n_1 1 0 2 NJ 1290 NJ
+preplace netloc ddr4_0_c0_ddr4_ui_clk_sync_rst 1 1 4 200 210 NJ 210 1270J 400 1770
+preplace netloc axi_pcie3_0_axi_periph_M00_AXI 1 3 1 1230
+preplace netloc rst_ddr4_0_300M1_peripheral_aresetn 1 2 5 760 1120 1270 1400 1780 1400 2100J 1390 NJ
+preplace netloc axi_pcie3_0_axi_periph_M04_AXI 1 3 1 1260
+preplace netloc xlconstant_0_dout 1 1 3 190 1500 NJ 1500 NJ
+preplace netloc S00_AXI_1 1 2 1 720
+preplace netloc clk_wiz_1_clk_out1 1 4 3 NJ 630 NJ 630 NJ
+preplace netloc xdma_0_M_AXI 1 2 2 730 1150 1280J
+preplace netloc S00_AXI_2 1 2 1 680
+preplace netloc axi_interconnect_0_M00_AXI 1 3 1 1200
+preplace netloc ddr4_1_addn_ui_clkout1 1 3 2 1290 1250 1780
+preplace netloc axi_pcie3_0_axi_aclk 1 1 6 200 450 690 1140 1240 1060 NJ 1060 NJ 1060 NJ
+preplace netloc axi_pcie3_0_axi_periph_M06_AXI 1 3 3 1200J 1230 NJ 1230 2080
+preplace netloc xdma_0_pcie_mgt 1 2 5 680J 1240 NJ 1240 NJ 1240 2090J 1230 NJ
+preplace netloc axi_pcie3_0_axi_periph_M05_AXI 1 3 1 1250
+preplace netloc clk_wiz_0_clk_out_125M 1 2 5 750 260 1220 1390 1790 1310 2090J 1250 NJ
+preplace netloc ddr4_0_C0_DDR4 1 4 3 NJ 200 NJ 200 NJ
+preplace netloc sys_clk_gt_1 1 0 2 NJ 1270 NJ
+preplace netloc rst_ddr4_0_300M_peripheral_aresetn 1 2 2 710 250 1210
+preplace netloc axi_register_slice_2_M_AXI 1 4 3 NJ 1150 NJ 1150 NJ
+preplace netloc M_AXI_MM_FROM_HLS_PR_0_1 1 0 2 NJ 520 NJ
+preplace netloc axi_pcie3_0_axi_periph_M02_AXI 1 3 1 1230
+preplace netloc axi_pcie3_0_axi_periph_M01_AXI 1 3 1 1240
+preplace netloc xlslice_0_Dout 1 1 4 210 1130 NJ 1130 1290 890 1770
+preplace netloc ddr4_0_c0_ddr4_ui_clk 1 1 4 210 250 700 240 1290 410 1790
+levelinfo -pg 1 -80 100 499 1046 1561 1947 2260 2440 -top 0 -bot 2310
 ",
 }
 {

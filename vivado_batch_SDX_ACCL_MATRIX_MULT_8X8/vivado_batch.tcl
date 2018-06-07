@@ -13,12 +13,19 @@ upvar 1 $ARGV_0 ROLE_NAME
 
     read_bd "../IP/role/$ROLE_NAME/HLS_PR_SDX_SRAI/HLS_PR_SDX_SRAI.bd"
 
+    read_ip " ../IP/role/debug_bridge_PR/debug_bridge_PR.xci"
+
     read_verilog {
     ../src/srai_accel_intfc.sv
     ../src/role_NORTH/role_NORTH.sv
     }
 
-    synth_design -keep_equivalent_registers -shreg_min_size 8 -include_dirs ../src -verilog_define $ROLE_NAME -top role_NORTH -mode out_of_context  -part [DEVICE_TYPE] 
+    read_xdc "
+    ../src/role_NORTH/xdc/role_NORTH.xdc
+    "
+
+    synth_design -keep_equivalent_registers -shreg_min_size 8 -include_dirs ../src -top role_NORTH -verilog_define XSDB_SLV_DIS -mode out_of_context  -part [DEVICE_TYPE] 
+    
     opt_design -verbose -directive Explore
 
     write_checkpoint -force ../checkpoints/role_NORTH.$ROLE_NAME.post_synth_opt.dcp

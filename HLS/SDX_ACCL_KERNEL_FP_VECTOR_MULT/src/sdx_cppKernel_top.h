@@ -57,7 +57,7 @@ void floating_point_vector_mult (data_t *a_in, data_t *b_in, data_t *results);
 #ifdef XOCC_CPP_KERNEL 
 extern "C" {
 #endif
-void sdx_cppKernel_top(sdx_data_t *a_in, sdx_data_t *y_out, unsigned int NUMBER_OF_DATA_SETS_t);
+void sdx_cppKernel_top(sdx_data_t *a_in, sdx_data_t *y_out, unsigned int NUMBER_OF_DATA_SETS_t, bool *start_ker);
 #ifdef XOCC_CPP_KERNEL 
 }
 #endif

@@ -33,6 +33,9 @@ set_property BITSTREAM.CONFIG.SPI_FALL_EDGE YES      [current_design]
 set_property BITSTREAM.CONFIG.UNUSEDPIN Pullup       [current_design]
 set_property BITSTREAM.CONFIG.SPI_32BIT_ADDR Yes     [current_design]
 
+# Relevant constraints from DDR4 IP
+# ------------------------------------------------------------------------------
+
 set_property PACKAGE_PIN AW20       [get_ports c1_sys_clk_p]
 set_property IOSTANDARD DIFF_SSTL12 [get_ports c1_sys_clk_p]
 set_property PACKAGE_PIN AW19       [get_ports c1_sys_clk_n]

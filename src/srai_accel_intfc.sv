@@ -5,6 +5,7 @@ interface srai_accel_AXI_MM_intfc;
     logic [(`AXI_MM_AW-1):0]AXI_araddr;
     logic [1:0]AXI_arburst;
     logic [3:0]AXI_arcache;
+    logic [15:0]AXI_arid;
     logic [7:0]AXI_arlen;
     logic [0:0]AXI_arlock;
     logic [2:0]AXI_arprot;
@@ -16,6 +17,7 @@ interface srai_accel_AXI_MM_intfc;
     logic [(`AXI_MM_AW-1):0]AXI_awaddr;
     logic [1:0]AXI_awburst;
     logic [3:0]AXI_awcache;
+    logic [15:0]AXI_awid;
     logic [7:0]AXI_awlen;
     logic [0:0]AXI_awlock;
     logic [2:0]AXI_awprot;
@@ -24,10 +26,12 @@ interface srai_accel_AXI_MM_intfc;
     logic [3:0]AXI_awregion;
     logic [2:0]AXI_awsize;
     logic AXI_awvalid;
+    logic [15:0]AXI_bid;
     logic AXI_bready;
     logic [1:0]AXI_bresp;
     logic AXI_bvalid;
     logic [(`AXI_MM_DW-1):0]AXI_rdata;
+    logic [15:0]AXI_rid;
     logic AXI_rlast;
     logic AXI_rready;
     logic [1:0]AXI_rresp;
@@ -42,6 +46,7 @@ interface srai_accel_AXI_MM_intfc;
       output AXI_araddr,
       output AXI_arburst,
       output AXI_arcache,
+      output AXI_arid,
       output AXI_arlen,
       output AXI_arlock,
       output AXI_arprot,
@@ -53,6 +58,7 @@ interface srai_accel_AXI_MM_intfc;
       output AXI_awaddr,
       output AXI_awburst,
       output AXI_awcache,
+      output AXI_awid,
       output AXI_awlen,
       output AXI_awlock,
       output AXI_awprot,
@@ -61,10 +67,12 @@ interface srai_accel_AXI_MM_intfc;
       output AXI_awregion,
       output AXI_awsize,
       output AXI_awvalid,
+      input  AXI_bid,
       output AXI_bready,
       input AXI_bresp,
       input AXI_bvalid,
       input AXI_rdata,
+      input AXI_rid,
       input AXI_rlast,
       output AXI_rready,
       input AXI_rresp,
@@ -79,6 +87,7 @@ interface srai_accel_AXI_MM_intfc;
       input AXI_araddr,
       input AXI_arburst,
       input AXI_arcache,
+      input AXI_arid,
       input AXI_arlen,
       input AXI_arlock,
       input AXI_arprot,
@@ -90,6 +99,7 @@ interface srai_accel_AXI_MM_intfc;
       input AXI_awaddr,
       input AXI_awburst,
       input AXI_awcache,
+      input AXI_awid,
       input AXI_awlen,
       input AXI_awlock,
       input AXI_awprot,
@@ -98,10 +108,12 @@ interface srai_accel_AXI_MM_intfc;
       input AXI_awregion,
       input AXI_awsize,
       input AXI_awvalid,
+      output AXI_bid,
       input AXI_bready,
       output AXI_bresp,
       output AXI_bvalid,
       output AXI_rdata,
+      output AXI_rid,
       output AXI_rlast,
       input AXI_rready,
       output AXI_rresp,

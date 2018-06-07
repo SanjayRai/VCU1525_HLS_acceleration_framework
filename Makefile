@@ -22,6 +22,7 @@ build_complete:
 build_all:
 	cd IP/role; make create_all_ip 
 	cd vivado_batch_shell;vivado -mode batch -source vivado_batch.tcl;cp *_partial*.bin; cp *.bi* ../bitfiles/shell; cp *.ltx ../bitfiles/shell; cp *.mcs ../bitfiles/shell; cp *.prm ../bitfiles/shell  
+	cd vivado_batch_shell;cp *_partial*.bin; cp *.bi* ../bitfiles/shell; cp *.ltx ../bitfiles/shell; cp *.mcs ../bitfiles/shell; cp *.prm ../bitfiles/shell  
 	cd vivado_batch_SDX_ACCL_MATRIX_INVERT_4X4_CPP_KERNEL;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
 	cd vivado_batch_SDX_ACCL_MATRIX_INVERT_5X5_CPP_KERNEL;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
 	cd vivado_batch_SDX_ACCL_MATRIX_MULT_6X6;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role

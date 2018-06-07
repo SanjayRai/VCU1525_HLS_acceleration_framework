@@ -55,7 +55,6 @@
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module PCIe_Bridge_ICAP_complex_system_ila_0_0 (
   clk,
-  SLOT_0_AXI_awid,
   SLOT_0_AXI_awaddr,
   SLOT_0_AXI_awlen,
   SLOT_0_AXI_awsize,
@@ -71,11 +70,9 @@ module PCIe_Bridge_ICAP_complex_system_ila_0_0 (
   SLOT_0_AXI_wlast,
   SLOT_0_AXI_wvalid,
   SLOT_0_AXI_wready,
-  SLOT_0_AXI_bid,
   SLOT_0_AXI_bresp,
   SLOT_0_AXI_bvalid,
   SLOT_0_AXI_bready,
-  SLOT_0_AXI_arid,
   SLOT_0_AXI_araddr,
   SLOT_0_AXI_arlen,
   SLOT_0_AXI_arsize,
@@ -86,20 +83,21 @@ module PCIe_Bridge_ICAP_complex_system_ila_0_0 (
   SLOT_0_AXI_arqos,
   SLOT_0_AXI_arvalid,
   SLOT_0_AXI_arready,
-  SLOT_0_AXI_rid,
   SLOT_0_AXI_rdata,
   SLOT_0_AXI_rresp,
   SLOT_0_AXI_rlast,
   SLOT_0_AXI_rvalid,
   SLOT_0_AXI_rready,
-  resetn
+  resetn,
+  SLOT_0_AXI_arid,
+  SLOT_0_AXI_awid,
+  SLOT_0_AXI_bid,
+  SLOT_0_AXI_rid
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 300000000, PHASE 0.00, CLK_DOMAIN PCIe_Bridge_ICAP_complex_ddr4_0_0_c0_ddr4_ui_clk, ASSOCIATED_BUSIF SLOT_0_AXI, ASSOCIATED_RESET resetn" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.clk CLK" *)
 input wire clk;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWID" *)
-input wire [4 : 0] SLOT_0_AXI_awid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWADDR" *)
 input wire [33 : 0] SLOT_0_AXI_awaddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWLEN" *)
@@ -130,16 +128,12 @@ input wire SLOT_0_AXI_wlast;
 input wire SLOT_0_AXI_wvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI WREADY" *)
 input wire SLOT_0_AXI_wready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BID" *)
-input wire [4 : 0] SLOT_0_AXI_bid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BRESP" *)
 input wire [1 : 0] SLOT_0_AXI_bresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BVALID" *)
 input wire SLOT_0_AXI_bvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BREADY" *)
 input wire SLOT_0_AXI_bready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARID" *)
-input wire [4 : 0] SLOT_0_AXI_arid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARADDR" *)
 input wire [33 : 0] SLOT_0_AXI_araddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARLEN" *)
@@ -160,8 +154,6 @@ input wire [3 : 0] SLOT_0_AXI_arqos;
 input wire SLOT_0_AXI_arvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARREADY" *)
 input wire SLOT_0_AXI_arready;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RID" *)
-input wire [4 : 0] SLOT_0_AXI_rid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RDATA" *)
 input wire [511 : 0] SLOT_0_AXI_rdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RRESP" *)
@@ -170,17 +162,24 @@ input wire [1 : 0] SLOT_0_AXI_rresp;
 input wire SLOT_0_AXI_rlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RVALID" *)
 input wire SLOT_0_AXI_rvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXI, DATA_WIDTH 512, PROTOCOL AXI4, FREQ_HZ 300000000, ID_WIDTH 5, ADDR_WIDTH 34, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 32, NUM_WRITE_OUTSTANDING 32, MAX_BURST_LENGTH 256, PHASE 0.00, CLK_DOMAIN PCIe_Bridge_ICAP_complex_ddr4_0_0_c0_ddr4_ui_clk, NUM\
-_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RREADY" *)
 input wire SLOT_0_AXI_rready;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.resetn, POLARITY ACTIVE_LOW" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.resetn RST" *)
 input wire resetn;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARID" *)
+input wire [4 : 0] SLOT_0_AXI_arid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWID" *)
+input wire [4 : 0] SLOT_0_AXI_awid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BID" *)
+input wire [4 : 0] SLOT_0_AXI_bid;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXI, DATA_WIDTH 512, PROTOCOL AXI4, FREQ_HZ 300000000, ID_WIDTH 5, ADDR_WIDTH 34, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 32, NUM_WRITE_OUTSTANDING 32, MAX_BURST_LENGTH 256, PHASE 0.00, CLK_DOMAIN PCIe_Bridge_ICAP_complex_ddr4_0_0_c0_ddr4_ui_clk, NUM\
+_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RID" *)
+input wire [4 : 0] SLOT_0_AXI_rid;
 
   bd_2022 inst (
     .clk(clk),
-    .SLOT_0_AXI_awid(SLOT_0_AXI_awid),
     .SLOT_0_AXI_awaddr(SLOT_0_AXI_awaddr),
     .SLOT_0_AXI_awlen(SLOT_0_AXI_awlen),
     .SLOT_0_AXI_awsize(SLOT_0_AXI_awsize),
@@ -196,11 +195,9 @@ input wire resetn;
     .SLOT_0_AXI_wlast(SLOT_0_AXI_wlast),
     .SLOT_0_AXI_wvalid(SLOT_0_AXI_wvalid),
     .SLOT_0_AXI_wready(SLOT_0_AXI_wready),
-    .SLOT_0_AXI_bid(SLOT_0_AXI_bid),
     .SLOT_0_AXI_bresp(SLOT_0_AXI_bresp),
     .SLOT_0_AXI_bvalid(SLOT_0_AXI_bvalid),
     .SLOT_0_AXI_bready(SLOT_0_AXI_bready),
-    .SLOT_0_AXI_arid(SLOT_0_AXI_arid),
     .SLOT_0_AXI_araddr(SLOT_0_AXI_araddr),
     .SLOT_0_AXI_arlen(SLOT_0_AXI_arlen),
     .SLOT_0_AXI_arsize(SLOT_0_AXI_arsize),
@@ -211,12 +208,15 @@ input wire resetn;
     .SLOT_0_AXI_arqos(SLOT_0_AXI_arqos),
     .SLOT_0_AXI_arvalid(SLOT_0_AXI_arvalid),
     .SLOT_0_AXI_arready(SLOT_0_AXI_arready),
-    .SLOT_0_AXI_rid(SLOT_0_AXI_rid),
     .SLOT_0_AXI_rdata(SLOT_0_AXI_rdata),
     .SLOT_0_AXI_rresp(SLOT_0_AXI_rresp),
     .SLOT_0_AXI_rlast(SLOT_0_AXI_rlast),
     .SLOT_0_AXI_rvalid(SLOT_0_AXI_rvalid),
     .SLOT_0_AXI_rready(SLOT_0_AXI_rready),
-    .resetn(resetn)
+    .resetn(resetn),
+    .SLOT_0_AXI_arid(SLOT_0_AXI_arid),
+    .SLOT_0_AXI_awid(SLOT_0_AXI_awid),
+    .SLOT_0_AXI_bid(SLOT_0_AXI_bid),
+    .SLOT_0_AXI_rid(SLOT_0_AXI_rid)
   );
 endmodule

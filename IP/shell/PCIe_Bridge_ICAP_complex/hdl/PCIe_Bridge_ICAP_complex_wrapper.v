@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Wed May  9 19:27:57 2018
+//Date        : Mon Jun  4 17:52:37 2018
 //Host        : mc32gblnx running 64-bit CentOS Linux release 7.4.1708 (Core)
 //Command     : generate_target PCIe_Bridge_ICAP_complex_wrapper.bd
 //Design      : PCIe_Bridge_ICAP_complex_wrapper
@@ -32,41 +32,84 @@ module PCIe_Bridge_ICAP_complex_wrapper
     M_AXI_LITE_TO_HLS_PR_NORTH_wready,
     M_AXI_LITE_TO_HLS_PR_NORTH_wstrb,
     M_AXI_LITE_TO_HLS_PR_NORTH_wvalid,
-    M_AXI_MM_FROM_HLS_PR_NORTH_araddr,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arburst,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arcache,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arlen,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arlock,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arprot,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arqos,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arready,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arregion,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arsize,
-    M_AXI_MM_FROM_HLS_PR_NORTH_arvalid,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awaddr,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awburst,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awcache,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awlen,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awlock,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awprot,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awqos,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awready,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awregion,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awsize,
-    M_AXI_MM_FROM_HLS_PR_NORTH_awvalid,
-    M_AXI_MM_FROM_HLS_PR_NORTH_bready,
-    M_AXI_MM_FROM_HLS_PR_NORTH_bresp,
-    M_AXI_MM_FROM_HLS_PR_NORTH_bvalid,
-    M_AXI_MM_FROM_HLS_PR_NORTH_rdata,
-    M_AXI_MM_FROM_HLS_PR_NORTH_rlast,
-    M_AXI_MM_FROM_HLS_PR_NORTH_rready,
-    M_AXI_MM_FROM_HLS_PR_NORTH_rresp,
-    M_AXI_MM_FROM_HLS_PR_NORTH_rvalid,
-    M_AXI_MM_FROM_HLS_PR_NORTH_wdata,
-    M_AXI_MM_FROM_HLS_PR_NORTH_wlast,
-    M_AXI_MM_FROM_HLS_PR_NORTH_wready,
-    M_AXI_MM_FROM_HLS_PR_NORTH_wstrb,
-    M_AXI_MM_FROM_HLS_PR_NORTH_wvalid,
+    M_AXI_MM_TO_HLS_PR_NORTH_araddr,
+    M_AXI_MM_TO_HLS_PR_NORTH_arburst,
+    M_AXI_MM_TO_HLS_PR_NORTH_arcache,
+    M_AXI_MM_TO_HLS_PR_NORTH_arid,
+    M_AXI_MM_TO_HLS_PR_NORTH_arlen,
+    M_AXI_MM_TO_HLS_PR_NORTH_arlock,
+    M_AXI_MM_TO_HLS_PR_NORTH_arprot,
+    M_AXI_MM_TO_HLS_PR_NORTH_arqos,
+    M_AXI_MM_TO_HLS_PR_NORTH_arready,
+    M_AXI_MM_TO_HLS_PR_NORTH_arregion,
+    M_AXI_MM_TO_HLS_PR_NORTH_arsize,
+    M_AXI_MM_TO_HLS_PR_NORTH_arvalid,
+    M_AXI_MM_TO_HLS_PR_NORTH_awaddr,
+    M_AXI_MM_TO_HLS_PR_NORTH_awburst,
+    M_AXI_MM_TO_HLS_PR_NORTH_awcache,
+    M_AXI_MM_TO_HLS_PR_NORTH_awid,
+    M_AXI_MM_TO_HLS_PR_NORTH_awlen,
+    M_AXI_MM_TO_HLS_PR_NORTH_awlock,
+    M_AXI_MM_TO_HLS_PR_NORTH_awprot,
+    M_AXI_MM_TO_HLS_PR_NORTH_awqos,
+    M_AXI_MM_TO_HLS_PR_NORTH_awready,
+    M_AXI_MM_TO_HLS_PR_NORTH_awregion,
+    M_AXI_MM_TO_HLS_PR_NORTH_awsize,
+    M_AXI_MM_TO_HLS_PR_NORTH_awvalid,
+    M_AXI_MM_TO_HLS_PR_NORTH_bid,
+    M_AXI_MM_TO_HLS_PR_NORTH_bready,
+    M_AXI_MM_TO_HLS_PR_NORTH_bresp,
+    M_AXI_MM_TO_HLS_PR_NORTH_bvalid,
+    M_AXI_MM_TO_HLS_PR_NORTH_rdata,
+    M_AXI_MM_TO_HLS_PR_NORTH_rid,
+    M_AXI_MM_TO_HLS_PR_NORTH_rlast,
+    M_AXI_MM_TO_HLS_PR_NORTH_rready,
+    M_AXI_MM_TO_HLS_PR_NORTH_rresp,
+    M_AXI_MM_TO_HLS_PR_NORTH_rvalid,
+    M_AXI_MM_TO_HLS_PR_NORTH_wdata,
+    M_AXI_MM_TO_HLS_PR_NORTH_wlast,
+    M_AXI_MM_TO_HLS_PR_NORTH_wready,
+    M_AXI_MM_TO_HLS_PR_NORTH_wstrb,
+    M_AXI_MM_TO_HLS_PR_NORTH_wvalid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_araddr,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arburst,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arcache,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arlen,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arlock,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arprot,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arqos,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arready,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arregion,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arsize,
+    S_AXI_MM_FROM_HLS_PR_NORTH_arvalid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awaddr,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awburst,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awcache,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awlen,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awlock,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awprot,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awqos,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awready,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awregion,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awsize,
+    S_AXI_MM_FROM_HLS_PR_NORTH_awvalid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_bid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_bready,
+    S_AXI_MM_FROM_HLS_PR_NORTH_bresp,
+    S_AXI_MM_FROM_HLS_PR_NORTH_bvalid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_rdata,
+    S_AXI_MM_FROM_HLS_PR_NORTH_rid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_rlast,
+    S_AXI_MM_FROM_HLS_PR_NORTH_rready,
+    S_AXI_MM_FROM_HLS_PR_NORTH_rresp,
+    S_AXI_MM_FROM_HLS_PR_NORTH_rvalid,
+    S_AXI_MM_FROM_HLS_PR_NORTH_wdata,
+    S_AXI_MM_FROM_HLS_PR_NORTH_wlast,
+    S_AXI_MM_FROM_HLS_PR_NORTH_wready,
+    S_AXI_MM_FROM_HLS_PR_NORTH_wstrb,
+    S_AXI_MM_FROM_HLS_PR_NORTH_wvalid,
     axi_reset_n_out,
     c1_ddr4_act_n,
     c1_ddr4_adr,
@@ -114,41 +157,84 @@ module PCIe_Bridge_ICAP_complex_wrapper
   input M_AXI_LITE_TO_HLS_PR_NORTH_wready;
   output [3:0]M_AXI_LITE_TO_HLS_PR_NORTH_wstrb;
   output M_AXI_LITE_TO_HLS_PR_NORTH_wvalid;
-  input [63:0]M_AXI_MM_FROM_HLS_PR_NORTH_araddr;
-  input [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_arburst;
-  input [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_arcache;
-  input [7:0]M_AXI_MM_FROM_HLS_PR_NORTH_arlen;
-  input [0:0]M_AXI_MM_FROM_HLS_PR_NORTH_arlock;
-  input [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_arprot;
-  input [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_arqos;
-  output M_AXI_MM_FROM_HLS_PR_NORTH_arready;
-  input [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_arregion;
-  input [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_arsize;
-  input M_AXI_MM_FROM_HLS_PR_NORTH_arvalid;
-  input [63:0]M_AXI_MM_FROM_HLS_PR_NORTH_awaddr;
-  input [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_awburst;
-  input [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_awcache;
-  input [7:0]M_AXI_MM_FROM_HLS_PR_NORTH_awlen;
-  input [0:0]M_AXI_MM_FROM_HLS_PR_NORTH_awlock;
-  input [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_awprot;
-  input [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_awqos;
-  output M_AXI_MM_FROM_HLS_PR_NORTH_awready;
-  input [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_awregion;
-  input [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_awsize;
-  input M_AXI_MM_FROM_HLS_PR_NORTH_awvalid;
-  input M_AXI_MM_FROM_HLS_PR_NORTH_bready;
-  output [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_bresp;
-  output M_AXI_MM_FROM_HLS_PR_NORTH_bvalid;
-  output [511:0]M_AXI_MM_FROM_HLS_PR_NORTH_rdata;
-  output M_AXI_MM_FROM_HLS_PR_NORTH_rlast;
-  input M_AXI_MM_FROM_HLS_PR_NORTH_rready;
-  output [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_rresp;
-  output M_AXI_MM_FROM_HLS_PR_NORTH_rvalid;
-  input [511:0]M_AXI_MM_FROM_HLS_PR_NORTH_wdata;
-  input M_AXI_MM_FROM_HLS_PR_NORTH_wlast;
-  output M_AXI_MM_FROM_HLS_PR_NORTH_wready;
-  input [63:0]M_AXI_MM_FROM_HLS_PR_NORTH_wstrb;
-  input M_AXI_MM_FROM_HLS_PR_NORTH_wvalid;
+  output [63:0]M_AXI_MM_TO_HLS_PR_NORTH_araddr;
+  output [1:0]M_AXI_MM_TO_HLS_PR_NORTH_arburst;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arcache;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arid;
+  output [7:0]M_AXI_MM_TO_HLS_PR_NORTH_arlen;
+  output [0:0]M_AXI_MM_TO_HLS_PR_NORTH_arlock;
+  output [2:0]M_AXI_MM_TO_HLS_PR_NORTH_arprot;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arqos;
+  input M_AXI_MM_TO_HLS_PR_NORTH_arready;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arregion;
+  output [2:0]M_AXI_MM_TO_HLS_PR_NORTH_arsize;
+  output M_AXI_MM_TO_HLS_PR_NORTH_arvalid;
+  output [63:0]M_AXI_MM_TO_HLS_PR_NORTH_awaddr;
+  output [1:0]M_AXI_MM_TO_HLS_PR_NORTH_awburst;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awcache;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awid;
+  output [7:0]M_AXI_MM_TO_HLS_PR_NORTH_awlen;
+  output [0:0]M_AXI_MM_TO_HLS_PR_NORTH_awlock;
+  output [2:0]M_AXI_MM_TO_HLS_PR_NORTH_awprot;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awqos;
+  input M_AXI_MM_TO_HLS_PR_NORTH_awready;
+  output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awregion;
+  output [2:0]M_AXI_MM_TO_HLS_PR_NORTH_awsize;
+  output M_AXI_MM_TO_HLS_PR_NORTH_awvalid;
+  input [3:0]M_AXI_MM_TO_HLS_PR_NORTH_bid;
+  output M_AXI_MM_TO_HLS_PR_NORTH_bready;
+  input [1:0]M_AXI_MM_TO_HLS_PR_NORTH_bresp;
+  input M_AXI_MM_TO_HLS_PR_NORTH_bvalid;
+  input [511:0]M_AXI_MM_TO_HLS_PR_NORTH_rdata;
+  input [3:0]M_AXI_MM_TO_HLS_PR_NORTH_rid;
+  input M_AXI_MM_TO_HLS_PR_NORTH_rlast;
+  output M_AXI_MM_TO_HLS_PR_NORTH_rready;
+  input [1:0]M_AXI_MM_TO_HLS_PR_NORTH_rresp;
+  input M_AXI_MM_TO_HLS_PR_NORTH_rvalid;
+  output [511:0]M_AXI_MM_TO_HLS_PR_NORTH_wdata;
+  output M_AXI_MM_TO_HLS_PR_NORTH_wlast;
+  input M_AXI_MM_TO_HLS_PR_NORTH_wready;
+  output [63:0]M_AXI_MM_TO_HLS_PR_NORTH_wstrb;
+  output M_AXI_MM_TO_HLS_PR_NORTH_wvalid;
+  input [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_araddr;
+  input [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_arburst;
+  input [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_arcache;
+  input [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_arid;
+  input [7:0]S_AXI_MM_FROM_HLS_PR_NORTH_arlen;
+  input [0:0]S_AXI_MM_FROM_HLS_PR_NORTH_arlock;
+  input [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_arprot;
+  input [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_arqos;
+  output S_AXI_MM_FROM_HLS_PR_NORTH_arready;
+  input [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_arregion;
+  input [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_arsize;
+  input S_AXI_MM_FROM_HLS_PR_NORTH_arvalid;
+  input [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_awaddr;
+  input [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_awburst;
+  input [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_awcache;
+  input [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_awid;
+  input [7:0]S_AXI_MM_FROM_HLS_PR_NORTH_awlen;
+  input [0:0]S_AXI_MM_FROM_HLS_PR_NORTH_awlock;
+  input [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_awprot;
+  input [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_awqos;
+  output S_AXI_MM_FROM_HLS_PR_NORTH_awready;
+  input [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_awregion;
+  input [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_awsize;
+  input S_AXI_MM_FROM_HLS_PR_NORTH_awvalid;
+  output [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_bid;
+  input S_AXI_MM_FROM_HLS_PR_NORTH_bready;
+  output [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_bresp;
+  output S_AXI_MM_FROM_HLS_PR_NORTH_bvalid;
+  output [511:0]S_AXI_MM_FROM_HLS_PR_NORTH_rdata;
+  output [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_rid;
+  output S_AXI_MM_FROM_HLS_PR_NORTH_rlast;
+  input S_AXI_MM_FROM_HLS_PR_NORTH_rready;
+  output [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_rresp;
+  output S_AXI_MM_FROM_HLS_PR_NORTH_rvalid;
+  input [511:0]S_AXI_MM_FROM_HLS_PR_NORTH_wdata;
+  input S_AXI_MM_FROM_HLS_PR_NORTH_wlast;
+  output S_AXI_MM_FROM_HLS_PR_NORTH_wready;
+  input [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_wstrb;
+  input S_AXI_MM_FROM_HLS_PR_NORTH_wvalid;
   output [0:0]axi_reset_n_out;
   output c1_ddr4_act_n;
   output [16:0]c1_ddr4_adr;
@@ -197,41 +283,84 @@ module PCIe_Bridge_ICAP_complex_wrapper
   wire M_AXI_LITE_TO_HLS_PR_NORTH_wready;
   wire [3:0]M_AXI_LITE_TO_HLS_PR_NORTH_wstrb;
   wire M_AXI_LITE_TO_HLS_PR_NORTH_wvalid;
-  wire [63:0]M_AXI_MM_FROM_HLS_PR_NORTH_araddr;
-  wire [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_arburst;
-  wire [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_arcache;
-  wire [7:0]M_AXI_MM_FROM_HLS_PR_NORTH_arlen;
-  wire [0:0]M_AXI_MM_FROM_HLS_PR_NORTH_arlock;
-  wire [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_arprot;
-  wire [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_arqos;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_arready;
-  wire [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_arregion;
-  wire [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_arsize;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_arvalid;
-  wire [63:0]M_AXI_MM_FROM_HLS_PR_NORTH_awaddr;
-  wire [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_awburst;
-  wire [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_awcache;
-  wire [7:0]M_AXI_MM_FROM_HLS_PR_NORTH_awlen;
-  wire [0:0]M_AXI_MM_FROM_HLS_PR_NORTH_awlock;
-  wire [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_awprot;
-  wire [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_awqos;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_awready;
-  wire [3:0]M_AXI_MM_FROM_HLS_PR_NORTH_awregion;
-  wire [2:0]M_AXI_MM_FROM_HLS_PR_NORTH_awsize;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_awvalid;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_bready;
-  wire [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_bresp;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_bvalid;
-  wire [511:0]M_AXI_MM_FROM_HLS_PR_NORTH_rdata;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_rlast;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_rready;
-  wire [1:0]M_AXI_MM_FROM_HLS_PR_NORTH_rresp;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_rvalid;
-  wire [511:0]M_AXI_MM_FROM_HLS_PR_NORTH_wdata;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_wlast;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_wready;
-  wire [63:0]M_AXI_MM_FROM_HLS_PR_NORTH_wstrb;
-  wire M_AXI_MM_FROM_HLS_PR_NORTH_wvalid;
+  wire [63:0]M_AXI_MM_TO_HLS_PR_NORTH_araddr;
+  wire [1:0]M_AXI_MM_TO_HLS_PR_NORTH_arburst;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arcache;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arid;
+  wire [7:0]M_AXI_MM_TO_HLS_PR_NORTH_arlen;
+  wire [0:0]M_AXI_MM_TO_HLS_PR_NORTH_arlock;
+  wire [2:0]M_AXI_MM_TO_HLS_PR_NORTH_arprot;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arqos;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_arready;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arregion;
+  wire [2:0]M_AXI_MM_TO_HLS_PR_NORTH_arsize;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_arvalid;
+  wire [63:0]M_AXI_MM_TO_HLS_PR_NORTH_awaddr;
+  wire [1:0]M_AXI_MM_TO_HLS_PR_NORTH_awburst;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awcache;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awid;
+  wire [7:0]M_AXI_MM_TO_HLS_PR_NORTH_awlen;
+  wire [0:0]M_AXI_MM_TO_HLS_PR_NORTH_awlock;
+  wire [2:0]M_AXI_MM_TO_HLS_PR_NORTH_awprot;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awqos;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_awready;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_awregion;
+  wire [2:0]M_AXI_MM_TO_HLS_PR_NORTH_awsize;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_awvalid;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_bid;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_bready;
+  wire [1:0]M_AXI_MM_TO_HLS_PR_NORTH_bresp;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_bvalid;
+  wire [511:0]M_AXI_MM_TO_HLS_PR_NORTH_rdata;
+  wire [3:0]M_AXI_MM_TO_HLS_PR_NORTH_rid;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_rlast;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_rready;
+  wire [1:0]M_AXI_MM_TO_HLS_PR_NORTH_rresp;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_rvalid;
+  wire [511:0]M_AXI_MM_TO_HLS_PR_NORTH_wdata;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_wlast;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_wready;
+  wire [63:0]M_AXI_MM_TO_HLS_PR_NORTH_wstrb;
+  wire M_AXI_MM_TO_HLS_PR_NORTH_wvalid;
+  wire [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_araddr;
+  wire [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_arburst;
+  wire [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_arcache;
+  wire [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_arid;
+  wire [7:0]S_AXI_MM_FROM_HLS_PR_NORTH_arlen;
+  wire [0:0]S_AXI_MM_FROM_HLS_PR_NORTH_arlock;
+  wire [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_arprot;
+  wire [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_arqos;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_arready;
+  wire [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_arregion;
+  wire [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_arsize;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_arvalid;
+  wire [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_awaddr;
+  wire [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_awburst;
+  wire [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_awcache;
+  wire [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_awid;
+  wire [7:0]S_AXI_MM_FROM_HLS_PR_NORTH_awlen;
+  wire [0:0]S_AXI_MM_FROM_HLS_PR_NORTH_awlock;
+  wire [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_awprot;
+  wire [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_awqos;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_awready;
+  wire [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_awregion;
+  wire [2:0]S_AXI_MM_FROM_HLS_PR_NORTH_awsize;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_awvalid;
+  wire [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_bid;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_bready;
+  wire [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_bresp;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_bvalid;
+  wire [511:0]S_AXI_MM_FROM_HLS_PR_NORTH_rdata;
+  wire [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_rid;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_rlast;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_rready;
+  wire [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_rresp;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_rvalid;
+  wire [511:0]S_AXI_MM_FROM_HLS_PR_NORTH_wdata;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_wlast;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_wready;
+  wire [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_wstrb;
+  wire S_AXI_MM_FROM_HLS_PR_NORTH_wvalid;
   wire [0:0]axi_reset_n_out;
   wire c1_ddr4_act_n;
   wire [16:0]c1_ddr4_adr;
@@ -281,41 +410,84 @@ module PCIe_Bridge_ICAP_complex_wrapper
         .M_AXI_LITE_TO_HLS_PR_NORTH_wready(M_AXI_LITE_TO_HLS_PR_NORTH_wready),
         .M_AXI_LITE_TO_HLS_PR_NORTH_wstrb(M_AXI_LITE_TO_HLS_PR_NORTH_wstrb),
         .M_AXI_LITE_TO_HLS_PR_NORTH_wvalid(M_AXI_LITE_TO_HLS_PR_NORTH_wvalid),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_araddr(M_AXI_MM_FROM_HLS_PR_NORTH_araddr),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arburst(M_AXI_MM_FROM_HLS_PR_NORTH_arburst),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arcache(M_AXI_MM_FROM_HLS_PR_NORTH_arcache),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arlen(M_AXI_MM_FROM_HLS_PR_NORTH_arlen),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arlock(M_AXI_MM_FROM_HLS_PR_NORTH_arlock),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arprot(M_AXI_MM_FROM_HLS_PR_NORTH_arprot),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arqos(M_AXI_MM_FROM_HLS_PR_NORTH_arqos),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arready(M_AXI_MM_FROM_HLS_PR_NORTH_arready),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arregion(M_AXI_MM_FROM_HLS_PR_NORTH_arregion),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arsize(M_AXI_MM_FROM_HLS_PR_NORTH_arsize),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_arvalid(M_AXI_MM_FROM_HLS_PR_NORTH_arvalid),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awaddr(M_AXI_MM_FROM_HLS_PR_NORTH_awaddr),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awburst(M_AXI_MM_FROM_HLS_PR_NORTH_awburst),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awcache(M_AXI_MM_FROM_HLS_PR_NORTH_awcache),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awlen(M_AXI_MM_FROM_HLS_PR_NORTH_awlen),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awlock(M_AXI_MM_FROM_HLS_PR_NORTH_awlock),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awprot(M_AXI_MM_FROM_HLS_PR_NORTH_awprot),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awqos(M_AXI_MM_FROM_HLS_PR_NORTH_awqos),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awready(M_AXI_MM_FROM_HLS_PR_NORTH_awready),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awregion(M_AXI_MM_FROM_HLS_PR_NORTH_awregion),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awsize(M_AXI_MM_FROM_HLS_PR_NORTH_awsize),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_awvalid(M_AXI_MM_FROM_HLS_PR_NORTH_awvalid),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_bready(M_AXI_MM_FROM_HLS_PR_NORTH_bready),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_bresp(M_AXI_MM_FROM_HLS_PR_NORTH_bresp),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_bvalid(M_AXI_MM_FROM_HLS_PR_NORTH_bvalid),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_rdata(M_AXI_MM_FROM_HLS_PR_NORTH_rdata),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_rlast(M_AXI_MM_FROM_HLS_PR_NORTH_rlast),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_rready(M_AXI_MM_FROM_HLS_PR_NORTH_rready),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_rresp(M_AXI_MM_FROM_HLS_PR_NORTH_rresp),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_rvalid(M_AXI_MM_FROM_HLS_PR_NORTH_rvalid),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_wdata(M_AXI_MM_FROM_HLS_PR_NORTH_wdata),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_wlast(M_AXI_MM_FROM_HLS_PR_NORTH_wlast),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_wready(M_AXI_MM_FROM_HLS_PR_NORTH_wready),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_wstrb(M_AXI_MM_FROM_HLS_PR_NORTH_wstrb),
-        .M_AXI_MM_FROM_HLS_PR_NORTH_wvalid(M_AXI_MM_FROM_HLS_PR_NORTH_wvalid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_araddr(M_AXI_MM_TO_HLS_PR_NORTH_araddr),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arburst(M_AXI_MM_TO_HLS_PR_NORTH_arburst),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arcache(M_AXI_MM_TO_HLS_PR_NORTH_arcache),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arid(M_AXI_MM_TO_HLS_PR_NORTH_arid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arlen(M_AXI_MM_TO_HLS_PR_NORTH_arlen),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arlock(M_AXI_MM_TO_HLS_PR_NORTH_arlock),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arprot(M_AXI_MM_TO_HLS_PR_NORTH_arprot),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arqos(M_AXI_MM_TO_HLS_PR_NORTH_arqos),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arready(M_AXI_MM_TO_HLS_PR_NORTH_arready),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arregion(M_AXI_MM_TO_HLS_PR_NORTH_arregion),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arsize(M_AXI_MM_TO_HLS_PR_NORTH_arsize),
+        .M_AXI_MM_TO_HLS_PR_NORTH_arvalid(M_AXI_MM_TO_HLS_PR_NORTH_arvalid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awaddr(M_AXI_MM_TO_HLS_PR_NORTH_awaddr),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awburst(M_AXI_MM_TO_HLS_PR_NORTH_awburst),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awcache(M_AXI_MM_TO_HLS_PR_NORTH_awcache),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awid(M_AXI_MM_TO_HLS_PR_NORTH_awid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awlen(M_AXI_MM_TO_HLS_PR_NORTH_awlen),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awlock(M_AXI_MM_TO_HLS_PR_NORTH_awlock),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awprot(M_AXI_MM_TO_HLS_PR_NORTH_awprot),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awqos(M_AXI_MM_TO_HLS_PR_NORTH_awqos),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awready(M_AXI_MM_TO_HLS_PR_NORTH_awready),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awregion(M_AXI_MM_TO_HLS_PR_NORTH_awregion),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awsize(M_AXI_MM_TO_HLS_PR_NORTH_awsize),
+        .M_AXI_MM_TO_HLS_PR_NORTH_awvalid(M_AXI_MM_TO_HLS_PR_NORTH_awvalid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_bid(M_AXI_MM_TO_HLS_PR_NORTH_bid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_bready(M_AXI_MM_TO_HLS_PR_NORTH_bready),
+        .M_AXI_MM_TO_HLS_PR_NORTH_bresp(M_AXI_MM_TO_HLS_PR_NORTH_bresp),
+        .M_AXI_MM_TO_HLS_PR_NORTH_bvalid(M_AXI_MM_TO_HLS_PR_NORTH_bvalid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_rdata(M_AXI_MM_TO_HLS_PR_NORTH_rdata),
+        .M_AXI_MM_TO_HLS_PR_NORTH_rid(M_AXI_MM_TO_HLS_PR_NORTH_rid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_rlast(M_AXI_MM_TO_HLS_PR_NORTH_rlast),
+        .M_AXI_MM_TO_HLS_PR_NORTH_rready(M_AXI_MM_TO_HLS_PR_NORTH_rready),
+        .M_AXI_MM_TO_HLS_PR_NORTH_rresp(M_AXI_MM_TO_HLS_PR_NORTH_rresp),
+        .M_AXI_MM_TO_HLS_PR_NORTH_rvalid(M_AXI_MM_TO_HLS_PR_NORTH_rvalid),
+        .M_AXI_MM_TO_HLS_PR_NORTH_wdata(M_AXI_MM_TO_HLS_PR_NORTH_wdata),
+        .M_AXI_MM_TO_HLS_PR_NORTH_wlast(M_AXI_MM_TO_HLS_PR_NORTH_wlast),
+        .M_AXI_MM_TO_HLS_PR_NORTH_wready(M_AXI_MM_TO_HLS_PR_NORTH_wready),
+        .M_AXI_MM_TO_HLS_PR_NORTH_wstrb(M_AXI_MM_TO_HLS_PR_NORTH_wstrb),
+        .M_AXI_MM_TO_HLS_PR_NORTH_wvalid(M_AXI_MM_TO_HLS_PR_NORTH_wvalid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_araddr(S_AXI_MM_FROM_HLS_PR_NORTH_araddr),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arburst(S_AXI_MM_FROM_HLS_PR_NORTH_arburst),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arcache(S_AXI_MM_FROM_HLS_PR_NORTH_arcache),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arid(S_AXI_MM_FROM_HLS_PR_NORTH_arid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arlen(S_AXI_MM_FROM_HLS_PR_NORTH_arlen),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arlock(S_AXI_MM_FROM_HLS_PR_NORTH_arlock),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arprot(S_AXI_MM_FROM_HLS_PR_NORTH_arprot),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arqos(S_AXI_MM_FROM_HLS_PR_NORTH_arqos),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arready(S_AXI_MM_FROM_HLS_PR_NORTH_arready),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arregion(S_AXI_MM_FROM_HLS_PR_NORTH_arregion),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arsize(S_AXI_MM_FROM_HLS_PR_NORTH_arsize),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_arvalid(S_AXI_MM_FROM_HLS_PR_NORTH_arvalid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awaddr(S_AXI_MM_FROM_HLS_PR_NORTH_awaddr),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awburst(S_AXI_MM_FROM_HLS_PR_NORTH_awburst),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awcache(S_AXI_MM_FROM_HLS_PR_NORTH_awcache),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awid(S_AXI_MM_FROM_HLS_PR_NORTH_awid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awlen(S_AXI_MM_FROM_HLS_PR_NORTH_awlen),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awlock(S_AXI_MM_FROM_HLS_PR_NORTH_awlock),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awprot(S_AXI_MM_FROM_HLS_PR_NORTH_awprot),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awqos(S_AXI_MM_FROM_HLS_PR_NORTH_awqos),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awready(S_AXI_MM_FROM_HLS_PR_NORTH_awready),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awregion(S_AXI_MM_FROM_HLS_PR_NORTH_awregion),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awsize(S_AXI_MM_FROM_HLS_PR_NORTH_awsize),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_awvalid(S_AXI_MM_FROM_HLS_PR_NORTH_awvalid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_bid(S_AXI_MM_FROM_HLS_PR_NORTH_bid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_bready(S_AXI_MM_FROM_HLS_PR_NORTH_bready),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_bresp(S_AXI_MM_FROM_HLS_PR_NORTH_bresp),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_bvalid(S_AXI_MM_FROM_HLS_PR_NORTH_bvalid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_rdata(S_AXI_MM_FROM_HLS_PR_NORTH_rdata),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_rid(S_AXI_MM_FROM_HLS_PR_NORTH_rid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_rlast(S_AXI_MM_FROM_HLS_PR_NORTH_rlast),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_rready(S_AXI_MM_FROM_HLS_PR_NORTH_rready),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_rresp(S_AXI_MM_FROM_HLS_PR_NORTH_rresp),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_rvalid(S_AXI_MM_FROM_HLS_PR_NORTH_rvalid),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_wdata(S_AXI_MM_FROM_HLS_PR_NORTH_wdata),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_wlast(S_AXI_MM_FROM_HLS_PR_NORTH_wlast),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_wready(S_AXI_MM_FROM_HLS_PR_NORTH_wready),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_wstrb(S_AXI_MM_FROM_HLS_PR_NORTH_wstrb),
+        .S_AXI_MM_FROM_HLS_PR_NORTH_wvalid(S_AXI_MM_FROM_HLS_PR_NORTH_wvalid),
         .axi_reset_n_out(axi_reset_n_out),
         .c1_ddr4_act_n(c1_ddr4_act_n),
         .c1_ddr4_adr(c1_ddr4_adr),
