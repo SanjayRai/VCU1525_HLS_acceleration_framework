@@ -7,6 +7,7 @@
 #include <chrono>
 #include <cmath>
 #include "pcie_memio.h" 
+//#include "pcie_memio_winx.h"
 #include "srai_accel_utils.h" 
 #include "cycle.h"
 
@@ -14,9 +15,6 @@
 #define ZERO_f 1.0e-4
 using namespace std;
 
-
-
-double getCPUTime();
 
 
 void gen_test_data(srai_mem_conv_IN0 *a) {
@@ -49,46 +47,48 @@ printf ("\n");
 printf ("-----------------------------------------------------\n");
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
 
   int compute_itn_count;
-  double startTime;
-  double endTime;
-  clock_t elspsed_time;
+  bool Exit_f_condition = false;
   time_t t;
   srand((unsigned) time(&t));
   double high_res_elapsed_time;
   double high_res_elapsed_time_HW = 0.0f;
   double high_res_elapsed_time_SW = 0.0f;
-  ticks t0, t1;
-  double tick_elsped_time_HW = 0.0f; 
-  double tick_elsped_time_SW = 0.0f; 
+  chrono::high_resolution_clock::time_point start_t;
+  chrono::high_resolution_clock::time_point stop_t;
+  chrono::duration<double> elapsed_hi_res;
 
-  elspsed_time = clock();
+  bool RESULT_SUCESSFULL;
+  bool dbg_srart_ker;
 
   sdx_data_t *a_in_ptr;
   char *a_in_ptr_c_POSIX = NULL;
+  char *y_out_ptr_c_POSIX = NULL;
   srai_mem_conv_IN0 *a_in_ptr_c;
   srai_mem_conv_OUT0 *y_out_ptr_c;
   srai_mem_conv_IN0 *a_in_head_c;
   srai_mem_conv_OUT0 *y_out_head_c;
   sdx_data_t *y_out_ptr;
 
-  bool RESULT_SUCESSFULL;
-  bool dbg_srart_ker;
+  SysMon_temp_struct sys_temprature;
 
   cout << "Srai_ DBG NUMBER_OF_DATA_SETS  =  " << NUMBER_OF_DATA_SETS << endl;
   cout << "Srai_ DBG GLOBAL_DATA_IN_SIZE  =  " << GLOBAL_DATA_IN_SIZE << endl;
   cout << "Srai_ DBG GLOBAL_DATA_OUT_SIZE =  " << GLOBAL_DATA_OUT_SIZE << endl;
 
-  //posix_memalign((void **)&a_in_ptr_c_POSIX, 4096/*alignment*/, GLOBAL_DATA_IN_SIZE_BYTES + 4096);
-  //assert(a_in_ptr_c_POSIX);
-  //a_in_ptr_c = (srai_mem_conv_IN0 *)a_in_ptr_c_POSIX;
+  posix_memalign((void **)&a_in_ptr_c_POSIX, 4096/*alignment*/, GLOBAL_DATA_IN_SIZE_BYTES + 4096);
+  assert(a_in_ptr_c_POSIX);
+  a_in_ptr_c = (srai_mem_conv_IN0 *)a_in_ptr_c_POSIX;
   
-  a_in_ptr_c = new srai_mem_conv_IN0[NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_IN_SIZE];
+  //a_in_ptr_c = new srai_mem_conv_IN0[NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_IN_SIZE];
   a_in_head_c = a_in_ptr_c;
-  y_out_ptr_c = new srai_mem_conv_OUT0[NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_OUT_SIZE];
+
+  posix_memalign((void **)&y_out_ptr_c_POSIX, 4096/*alignment*/, GLOBAL_DATA_OUT_SIZE_BYTES + 4096);
+  assert(y_out_ptr_c_POSIX);
+  y_out_ptr_c = (srai_mem_conv_OUT0 *)y_out_ptr_c_POSIX;
+  //y_out_ptr_c = new srai_mem_conv_OUT0[NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_OUT_SIZE];
   y_out_head_c = y_out_ptr_c;
 
   printf("-------------------------------------------------------------\n");
@@ -117,13 +117,10 @@ int main(int argc, char** argv)
     cout << "Memory Initialized with test Data\n";
 
 #ifdef GPP_ONLY_FLOW  
-    startTime = getCPUTime();
     sdx_cppKernel_top(a_in_ptr, y_out_ptr, (unsigned int)NUMBER_OF_DATA_SETS, &dbg_srart_ker);
-    endTime = getCPUTime();
 
 #elif SRAI__HLS_ACCEL
 // Compile for SRAI custom HLS accelerator platform 
-    startTime = getCPUTime();
     string PR_binFile_name;
     unsigned int xfer_count ;
 
@@ -136,54 +133,71 @@ int main(int argc, char** argv)
 
 
     cout << "Initializing FPGA\n";
-    fpga_mmio *my_fpga_ptr = new fpga_mmio;
-    fpga_xDMA *my_fpga_xDMA_ptr = new fpga_xDMA;
-    my_fpga_ptr->fpga_mmio_init<uint32_t>(PAGE_SIZE);
+    fpga_xDMA_linux *my_fpga_xDMA_ptr = new fpga_xDMA_linux;
+    //fpga_xDMA_winx *my_fpga_xDMA_ptr = new fpga_xDMA_winx;
     my_fpga_xDMA_ptr->fpga_xDMA_init();
 
-    fpga_test_AXIL_LITE_8KSCRATCHPAD_BRAM (my_fpga_ptr);
+    fpga_test_AXIL_LITE_8KSCRATCHPAD_BRAM (my_fpga_xDMA_ptr);
+    //
+    //DeIsolate before doing anyting on AXI Buses
+    cout << "DeIsolate PR region \n";
+    my_fpga_xDMA_ptr->fpga_poke(AXI_LITE_GPIO_BASE, DEISOLATE_NORTH_PR); 
+
+    fpga_read_temprature(my_fpga_xDMA_ptr, &sys_temprature, 10);
+    cout << "Current FPGA Die Temprature (deg C) =  " << sys_temprature.current_temp << endl;
+    cout << "Current FPGA Max Die Temprature (deg C) =  " << sys_temprature.maximum_temp << endl;
+    cout << "Current FPGA Min Die Temprature (deg C) =  " << sys_temprature.minimum_temp << endl;
+
 
     /* xDMA Throughput testing */
-    fpga_PCIE_BANDWIDTH_test64(my_fpga_xDMA_ptr, AXI_MM_DDR4_BASE_NORTH_in_C0,  (char*)a_in_ptr, GLOBAL_DATA_IN_SIZE_BYTES);
+    cout << "xDMA BandWidth test C0  : \n";
+   fpga_PCIE_BANDWIDTH_test64(my_fpga_xDMA_ptr, AXI_MM_DDR4_C0, (char*)a_in_ptr, GLOBAL_DATA_OUT_SIZE_BYTES);
+   cout << "..........................\n";
+   cout << "xDMA BandWidth test C1  : \n";
+   fpga_PCIE_BANDWIDTH_test64(my_fpga_xDMA_ptr, AXI_MM_DDR4_C1, (char*)a_in_ptr, GLOBAL_DATA_OUT_SIZE_BYTES);
+   cout << "..........................\n";
+   cout << "xDMA BandWidth test C2  : \n";
+   fpga_PCIE_BANDWIDTH_test64(my_fpga_xDMA_ptr, AXI_MM_DDR4_C2, (char*)a_in_ptr, GLOBAL_DATA_OUT_SIZE_BYTES);
+   cout << "..........................\n";
+   cout << "xDMA BandWidth test C3: \n";
+   fpga_PCIE_BANDWIDTH_test64(my_fpga_xDMA_ptr, AXI_MM_DDR4_C3, (char*)a_in_ptr, GLOBAL_DATA_OUT_SIZE_BYTES);
+   cout << "..........................\n";
+   
+   
 
    
-    /* Program Partial Bit file */
-    fpga_PROGRAM_NORTH_PR(my_fpga_ptr, PR_binFile_name);
-
     cout << "Start HLS execution " << endl;
     cout << " ............... Programing PR clock ------------------ " << endl;
-    fpga_PROGRAM_PR_CLOCK (my_fpga_ptr, HW_Kernel_frequency);
+    fpga_PROGRAM_PR_CLOCK (my_fpga_xDMA_ptr, HW_Kernel_frequency);
     cout << " ....DONE ...... Programing PR clock ------------------ " << endl;
+
+    /* Program Partial Bit file */
+    fpga_PROGRAM_NORTH_PR(my_fpga_xDMA_ptr, PR_binFile_name);
 
 
     //auto start_t = chrono::high_resolution_clock::now();
     //cin >> DBG__SRAI_tempvar_1; 
     /* Read the PR_HLS Control register to poll the Idle bit (bit 1) */ 
-    xfer_count = fpga_xfer_data_to_card_NORTH64(my_fpga_xDMA_ptr, my_fpga_ptr, AXI_MM_DDR4_BASE_NORTH_in_C0, (char*)a_in_ptr, (GLOBAL_DATA_IN_SIZE_BYTES));
+    xfer_count = fpga_xfer_data_to_card64(my_fpga_xDMA_ptr, AXI_MM_DDR4_C1, (char*)a_in_ptr, (GLOBAL_DATA_IN_SIZE_BYTES));
     //cout << "Waiting for input\n";
     //cin >> DBG__SRAI_tempvar_1; 
     /* Write to PR_HLS Address offset registers to set the location in Memory where Input Data and Output results are stored */
-    auto start_t = chrono::high_resolution_clock::now();
-    t0 = getticks();
-    fpga_run_NORTH_PR64(my_fpga_ptr, AXI_MM_DDR4_BASE_NORTH_in_C0, AXI_MM_DDR4_BASE_NORTH_results_C0, (NUMBER_OF_DATA_SETS));
-    compute_itn_count = fpga_check_compute_done_NORTH_PR(my_fpga_ptr);
-    t1 = getticks();
-    tick_elsped_time_HW = elapsed(t1,t0); 
-    auto stop_t = chrono::high_resolution_clock::now();
-    //cout << "compute_itn_count = " << compute_itn_count << endl;
+    start_t = chrono::high_resolution_clock::now();
+    fpga_run_NORTH_PR(my_fpga_xDMA_ptr, AXI_MM_DDR4_C1, AXI_MM_DDR4_results_C1, (NUMBER_OF_DATA_SETS));
+    compute_itn_count = fpga_check_compute_done_NORTH_PR(my_fpga_xDMA_ptr);
+    stop_t = chrono::high_resolution_clock::now();
+    cout << "compute_itn_count = " << compute_itn_count << endl;
 
     /* Read Results from DDR4 output (results) area */
-    xfer_count = fpga_xfer_data_from_card64(my_fpga_xDMA_ptr, AXI_MM_DDR4_BASE_NORTH_results_C0, (char*)y_out_ptr, (GLOBAL_DATA_OUT_SIZE_BYTES));
+    xfer_count = fpga_xfer_data_from_card64(my_fpga_xDMA_ptr, AXI_MM_DDR4_results_C1, (char*)y_out_ptr, (GLOBAL_DATA_OUT_SIZE_BYTES));
 
-
-    //auto stop_t = chrono::high_resolution_clock::now();
-    chrono::duration<double> elapsed_hi_res = stop_t - start_t ;
+    //stop_t = chrono::high_resolution_clock::now();
+    elapsed_hi_res = stop_t - start_t ;
     high_res_elapsed_time = elapsed_hi_res.count();
     high_res_elapsed_time_HW = high_res_elapsed_time;
     cout << "HLS Execution time =  " <<  high_res_elapsed_time << "s\n";
     cout << "HLS THroughput =  " <<  (GLOBAL_DATA_OUT_SIZE_BYTES/high_res_elapsed_time) << " Bytes/s\n";
-    endTime = getCPUTime();
-    fpga_clean(my_fpga_xDMA_ptr, my_fpga_ptr);
+    fpga_clean(my_fpga_xDMA_ptr);
 
 #endif
     int MAX_ITERATION_to_print = 1;
@@ -196,7 +210,9 @@ int main(int argc, char** argv)
     }
     random_NUMBER_OF_DATA_SETS = (uint32_t)(rand() % NUMBER_OF_DATA_SETS); 
 
+    cout << "Verifying results ..............\n";
     RESULT_SUCESSFULL = 1;
+    int dbg_count = 0;
     for (int j = 0 ; j < NUMBER_OF_DATA_SETS; j++) {
     data_t fn_in_arg0[NUM_ELEMENTS_PER_SDX_DATA_BEAT][NUM_INPUT_KERNEL_FUNCTION_ARGUMENTS];
     data_t fn_out_arg0[NUM_ELEMENTS_PER_SDX_DATA_BEAT][NUM_OUTPUT_KERNEL_FUNCTION_ARGUMENTS];
@@ -217,14 +233,12 @@ int main(int argc, char** argv)
                 if (j == random_NUMBER_OF_DATA_SETS & ( (index == random_index[0]) | (index == random_index[1]) | (index == random_index[2]) | (index == random_index[3]) )) {
                     //printf ("Input A = %f Inout_B = %f Output Y = %f \n", (fn_in_arg0[index][0]),(fn_in_arg0[index][1]),(fn_out_arg0[index][0]));
                 }
-                auto start_t = chrono::high_resolution_clock::now();
-                t0 = getticks();
+                start_t = chrono::high_resolution_clock::now();
                 sw_result = ((fn_in_arg0[index][0])*(fn_in_arg0[index][1]));
-                t1 = getticks();
-                auto stop_t = chrono::high_resolution_clock::now();
-                chrono::duration<double> elapsed_hi_res = stop_t - start_t ;
+                stop_t = chrono::high_resolution_clock::now();
+                elapsed_hi_res = stop_t - start_t ;
                 high_res_elapsed_time += elapsed_hi_res.count();
-                tick_elsped_time_SW += elapsed(t1,t0); 
+                dbg_count++;
                 if (fabs(sw_result - fn_out_arg0[index][0]) < ZERO_f){
                     RESULT_SUCESSFULL &= 1;
                 } else {
@@ -243,22 +257,19 @@ int main(int argc, char** argv)
     }
 
     cout << "Gain (SW_time/HW_time)  =  " << (high_res_elapsed_time_SW/high_res_elapsed_time_HW) << endl;
-    cout << "Tick  (SW_time)  =  " << (tick_elsped_time_SW) << endl;
-    cout << "Tick  (HW_time)  =  " << (tick_elsped_time_HW) << endl;
-    cout << "RDTSC based Gain (tick_elsped_time_SW/tick_elsped_time_HW)  =  " << (tick_elsped_time_SW/tick_elsped_time_HW) << endl;
     cout << "Highres  (SW_time)  =  " << (high_res_elapsed_time_SW) << endl;
-    printf ("%d :: Software Number of operations per sec = %f \n",(NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE), (NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE)/high_res_elapsed_time_SW);
-    printf ("%d :: Hawdware Number of operations per sec = %f \n",(NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE), (NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE)/high_res_elapsed_time_HW);
+    printf ("%d :: Software Number of operations per sec = %f \n",(NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE*NUM_ELEMENTS_PER_SDX_DATA_BEAT), (NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE*NUM_ELEMENTS_PER_SDX_DATA_BEAT)/high_res_elapsed_time_SW);
+    printf ("%d :: Hawdware Number of operations per sec = %f \n",(NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE*NUM_ELEMENTS_PER_SDX_DATA_BEAT), (NUMBER_OF_DATA_SETS*SDX_CU_LOCAL_SIZE*NUM_ELEMENTS_PER_SDX_DATA_BEAT)/high_res_elapsed_time_HW);
 
     printf ("-----------------------------------------------------\n");
 
     cout << "Results verifcation complete " << endl;
 
+    cout << "DBG_ COunt = " << dec << dbg_count << endl;
     // ------------ Clean -----------------------
-    elspsed_time = (clock() - elspsed_time);
-    delete [] a_in_head_c;
-    //free(a_in_ptr_c_POSIX);
-    delete [] y_out_head_c;
-    printf (" Total elapsed Time for algorithm = %1f sec\n", elspsed_time);
+    //delete [] a_in_head_c;
+    free(a_in_ptr_c_POSIX);
+    //delete [] y_out_head_c;
+    free(y_out_ptr_c_POSIX);
     return 0;
 }

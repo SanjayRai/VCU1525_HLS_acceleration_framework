@@ -9,7 +9,7 @@ void sdx_cppKernel_top(sdx_data_t *a_in, sdx_data_t *y_out, unsigned int NUMBER_
 #pragma HLS INTERFACE s_axilite port=a_in bundle=control
 #pragma HLS INTERFACE s_axilite port=y_out bundle=control
 #pragma HLS INTERFACE s_axilite port=NUMBER_OF_DATA_SETS_t bundle=control
-#pragma HLS INTERFACE ap_ctrl_hs port=return
+#pragma HLS INTERFACE s_axilite port=return bundle=control
 
 
     static unsigned int ker_count = 0;
