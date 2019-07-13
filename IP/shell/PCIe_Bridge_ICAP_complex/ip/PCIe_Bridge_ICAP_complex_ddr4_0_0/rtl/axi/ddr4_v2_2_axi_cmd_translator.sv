@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_cmd_translator.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_cmd_translator.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -67,7 +67,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_cmd_translator #
+module ddr4_v2_2_7_axi_cmd_translator #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -177,7 +177,7 @@ assign incr_next        = (axburst[1]) ? 1'b0 : next;
 
 assign wrap_next        = (axburst[1]) ? next : 1'b0;
 
-ddr4_v2_2_4_axi_incr_cmd #
+ddr4_v2_2_7_axi_incr_cmd #
 (
   .C_AXI_ADDR_WIDTH  (C_AXI_ADDR_WIDTH),
   .C_MC_ADDR_WIDTH  (C_MC_ADDR_WIDTH),
@@ -201,7 +201,7 @@ axi_mc_incr_cmd_0
   .next_pending  ( incr_next_pending  ) 
 );
 
-ddr4_v2_2_4_axi_wrap_cmd #
+ddr4_v2_2_7_axi_wrap_cmd #
 (
   .C_AXI_ADDR_WIDTH (C_AXI_ADDR_WIDTH),
   .C_MC_ADDR_WIDTH  (C_MC_ADDR_WIDTH),

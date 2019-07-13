@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//  (c) Copyright 2013-2015 Xilinx, Inc. All rights reserved.
+//  (c) Copyright 2013-2018 Xilinx, Inc. All rights reserved.
 //
 //  This file contains confidential and proprietary information
 //  of Xilinx, Inc. and is protected under U.S. and
@@ -394,7 +394,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtye4_channel_wrapper #(
 
 
 
-gtwizard_ultrascale_v1_7_3_gtye4_channel #(
+gtwizard_ultrascale_v1_7_6_gtye4_channel #(
   .GTYE4_CHANNEL_ACJTAG_DEBUG_MODE              (1'b0),
   .GTYE4_CHANNEL_ACJTAG_MODE                    (1'b0),
   .GTYE4_CHANNEL_ACJTAG_RESET                   (1'b0),

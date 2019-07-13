@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_periodic.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc_periodic.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Feb 6 2014
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_periodic module
+//                   ddr4_v2_2_7_mc_periodic module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_periodic #(parameter
+module ddr4_v2_2_7_mc_periodic #(parameter
     TCQ    = 0.1
 )(
     input clk,

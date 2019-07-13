@@ -79,6 +79,10 @@
     `ifndef CALIB_SIM
        `define SIMULATION
      `endif
+`elsif _VCP
+    `ifndef CALIB_SIM
+       `define SIMULATION
+     `endif
 `endif
 `timescale 1ps/1ps
 
@@ -92,6 +96,7 @@ module  PCIe_Bridge_ICAP_complex_ddr4_0_0_ddr4_cal_riu #
    ,input                          riu_clk_rst
 
    ,input   [15:0] riu2clb_vld_read_data
+   ,input sample_gts
    ,input   [7:0] riu_nibble_8
    ,input [5:0]                    riu_addr_cal
 
@@ -267,6 +272,21 @@ always @(posedge riu_clk) begin
      any_clb2riu_wr_wait <= 0;
 end
 
+  reg sample_gts_riu;
+  reg sample_gts_flag;
+  always @ (posedge riu_clk) begin
+      sample_gts_riu <= sample_gts;
+  end
+
+   always @ (posedge riu_clk) begin
+      if (reset_ub_riuclk) begin
+        sample_gts_flag <= 1'b0;
+      end else if(riu_rd_val_r2 & (riu_addr_cal[5:0] == 0)) begin
+        sample_gts_flag <= 1'b1;
+      end else if(sample_gts_riu) begin
+        sample_gts_flag <= 1'b0;
+      end
+    end
 
   always @ (posedge riu_clk) begin
     if (ub_rst_adr_hit) // Microblaze reset access
@@ -274,7 +294,7 @@ end
     else if (riu_access && any_clb2riu_wr_wait) // RIU Write
       io_ready_ub <= #TCQ &riu2clb_valid_riuclk;
     else if (riu_access) // RIU Read
-      io_ready_ub <= #TCQ riu_rd_val_r2;
+      io_ready_ub <= #TCQ (riu_addr_cal[5:0] == 0) ? (sample_gts_flag & sample_gts_riu) : riu_rd_val_r2;
     else
       io_ready_ub <= #TCQ io_ready_riuclk;
   end

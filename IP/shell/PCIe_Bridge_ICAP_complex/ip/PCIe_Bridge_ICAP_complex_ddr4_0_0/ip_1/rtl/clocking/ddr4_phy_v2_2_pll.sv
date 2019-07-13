@@ -171,7 +171,7 @@ module ddr4_phy_v2_2_0_pll #
   generate
   genvar i;
     for (i = 0; i < PLL_WIDTH; i++) begin : plle_loop
-      if (C_FAMILY == "zynquplus" || C_FAMILY == "kintexuplus" || C_FAMILY == "virtexuplus" || C_FAMILY == "virtexuplusHBM") begin: gen_plle4
+      if (C_FAMILY == "zynquplus" || C_FAMILY == "kintexuplus" || C_FAMILY == "virtexuplus" || C_FAMILY == "virtexuplusHBM" || C_FAMILY == "virtexuplus58g") begin: gen_plle4
       PLLE4_ADV #(
         .COMPENSATION       ("INTERNAL"),
         .CLKFBOUT_MULT      (CLKFBOUT_MULT_PLL),

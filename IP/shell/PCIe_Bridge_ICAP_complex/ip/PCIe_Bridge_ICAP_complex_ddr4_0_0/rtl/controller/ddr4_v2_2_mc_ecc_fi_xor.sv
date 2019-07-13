@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_ecc_fi_xor.xv
+//  /   /         Filename           : ddr4_v2_2_7_mc_ecc_fi_xor.xv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Tue May 13 2014
 //  \___\/\___\
@@ -59,7 +59,7 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_ecc_fi_xor module
+//                   ddr4_v2_2_7_mc_ecc_fi_xor module
 // Reference        :
 // Revision History :
 //*****************************************************************************
@@ -67,7 +67,7 @@
 `timescale 1ns/100ps
 `default_nettype none
 
-module ddr4_v2_2_4_mc_ecc_fi_xor #
+module ddr4_v2_2_7_mc_ecc_fi_xor #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions

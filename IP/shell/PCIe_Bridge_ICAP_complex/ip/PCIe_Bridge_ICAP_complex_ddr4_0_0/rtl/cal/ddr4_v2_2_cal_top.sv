@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_top.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_top.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/21 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,7 +58,7 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                    ddr4_v2_2_4_cal_top module
+//                    ddr4_v2_2_7_cal_top module
 // Reference        :
 // Revision History :
 //*****************************************************************************
@@ -66,7 +66,7 @@
 `timescale 1ns/100ps
 `define RECONFIG_INIT_RESET_1
 
-module ddr4_v2_2_4_cal_top #
+module ddr4_v2_2_7_cal_top #
  (
     parameter         PING_PONG_PHY  = 1
    ,parameter integer ABITS          = 14
@@ -99,6 +99,7 @@ module ddr4_v2_2_4_cal_top #
    ,parameter         ODTNOP         = 16'h0000
    ,parameter         SELF_REFRESH   = 1'b0
    ,parameter         SAVE_RESTORE   = 1'b0
+   ,parameter         RESTORE_CRC    = 1'b0
 
    ,parameter         MR0            = 13'bxxxxxxxxxxxx
    ,parameter         MR1            = 13'bxxxxxxxxxxxx
@@ -168,6 +169,7 @@ module ddr4_v2_2_4_cal_top #
    ,parameter         EARLY_WR_DATA  = "OFF"
    ,parameter         DRAM_WIDTH     = 8
    ,parameter         RANKS          = 1
+   ,parameter         RNK_BITS       = (RANKS <= 4) ? 2 : 3
    ,parameter         nCK_PER_CLK    = 4
    ,parameter         RTL_VERSION    = 7
    ,parameter         MEM_CODE       = 0
@@ -237,7 +239,7 @@ module ddr4_v2_2_4_cal_top #
    ,input            [PING_PONG_PHY-1:0]      winRmw 
    ,input                  gt_data_ready 
    ,input       [PING_PONG_PHY*DBAW-1:0] winBuf 
-   ,input            [PING_PONG_PHY*2-1:0] winRank 
+   ,input            [PING_PONG_PHY*RNK_BITS-1:0] winRank 
 
    ,output reg [DBYTES*8*8-1:0] rdData
    ,output           [PING_PONG_PHY*DBAW-1:0] rdDataAddr 
@@ -307,7 +309,7 @@ module ddr4_v2_2_4_cal_top #
    ,output        [DBYTES*7-1:0] ch1_mcal_clb2phy_odt_low
 
    ,output        [DBYTES*7-1:0] mcal_rd_vref_value
-
+   ,output reg    sample_gts
 
    ,input   [DBYTES*8-1:0] mcal_DMIn_n
    ,input [DBYTES*8*8-1:0] mcal_DQIn
@@ -346,6 +348,7 @@ module ddr4_v2_2_4_cal_top #
    ,output wire [7:0]  cal_error_bit
    ,output wire [7:0]  cal_error_nibble
    ,output wire [3:0]  cal_error_code
+   ,output             cal_crc_error
    
    ,input                     traffic_wr_done
    ,input                     traffic_status_err_bit_valid
@@ -547,7 +550,7 @@ wire [1:0] calRank;
 wire [DBYTES-1:0] cal_oe_dis_low;
 wire [DBYTES-1:0] cal_oe_dis_upp;
 
-reg [PING_PONG_PHY*2-1:0] mcalRank;
+reg [PING_PONG_PHY*RNK_BITS-1:0] mcalRank;
 reg [PING_PONG_PHY-1:0]      mcalRdCAS;
 reg [PING_PONG_PHY-1:0]      mcalWrCAS;
 reg [PING_PONG_PHY*2-1:0] mcalCasSlot;
@@ -966,7 +969,7 @@ reg io_addr_strobe_lvl_r2;
     io_addr_strobe  <= #TCQ io_addr_strobe_lvl_r1 ^ io_addr_strobe_lvl_r2;
   end
 
-ddr4_v2_2_4_cal #
+ddr4_v2_2_7_cal #
 (
     .ABITS              (ABITS)
    ,.BABITS             (BABITS)
@@ -993,10 +996,12 @@ ddr4_v2_2_4_cal #
    ,.DBYTES             (DBYTES)
    ,.SAVE_RESTORE       (SAVE_RESTORE)
    ,.SELF_REFRESH       (SELF_REFRESH)
+   ,.RESTORE_CRC        (RESTORE_CRC)
 
    ,.MEMORY_CONFIGURATION (MEMORY_CONFIGURATION)
    ,.DRAM_WIDTH         (DRAM_WIDTH)
    ,.RANKS              (RANKS)
+   ,.RNK_BITS           (RNK_BITS)
    ,.nCK_PER_CLK        (nCK_PER_CLK)
    ,.RTL_VERSION        (RTL_VERSION)
    ,.MEM_CODE           (MEM_CODE)
@@ -1192,6 +1197,7 @@ ddr4_v2_2_4_cal #
    ,.cal_warning            (cal_warning)
    ,.cal_warning_nibble     (cal_warning_nibble)
    ,.cal_warning_code       (cal_warning_code)
+   ,.cal_crc_error          (cal_crc_error)
 
    ,.sl_iport0              (sl_iport0)
    ,.sl_oport0              (sl_oport0)
@@ -1538,7 +1544,31 @@ generate
    endcase
 endgenerate
 
-ddr4_v2_2_4_cal_pi # (
+  wire phy_rden_or  = |mcal_clb2phy_rden_upp[3:0];
+  wire phy_rden_and = &mcal_clb2phy_rden_upp[3:0];
+
+  reg [11:0] phy_rden_or_stg;
+  reg [11:0] phy_rden_and_stg;
+    
+  always @ (posedge clk) begin
+     phy_rden_or_stg <= {phy_rden_or_stg, phy_rden_or};
+     phy_rden_and_stg <= {phy_rden_and_stg, phy_rden_and};
+  end
+
+  wire [11:0] vio_phy_rden_or_stg = 12'b1111_0000_0111;
+  wire [11:0] vio_phy_rden_and_stg = 12'b0000_1111_1000;
+
+  wire [11:0] phy_rden_or_stg_gt = phy_rden_or_stg & ~vio_phy_rden_or_stg;
+  wire [11:0] phy_rden_and_stg_gt = phy_rden_and_stg | ~vio_phy_rden_and_stg;
+
+  wire phy_rden_no_rd = ~(|phy_rden_or_stg_gt);
+  wire phy_rden_all_rd = &phy_rden_and_stg_gt;
+
+  always @ (posedge clk) begin
+    sample_gts <= phy_rden_no_rd | phy_rden_all_rd;
+  end
+
+ddr4_v2_2_7_cal_pi # (
     .DBAW             (DBAW)
    ,.DBYTES           (DBYTES)
    ,.DBYTES_PI        (CH0_DBYTES_PI)
@@ -1649,7 +1679,7 @@ if (NUM_CHANNELS == 1) begin
 end
 else begin
 
-ddr4_v2_2_4_cal_pi # (
+ddr4_v2_2_7_cal_pi # (
    .DBAW             (DBAW)
    ,.DBYTES           (DBYTES)
    ,.DBYTES_PI        (CH1_DBYTES_PI)
@@ -1722,9 +1752,9 @@ ddr4_v2_2_4_cal_pi # (
    ,.winInjTxn            (winInjTxn[1]) 
    ,.winRmw               (winRmw[1]) 
    ,.winBuf               (winBuf[PING_PONG_PHY*DBAW-1:DBAW]) 
-   ,.winRank              (mcalRank[3:2]) 
+   ,.winRank              (mcalRank[RNK_BITS+1:RNK_BITS]) 
    ,.calRank              (calRank)
-   ,.mcwinRank            (winRank[3:2]) 
+   ,.mcwinRank            (winRank[RNK_BITS+1:RNK_BITS]) 
    ,.wrCAS                (mcalWrCAS[1]) 
    ,.calwrCAS             (calWrCAS)
    ,.mcwrCAS              (mcWrCAS[1]) 
@@ -1754,7 +1784,7 @@ always @(posedge clk) if (~rst_r1) assert property (~a_mc_cal_tCWL_ovf);
 
 //synthesis translate_on
 
-`include "ddr4_v2_2_4_cal_assert.vh"
+`include "ddr4_v2_2_7_cal_assert.vh"
 //synthesis translate_off 
 `ifdef DIS_GT_ASSERT
 

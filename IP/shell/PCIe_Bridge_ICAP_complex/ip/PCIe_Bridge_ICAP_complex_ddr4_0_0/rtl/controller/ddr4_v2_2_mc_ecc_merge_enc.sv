@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_mc_ecc_merge_enc.sv
+//  /   /         Filename              : ddr4_v2_2_7_mc_ecc_merge_enc.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          : Tue May 13 2014
 //  \___\/\___\
@@ -59,14 +59,14 @@
 //Device            : UltraScale
 //Design Name       : DDR4 SDRAM & DDR3 SDRAM
 //Purpose           :
-//                   ddr4_v2_2_4_mc_ecc_merge_enc module
+//                   ddr4_v2_2_7_mc_ecc_merge_enc module
 //Reference         :
 //Revision History  :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_ecc_merge_enc
+module ddr4_v2_2_7_mc_ecc_merge_enc
   #(
     parameter TCQ = 100,
     parameter PAYLOAD_WIDTH         = 64,

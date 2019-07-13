@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2018 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2019 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:ip:axi_register_slice:2.1
-// IP Revision: 16
+// IP Revision: 19
 
 `timescale 1ns/1ps
 
@@ -96,10 +96,10 @@ module PCIe_Bridge_ICAP_complex_m02_regslice_0 (
   m_axi_rready
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET ARESETN" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET ARESETN, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK CLK" *)
 input wire aclk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST, POLARITY ACTIVE_LOW, TYPE INTERCONNECT" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST, POLARITY ACTIVE_LOW, INSERT_VIP 0, TYPE INTERCONNECT" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST RST" *)
 input wire aresetn;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI AWADDR" *)
@@ -139,7 +139,7 @@ output wire [1 : 0] s_axi_rresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI RVALID" *)
 output wire s_axi_rvalid;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXI, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 125000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, NUM_READ_T\
-HREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
+HREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI RREADY" *)
 input wire s_axi_rready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI AWADDR" *)
@@ -179,11 +179,11 @@ input wire [1 : 0] m_axi_rresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI RVALID" *)
 input wire m_axi_rvalid;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXI, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 125000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, NUM_READ_T\
-HREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
+HREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI RREADY" *)
 output wire m_axi_rready;
 
-  axi_register_slice_v2_1_16_axi_register_slice #(
+  axi_register_slice_v2_1_19_axi_register_slice #(
     .C_FAMILY("virtexuplus"),
     .C_AXI_PROTOCOL(2),
     .C_AXI_ID_WIDTH(1),
@@ -218,26 +218,26 @@ output wire m_axi_rready;
     .C_PIPELINES_MIDDLE_R(0)
   ) inst (
     .aclk(aclk),
-    .aclk2x(1'H0),
+    .aclk2x(1'B0),
     .aresetn(aresetn),
-    .s_axi_awid(1'H0),
+    .s_axi_awid(1'B0),
     .s_axi_awaddr(s_axi_awaddr),
-    .s_axi_awlen(8'H00),
-    .s_axi_awsize(3'H0),
-    .s_axi_awburst(2'H1),
-    .s_axi_awlock(1'H0),
-    .s_axi_awcache(4'H0),
+    .s_axi_awlen(8'B0),
+    .s_axi_awsize(3'H00000002),
+    .s_axi_awburst(2'B1),
+    .s_axi_awlock(1'B0),
+    .s_axi_awcache(4'B0),
     .s_axi_awprot(s_axi_awprot),
-    .s_axi_awregion(4'H0),
-    .s_axi_awqos(4'H0),
-    .s_axi_awuser(1'H0),
+    .s_axi_awregion(4'B0),
+    .s_axi_awqos(4'B0),
+    .s_axi_awuser(1'B0),
     .s_axi_awvalid(s_axi_awvalid),
     .s_axi_awready(s_axi_awready),
-    .s_axi_wid(1'H0),
+    .s_axi_wid(1'B0),
     .s_axi_wdata(s_axi_wdata),
     .s_axi_wstrb(s_axi_wstrb),
-    .s_axi_wlast(1'H1),
-    .s_axi_wuser(1'H0),
+    .s_axi_wlast(1'B0),
+    .s_axi_wuser(1'B0),
     .s_axi_wvalid(s_axi_wvalid),
     .s_axi_wready(s_axi_wready),
     .s_axi_bid(),
@@ -245,17 +245,17 @@ output wire m_axi_rready;
     .s_axi_buser(),
     .s_axi_bvalid(s_axi_bvalid),
     .s_axi_bready(s_axi_bready),
-    .s_axi_arid(1'H0),
+    .s_axi_arid(1'B0),
     .s_axi_araddr(s_axi_araddr),
-    .s_axi_arlen(8'H00),
-    .s_axi_arsize(3'H0),
-    .s_axi_arburst(2'H1),
-    .s_axi_arlock(1'H0),
-    .s_axi_arcache(4'H0),
+    .s_axi_arlen(8'B0),
+    .s_axi_arsize(3'H00000002),
+    .s_axi_arburst(2'B1),
+    .s_axi_arlock(1'B0),
+    .s_axi_arcache(4'B0),
     .s_axi_arprot(s_axi_arprot),
-    .s_axi_arregion(4'H0),
-    .s_axi_arqos(4'H0),
-    .s_axi_aruser(1'H0),
+    .s_axi_arregion(4'B0),
+    .s_axi_arqos(4'B0),
+    .s_axi_aruser(1'B0),
     .s_axi_arvalid(s_axi_arvalid),
     .s_axi_arready(s_axi_arready),
     .s_axi_rid(),
@@ -285,9 +285,9 @@ output wire m_axi_rready;
     .m_axi_wuser(),
     .m_axi_wvalid(m_axi_wvalid),
     .m_axi_wready(m_axi_wready),
-    .m_axi_bid(1'H0),
+    .m_axi_bid(1'B0),
     .m_axi_bresp(m_axi_bresp),
-    .m_axi_buser(1'H0),
+    .m_axi_buser(1'B0),
     .m_axi_bvalid(m_axi_bvalid),
     .m_axi_bready(m_axi_bready),
     .m_axi_arid(),
@@ -303,11 +303,11 @@ output wire m_axi_rready;
     .m_axi_aruser(),
     .m_axi_arvalid(m_axi_arvalid),
     .m_axi_arready(m_axi_arready),
-    .m_axi_rid(1'H0),
+    .m_axi_rid(1'B0),
     .m_axi_rdata(m_axi_rdata),
     .m_axi_rresp(m_axi_rresp),
-    .m_axi_rlast(1'H1),
-    .m_axi_ruser(1'H0),
+    .m_axi_rlast(1'B0),
+    .m_axi_ruser(1'B0),
     .m_axi_rvalid(m_axi_rvalid),
     .m_axi_rready(m_axi_rready)
   );

@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_w_upsizer.sv
+//  /   /         Filename           : ddr4_v2_2_7_w_upsizer.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -69,7 +69,7 @@
 `timescale 1ps/1ps
 
 
-module ddr4_v2_2_4_w_upsizer #
+module ddr4_v2_2_7_w_upsizer #
   (
    parameter         C_FAMILY                         = "rtl", 
                        // FPGA Family. Current version: virtex6 or spartan6.
@@ -345,7 +345,7 @@ module ddr4_v2_2_4_w_upsizer #
       
       // Optimize next word address wrap branch of expression.
       //
-      ddr4_v2_2_4_comparator_sel_static #
+      ddr4_v2_2_7_comparator_sel_static #
         (
          .C_FAMILY(C_FAMILY),
          .C_VALUE({C_M_AXI_BYTES_LOG{1'b0}}),
@@ -361,7 +361,7 @@ module ddr4_v2_2_4_w_upsizer #
          
       assign sel_word_complete_next_wrap = ~cmd_fix & ~cmd_complete_wrap;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_inst
@@ -373,7 +373,7 @@ module ddr4_v2_2_4_w_upsizer #
          
       assign sel_word_complete_next_wrap_qual = cmd_valid & ~store_in_wrap_buffer_enabled;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_valid_inst
@@ -383,7 +383,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(word_complete_next_wrap_qual)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_qual_inst
@@ -393,7 +393,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(word_complete_next_wrap_valid)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_pop_inst
@@ -405,7 +405,7 @@ module ddr4_v2_2_4_w_upsizer #
          
       assign sel_word_complete_next_wrap_stall = ~M_AXI_WREADY_I;
       
-      ddr4_v2_2_4_carry_latch_and #
+      ddr4_v2_2_7_carry_latch_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_stall_inst
@@ -415,7 +415,7 @@ module ddr4_v2_2_4_w_upsizer #
          .O(word_complete_next_wrap_stall)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_last_inst
@@ -429,7 +429,7 @@ module ddr4_v2_2_4_w_upsizer #
       //
       assign sel_last_word = ~cmd_fix;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) last_word_inst_2
@@ -441,7 +441,7 @@ module ddr4_v2_2_4_w_upsizer #
       
       assign sel_word_complete_rest = cmd_fix | ~cmd_modified;
       
-      ddr4_v2_2_4_carry_or #
+      ddr4_v2_2_7_carry_or #
         (
          .C_FAMILY(C_FAMILY)
          ) pop_si_data_inst
@@ -453,7 +453,7 @@ module ddr4_v2_2_4_w_upsizer #
       
       assign sel_word_complete_rest_qual = cmd_valid & ~store_in_wrap_buffer_enabled;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_valid_inst
@@ -463,7 +463,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(word_complete_rest_qual)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_qual_inst
@@ -473,7 +473,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(word_complete_rest_valid)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_pop_inst
@@ -485,7 +485,7 @@ module ddr4_v2_2_4_w_upsizer #
          
       assign sel_word_complete_rest_stall = ~M_AXI_WREADY_I;
       
-      ddr4_v2_2_4_carry_latch_and #
+      ddr4_v2_2_7_carry_latch_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_stall_inst
@@ -495,7 +495,7 @@ module ddr4_v2_2_4_w_upsizer #
          .O(word_complete_rest_stall)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_last_inst
@@ -911,7 +911,7 @@ module ddr4_v2_2_4_w_upsizer #
     end else begin : USE_FPGA_LAST_WORD
       wire last_beat_curr_word;
       
-      ddr4_v2_2_4_comparator_sel_static #
+      ddr4_v2_2_7_comparator_sel_static #
         (
          .C_FAMILY(C_FAMILY),
          .C_VALUE(8'b0),
@@ -925,7 +925,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(last_beat)
          );
       
-      ddr4_v2_2_4_comparator_sel #
+      ddr4_v2_2_7_comparator_sel #
         (
          .C_FAMILY(C_FAMILY),
          .C_DATA_WIDTH(C_M_AXI_BYTES_LOG)
@@ -939,7 +939,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(last_beat_curr_word)
          );
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) last_word_inst
@@ -979,7 +979,7 @@ module ddr4_v2_2_4_w_upsizer #
     end else begin : USE_FPGA_USE_WRAP
       wire last_word_carry;  
     
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) last_word_inst2
@@ -989,7 +989,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(last_word_carry)
          );
 
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) last_word_inst3
@@ -999,7 +999,7 @@ module ddr4_v2_2_4_w_upsizer #
          .COUT(last_word_extra_carry)
          );
 
-      ddr4_v2_2_4_carry_latch_and #
+      ddr4_v2_2_7_carry_latch_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_stall_inst

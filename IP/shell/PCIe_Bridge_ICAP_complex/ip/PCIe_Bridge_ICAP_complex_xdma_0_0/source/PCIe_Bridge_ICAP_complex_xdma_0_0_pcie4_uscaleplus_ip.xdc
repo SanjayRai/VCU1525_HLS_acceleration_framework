@@ -98,6 +98,16 @@
 #create_clock -period 10 [get_ports sys_clk]
 #create_clock -period 10 [get_ports sys_clk_gt]
 #
+
 ###############################################################################
 # End
-###############################################################################
+##############################################################################
+#create_waiver -internal -scope -id "TIMING-1" -user "xdma" -tag "1019576" -desc " TIMING-1 wavied" 
+#create_waiver -internal -scope -id "TIMING-3" -user "xdma" -tag "1019576" -desc " TIMING-3 wavied" 
+#create_waiver -internal -scope -id "TIMING-6" -user "xdma" -tag "1019576" -desc " TIMING-6 wavied" 
+#create_waiver -internal -scope -id "TIMING-7" -user "xdma" -tag "1019576" -desc " TIMING-7 wavied"
+#create_waiver -internal -scope -id "TIMING-18" -user "xdma" -tag "1019576" -desc " TIMING-18 wavied"
+#create_waiver -internal -scope -id "LUTAR-1" -user "xdma" -tag "1019576" -desc " LUTAR-1 wavied"
+
+
+

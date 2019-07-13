@@ -51,7 +51,7 @@
 // \   \   \/     Version            : 1.0
 //  \   \         Application        : MIG
 //  /   /         Filename           : PCIe_Bridge_ICAP_complex_ddr4_0_0_phy_ddr4.sv
-// /___/   /\     Date Last Modified : $Date: 2018/02/11 $
+// /___/   /\     Date Last Modified : $Date: 2019/04/29 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
 //
@@ -81,6 +81,10 @@
     `ifndef CALIB_SIM
        `define SIMULATION
      `endif
+`elsif _VCP
+    `ifndef CALIB_SIM
+       `define SIMULATION
+     `endif
 `endif
 
 module PCIe_Bridge_ICAP_complex_ddr4_0_0_phy_ddr4 #
@@ -96,6 +100,7 @@ module PCIe_Bridge_ICAP_complex_ddr4_0_0_phy_ddr4 #
    ,parameter integer CS_WIDTH             = 1
    ,parameter integer ODT_WIDTH            = 1
    ,parameter         DRAM_TYPE            = "DDR4"
+   ,parameter         EN_LVAUX             = "FALSE"
    ,parameter integer DQ_WIDTH             = 72
    ,parameter integer DQS_WIDTH            = 18
    ,parameter integer DM_WIDTH             = 9
@@ -477,6 +482,7 @@ wire [BYTES*1-1:0]           riu_bytes;                      //riu_bytes cal fro
 
   //Generate one hot riu_nibble_sel;
 integer n;
+reg extend_nibble_sel_riu_addr_0;
 generate
     always @ (posedge riu_clk)
     begin
@@ -487,13 +493,24 @@ generate
           clb2riu_wr_en[n]          <= #TCQ 1'b0;
         end else begin
           // valid only comes with a write. If wr_en is low then do not wait for valid for nibble_sel
-          clb2riu_nibble_sel_low[n] <= #TCQ (2*n == riu_nibble) & io_addr_strobe_clb2riu_riuclk;
-          clb2riu_nibble_sel_upp[n] <= #TCQ (2*n+1 == riu_nibble)& io_addr_strobe_clb2riu_riuclk;
+          clb2riu_nibble_sel_low[n] <= #TCQ ((2*n == riu_nibble) & (io_addr_strobe_clb2riu_riuclk | extend_nibble_sel_riu_addr_0));
+          clb2riu_nibble_sel_upp[n] <= #TCQ ((2*n+1 == riu_nibble)& (io_addr_strobe_clb2riu_riuclk | extend_nibble_sel_riu_addr_0));
+          //clb2riu_nibble_sel_low[n] <= #TCQ (2*n == riu_nibble) & io_addr_strobe_clb2riu_riuclk;
+          //clb2riu_nibble_sel_upp[n] <= #TCQ (2*n+1 == riu_nibble)& io_addr_strobe_clb2riu_riuclk;
           clb2riu_wr_en[n] <= #TCQ ((2*n == riu_nibble) | (2*n+1 == riu_nibble) ) & io_addr_strobe_clb2riu_riuclk & io_write_strobe_riuclk;
         end
       end
     end
 endgenerate
+
+ always @ (posedge riu_clk) begin
+       if(riu_clk_rst_r1)
+         extend_nibble_sel_riu_addr_0 <= 1'b0;
+       else if (io_addr_strobe_clb2riu_riuclk & ~io_write_strobe_riuclk & (riu_addr_cal == 0))
+         extend_nibble_sel_riu_addr_0 <= 1'b1;
+       else if (io_addr_strobe_clb2riu_riuclk)
+         extend_nibble_sel_riu_addr_0 <= 1'b0;
+    end
 
   assign riu_bytes = riu_nibble[NIBBLE_CNT_WIDTH-1:1];
   assign riu_nibble_8 = {{riu_nibble[NIBBLE_CNT_WIDTH+1:NIBBLE_CNT_WIDTH]},{{6-NIBBLE_CNT_WIDTH}{1'b0}},riu_nibble[NIBBLE_CNT_WIDTH-1:0]};
@@ -602,6 +619,7 @@ ddr4_phy_v2_2_0_iob # (
     .BYTES          (BYTES)
    ,.IOBTYPE        (IOBTYPE)
    ,.DRAM_TYPE      (DRAM_TYPE)
+   ,.EN_LVAUX       (EN_LVAUX)
    ,.DQS_BIAS       (DQS_BIAS)
    ,.BANK_TYPE      (BANK_TYPE)
    ,.USE_DYNAMIC_DCI(USE_DYNAMIC_DCI)

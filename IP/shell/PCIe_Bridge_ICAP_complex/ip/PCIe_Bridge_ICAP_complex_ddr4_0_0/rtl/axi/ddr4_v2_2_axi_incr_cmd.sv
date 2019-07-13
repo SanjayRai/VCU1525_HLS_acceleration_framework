@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_incr_cmd.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_incr_cmd.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -73,7 +73,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_incr_cmd #
+module ddr4_v2_2_7_axi_incr_cmd #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions

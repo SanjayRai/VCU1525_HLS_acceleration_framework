@@ -46,7 +46,7 @@
 // --  
 ///////////////////////////////////////////////////////////////////////////////
 //
-// File name: ddr4_v2_2_4_axi_ctrl_reg.v     
+// File name: ddr4_v2_2_7_axi_ctrl_reg.v     
 //
 // Description: 
 // AXI Lite Controller
@@ -71,7 +71,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_ctrl_reg #
+module ddr4_v2_2_7_axi_ctrl_reg #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions

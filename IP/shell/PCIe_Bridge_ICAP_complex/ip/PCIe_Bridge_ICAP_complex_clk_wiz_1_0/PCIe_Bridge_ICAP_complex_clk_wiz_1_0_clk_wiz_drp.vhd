@@ -507,6 +507,7 @@ begin
  if (Bus2IP_Clk'event and Bus2IP_Clk='1') then
    if(Bus2IP_Rst = RESET_ACTIVE) then
     clk_mon_error_reg <= X"0000";
+    clk_mon_error_reg_sig <= X"0000"; 
     clk_mon_error_reg_d <= X"0000";
     interrupt_status_reg <= X"0000";
    else 

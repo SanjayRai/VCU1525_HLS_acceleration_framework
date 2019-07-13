@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_arb_c.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc_arb_c.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,15 +58,17 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_arb_c module
+//                   ddr4_v2_2_7_mc_arb_c module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_arb_c #(parameter
+module ddr4_v2_2_7_mc_arb_c #(parameter
     TCQ = 0.1   
+   ,RKBITS = 2
+   ,RANK_SLAB = 4
    ,S_HEIGHT = 1
    ,LR_WIDTH = 1
    ,ORDERING  = "NORM"
@@ -81,7 +83,7 @@ module ddr4_v2_2_4_mc_arb_c #(parameter
    ,output reg [1:0] win_bank_cas
    ,output reg [1:0] win_group_cas
    ,output     [LR_WIDTH-1:0] win_l_rank_cas
-   ,output reg [1:0] win_rank_cas
+   ,output reg [RKBITS-1:0] win_rank_cas
 
    ,input  [3:0] cmdRmw
    ,input  [3:0] read
@@ -94,9 +96,9 @@ module ddr4_v2_2_4_mc_arb_c #(parameter
    ,input  [7:0] cmd_bank_cas
    ,input  [7:0] cmd_group_cas
    ,input  [4*LR_WIDTH-1:0] cmd_l_rank_cas
-   ,input  [7:0] cmd_rank_cas
-   ,input  [7:0] cmdRank
-   ,input  [7:0] cmdRankP
+   ,input  [RKBITS*4-1:0] cmd_rank_cas
+   ,input  [RKBITS*4-1:0] cmdRank
+   ,input  [RKBITS*4-1:0] cmdRankP
    ,input  [3:0] preReqM
 );
 
@@ -187,26 +189,26 @@ end
 
 always @(*) begin
    preMask = 4'b0000; // ranks
-   if (preReqM[0]) preMask[cmdRankP[1:0]] = 1'b1;
-   if (preReqM[1]) preMask[cmdRankP[3:2]] = 1'b1;
-   if (preReqM[2]) preMask[cmdRankP[5:4]] = 1'b1;
-   if (preReqM[3]) preMask[cmdRankP[7:6]] = 1'b1;
+   if (preReqM[0]) preMask[cmdRankP[RKBITS*1-1:RKBITS*0]] = 1'b1;
+   if (preReqM[1]) preMask[cmdRankP[RKBITS*2-1:RKBITS*1]] = 1'b1;
+   if (preReqM[2]) preMask[cmdRankP[RKBITS*3-1:RKBITS*2]] = 1'b1;
+   if (preReqM[3]) preMask[cmdRankP[RKBITS*4-1:RKBITS*3]] = 1'b1;
 end
 
 always @(*) begin
    readM = read;
-   if (preMask[cmdRank[1:0]]) readM[0] = 1'b0;
-   if (preMask[cmdRank[3:2]]) readM[1] = 1'b0;
-   if (preMask[cmdRank[5:4]]) readM[2] = 1'b0;
-   if (preMask[cmdRank[7:6]]) readM[3] = 1'b0;
+   if (preMask[cmdRank[RKBITS*1-1:RKBITS*0]]) readM[0] = 1'b0;
+   if (preMask[cmdRank[RKBITS*2-1:RKBITS*1]]) readM[1] = 1'b0;
+   if (preMask[cmdRank[RKBITS*3-1:RKBITS*2]]) readM[2] = 1'b0;
+   if (preMask[cmdRank[RKBITS*4-1:RKBITS*3]]) readM[3] = 1'b0;
 end
 
 always @(*) begin
    wrteM = wrte;
-   if (preMask[cmdRank[1:0]]) wrteM[0] = 1'b0;
-   if (preMask[cmdRank[3:2]]) wrteM[1] = 1'b0;
-   if (preMask[cmdRank[5:4]]) wrteM[2] = 1'b0;
-   if (preMask[cmdRank[7:6]]) wrteM[3] = 1'b0;
+   if (preMask[cmdRank[RKBITS*1-1:RKBITS*0]]) wrteM[0] = 1'b0;
+   if (preMask[cmdRank[RKBITS*2-1:RKBITS*1]]) wrteM[1] = 1'b0;
+   if (preMask[cmdRank[RKBITS*3-1:RKBITS*2]]) wrteM[2] = 1'b0;
+   if (preMask[cmdRank[RKBITS*4-1:RKBITS*3]]) wrteM[3] = 1'b0;
 end
 
 always @(*) begin
@@ -250,7 +252,7 @@ always @(posedge clk) if (rst) begin
    win_bank_cas  <= #TCQ 2'b0;
    win_group_cas <= #TCQ 2'b0;
    win_l_rank_cas_int <= #TCQ '0;
-   win_rank_cas  <= #TCQ 2'b0;
+   win_rank_cas  <= #TCQ {RKBITS{1'b0}};
 end else begin:arbing
    reg       nRdSlot;
    reg [7:0] nSlotCnt;
@@ -266,7 +268,7 @@ end else begin:arbing
          win_bank_cas        <= #TCQ cmd_bank_cas[1:0];
          win_group_cas       <= #TCQ cmd_group_cas[1:0];
          win_l_rank_cas_int  <= #TCQ cmd_l_rank_cas[0*LR_WIDTH+:LR_WIDTH];
-         win_rank_cas        <= #TCQ cmd_rank_cas[1:0];
+         win_rank_cas        <= #TCQ cmd_rank_cas[RKBITS*1-1:RKBITS*0];
       end
       4'bzz1z: begin
          last <= #TCQ 1'b0;
@@ -277,7 +279,7 @@ end else begin:arbing
          win_bank_cas        <= #TCQ cmd_bank_cas[3:2];
          win_group_cas       <= #TCQ cmd_group_cas[3:2];
          win_l_rank_cas_int  <= #TCQ cmd_l_rank_cas[1*LR_WIDTH+:LR_WIDTH];
-         win_rank_cas        <= #TCQ cmd_rank_cas[3:2];
+         win_rank_cas        <= #TCQ cmd_rank_cas[RKBITS*2-1:RKBITS*1];
       end
       4'bz1zz: begin
          last <= #TCQ 1'b1;
@@ -288,7 +290,7 @@ end else begin:arbing
          win_bank_cas        <= #TCQ cmd_bank_cas[5:4];
          win_group_cas       <= #TCQ cmd_group_cas[5:4];
          win_l_rank_cas_int  <= #TCQ cmd_l_rank_cas[2*LR_WIDTH+:LR_WIDTH];
-         win_rank_cas        <= #TCQ cmd_rank_cas[5:4];
+         win_rank_cas        <= #TCQ cmd_rank_cas[RKBITS*3-1:RKBITS*2];
       end
       4'b1zzz: begin
          last <= #TCQ 1'b1;
@@ -299,7 +301,7 @@ end else begin:arbing
          win_bank_cas        <= #TCQ cmd_bank_cas[7:6];
          win_group_cas       <= #TCQ cmd_group_cas[7:6];
          win_l_rank_cas_int  <= #TCQ cmd_l_rank_cas[3*LR_WIDTH+:LR_WIDTH];
-         win_rank_cas        <= #TCQ cmd_rank_cas[7:6];
+         win_rank_cas        <= #TCQ cmd_rank_cas[RKBITS*4-1:RKBITS*3];
       end
       default:begin
          winPortEnc <= #TCQ 2'd0;
@@ -308,7 +310,7 @@ end else begin:arbing
          win_bank_cas        <= #TCQ 2'b0;
          win_group_cas       <= #TCQ 2'b0;
          win_l_rank_cas_int  <= #TCQ '0;
-         win_rank_cas        <= #TCQ 2'b0;
+         win_rank_cas        <= #TCQ {RKBITS{1'b0}};
       end
    endcase
    rdSlot <= #TCQ nRdSlot;

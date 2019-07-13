@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_r_channel.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_r_channel.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -75,7 +75,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_r_channel #
+module ddr4_v2_2_7_axi_r_channel #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -233,7 +233,7 @@ end
 assign fifo_rd_last = (C_MC_BURST_LEN == 1) ? 1'b1 : rd_last_r;
    
 // rd data fifo
-ddr4_v2_2_4_axi_fifo #
+ddr4_v2_2_7_axi_fifo #
   (
   .C_WIDTH                (P_D_WIDTH),
   .C_AWIDTH               (P_D_AWIDTH),
@@ -256,7 +256,7 @@ rd_data_fifo_0
 assign rd_data_fifo_in = {mc_app_ecc_multiple_err, mc_app_rd_data};
 
 
-ddr4_v2_2_4_axi_fifo #
+ddr4_v2_2_7_axi_fifo #
   (
   .C_WIDTH                  (P_WIDTH),
   .C_AWIDTH                 (P_AWIDTH),

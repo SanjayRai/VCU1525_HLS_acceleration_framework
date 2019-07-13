@@ -85,6 +85,10 @@
     `ifndef CALIB_SIM
        `define SIMULATION
      `endif
+`elsif _VCP
+    `ifndef CALIB_SIM
+       `define SIMULATION
+     `endif
 `endif
 
 (*
@@ -113,7 +117,7 @@
   
   PhyIP_SELF_REFRESH = "false",
   PhyIP_SAVE_RESTORE = "false",
-  
+  PhyIP_Enable_LVAUX = "false", 
   PhyIP_CLKFBOUT_MULT = "5",
   PhyIP_DIVCLK_DIVIDE = "1",
   PhyIP_CLKOUT0_DIVIDE = "5",
@@ -156,7 +160,7 @@
 
 *)
 module PCIe_Bridge_ICAP_complex_ddr4_0_0_ddr4 #
-  (
+ (
     parameter integer ADDR_WIDTH              = 17,
     parameter integer ROW_WIDTH               = 17,
     parameter integer BANK_WIDTH              = 2,
@@ -313,7 +317,7 @@ module PCIe_Bridge_ICAP_complex_ddr4_0_0_ddr4 #
     parameter AL                                = "0",
     parameter SELF_REFRESH                      = "false",
     parameter SAVE_RESTORE                      = "false",
-
+    parameter RESTORE_CRC                       = "false",
     parameter IS_CKE_SHARED                     = "false",
     parameter MEMORY_PART                       = "MTA18ASF2G72PZ-2G3",
     parameter integer COMPONENT_WIDTH           = 72,
@@ -434,7 +438,7 @@ module PCIe_Bridge_ICAP_complex_ddr4_0_0_ddr4 #
     parameter         t200us                    = 60025, // In fabric clock cycles
     parameter         t500us                    = 150061 // In fabric clock cycles
   `endif
-    )
+    ) 
    (
    input  sys_rst,
 
@@ -630,7 +634,7 @@ module PCIe_Bridge_ICAP_complex_ddr4_0_0_ddr4 #
   assign c0_ddr4_ui_clk_sync_rst = div_clk_rst_r1;
 
 
-  ddr4_v2_2_4_infrastructure #
+  ddr4_v2_2_7_infrastructure #
     (
      .CLKIN_PERIOD_MMCM   (CLKIN_PERIOD_MMCM),
      .CLKFBOUT_MULT_MMCM  (CLKFBOUT_MULT_MMCM),
@@ -683,6 +687,7 @@ PCIe_Bridge_ICAP_complex_ddr4_0_0_ddr4_mem_intfc #
      .DEVICE                (DEVICE),
      .SAVE_RESTORE          (1'b0),
      .SELF_REFRESH          (1'b0),
+     .RESTORE_CRC           (1'b0),
      .NUM_SLOT              (NUM_SLOT),
      .RANK_SLOT             (RANK_SLOT),
      .DQS_WIDTH             (DQS_WIDTH),
@@ -922,7 +927,7 @@ u_ddr4_mem_intfc
    .xsdb_rd_data          (),
    .xsdb_rdy              (),
    .dbg_out               (),
-
+   .restore_crc_error     (),
    .traffic_wr_done               (1'b0),
    .traffic_status_err_bit_valid  (1'b0),
    .traffic_status_err_type_valid (1'b0),
@@ -968,7 +973,7 @@ u_ddr4_mem_intfc
    .dbg_phy2clb_phy_rdy_upp   (),
    .cal_r0_status             ()
    );
-ddr4_v2_2_4_axi #
+ddr4_v2_2_7_axi #
   (
    .C_ECC                         (ECC),
    .C_S_AXI_ID_WIDTH              (C_S_AXI_ID_WIDTH),
@@ -1062,7 +1067,7 @@ ddr4_v2_2_4_axi #
     c0_ddr4_rd_data_phy2mc_r2 <= #TCQ c0_ddr4_rd_data_phy2mc_r1;
   end
 
-  ddr4_v2_2_4_axi_ctrl_top # (
+  ddr4_v2_2_7_axi_ctrl_top # (
     .C_S_AXI_CTRL_ADDR_WIDTH (C_S_AXI_CTRL_ADDR_WIDTH) ,
     .C_S_AXI_CTRL_DATA_WIDTH (C_S_AXI_CTRL_DATA_WIDTH) ,
     .C_S_AXI_ADDR_WIDTH      (C_S_AXI_ADDR_WIDTH) ,

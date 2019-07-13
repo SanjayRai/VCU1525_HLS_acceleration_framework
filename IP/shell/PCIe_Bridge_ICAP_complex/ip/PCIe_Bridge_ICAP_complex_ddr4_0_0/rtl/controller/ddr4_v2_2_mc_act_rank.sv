@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_act_rank.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc_act_rank.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_act_rank module
+//                   ddr4_v2_2_7_mc_act_rank module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_act_rank #(parameter
+module ddr4_v2_2_7_mc_act_rank #(parameter
     tFAW   = 500
    ,tFAW_dlr = 500
    ,tRRD_L = 500

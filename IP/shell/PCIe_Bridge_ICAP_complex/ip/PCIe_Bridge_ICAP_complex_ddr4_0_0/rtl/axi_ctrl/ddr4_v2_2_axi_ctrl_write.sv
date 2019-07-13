@@ -46,7 +46,7 @@
 // --  
 ///////////////////////////////////////////////////////////////////////////////
 //
-// File name: ddr4_v2_2_4_axi_ctrl_write.v
+// File name: ddr4_v2_2_7_axi_ctrl_write.v
 //
 // Description: AXI Lite Controller
 //
@@ -65,7 +65,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_ctrl_write #
+module ddr4_v2_2_7_axi_ctrl_write #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -136,7 +136,7 @@ assign awhandshake = awvalid & awready;
 assign whandshake = wvalid & wready;
 assign bhandshake = bvalid & bready;
 
-ddr4_v2_2_4_axi_ctrl_addr_decode #
+ddr4_v2_2_7_axi_ctrl_addr_decode #
 (
   .C_ADDR_WIDTH     ( C_ADDR_WIDTH     ) ,
   .C_NUM_REG        ( C_NUM_REG        ) ,

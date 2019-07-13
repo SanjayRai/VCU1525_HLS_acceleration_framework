@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_comparator_sel.sv
+//  /   /         Filename           : ddr4_v2_2_7_comparator_sel.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -65,7 +65,7 @@
 
 `timescale 1ps/1ps
 
-module ddr4_v2_2_4_comparator_sel #
+module ddr4_v2_2_7_comparator_sel #
   (
    parameter         C_FAMILY                         = "virtex6", 
                        // FPGA Family. Current version: virtex6 or spartan6.
@@ -149,7 +149,7 @@ module ddr4_v2_2_4_comparator_sel #
                                 v_local[bit_cnt*C_BITS_PER_LUT +: C_BITS_PER_LUT] ) & ( S == 1'b1 ) );
     
       // Instantiate each LUT level.
-      ddr4_v2_2_4_carry_and # 
+      ddr4_v2_2_7_carry_and # 
       (
        .C_FAMILY(C_FAMILY)
       ) compare_inst 

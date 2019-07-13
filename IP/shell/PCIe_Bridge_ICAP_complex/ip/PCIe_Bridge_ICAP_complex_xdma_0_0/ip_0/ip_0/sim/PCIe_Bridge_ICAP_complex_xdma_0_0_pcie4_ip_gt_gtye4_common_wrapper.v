@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//  (c) Copyright 2013-2015 Xilinx, Inc. All rights reserved.
+//  (c) Copyright 2013-2018 Xilinx, Inc. All rights reserved.
 //
 //  This file contains confidential and proprietary information
 //  of Xilinx, Inc. and is protected under U.S. and
@@ -163,7 +163,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtye4_common_wrapper (
 
 
 
-gtwizard_ultrascale_v1_7_3_gtye4_common #(
+gtwizard_ultrascale_v1_7_6_gtye4_common #(
   .GTYE4_COMMON_AEN_QPLL0_FBDIV                 (1'b1),
   .GTYE4_COMMON_AEN_QPLL1_FBDIV                 (1'b1),
   .GTYE4_COMMON_AEN_SDM0TOGGLE                  (1'b0),
@@ -259,8 +259,8 @@ gtwizard_ultrascale_v1_7_3_gtye4_common #(
   .GTYE4_COMMON_QPLL0_CFG0                      (16'b0011001100011000),
   .GTYE4_COMMON_QPLL0_CFG1                      (16'b1101000000111000),
   .GTYE4_COMMON_QPLL0_CFG1_G3                   (16'b1101000000111000),
-  .GTYE4_COMMON_QPLL0_CFG2                      (16'b0000111111000000),
-  .GTYE4_COMMON_QPLL0_CFG2_G3                   (16'b0000111111000000),
+  .GTYE4_COMMON_QPLL0_CFG2                      (16'b1000011111000000),
+  .GTYE4_COMMON_QPLL0_CFG2_G3                   (16'b1000011111000000),
   .GTYE4_COMMON_QPLL0_CFG3                      (16'b0000000100100000),
   .GTYE4_COMMON_QPLL0_CFG4                      (16'b0000000000000010),
   .GTYE4_COMMON_QPLL0_CP                        (10'b1111111111),

@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_debug_microblaze.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_debug_microblaze.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/23 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_debug_microblaze module
+//                   ddr4_v2_2_7_cal_debug_microblaze module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ps / 1ps
 
-module ddr4_v2_2_4_cal_debug_microblaze #
+module ddr4_v2_2_7_cal_debug_microblaze #
   (
    parameter CAL_STATUS_REG_SIZE = 7,
    parameter LRDIMM_CAL_SIZE     = 0,

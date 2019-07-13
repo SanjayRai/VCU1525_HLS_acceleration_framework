@@ -552,9 +552,12 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_phy_wrapper #
 
     wire        [(PHY_LANE*2)-1:0]     rate_delayed;  
 
-    assign bufg_gt_ce = rrst_n ? gt_bufgtce[0] : 1'b1;
-    assign bufg_gt_reset = rrst_n ? gt_bufgtreset[0] : 1'b0;
+    assign bufg_gt_ce = rrst_n ? gt_bufgtce[0] : 1'b1;   // else condition takes care of enablement durin perst
+    assign bufg_gt_reset = rrst_n ? gt_bufgtreset[0] : 1'b0; // else condition takes care of enablement durin perst
+
     assign PHY_TXOUTCLKSEL = 3'h5; //rst_cpllreset ? 3'h3 : 3'h5; 
+
+ 
 
    // 64-bit support for PCIe Gen4
     localparam PHY_GEN4_64BIT_EN = (PHY_GT_XCVR == "GTY64") ? "TRUE" : "FALSE";

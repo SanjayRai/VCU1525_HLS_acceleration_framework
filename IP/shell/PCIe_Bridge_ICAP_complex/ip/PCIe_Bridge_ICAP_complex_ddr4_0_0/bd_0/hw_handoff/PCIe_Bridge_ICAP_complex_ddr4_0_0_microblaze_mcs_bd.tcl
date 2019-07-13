@@ -20,7 +20,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2018.1
+set scripts_vivado_version 2019.1
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -58,7 +58,7 @@ set run_remote_bd_flow 1
 if { $run_remote_bd_flow == 1 } {
   # Set the reference directory for source file relative paths (by default 
   # the value is script directory path)
-  set origin_dir ./shell/PCIe_Bridge_ICAP_complex/ip/PCIe_Bridge_ICAP_complex_ddr4_0_0/bd_0
+  set origin_dir ./PCIe_Bridge_ICAP_complex/ip/PCIe_Bridge_ICAP_complex_ddr4_0_0/bd_0
 
   # Use origin directory path location variable, if specified in the tcl shell
   if { [info exists ::origin_dir_loc] } {
@@ -154,7 +154,9 @@ proc create_root_design { parentCell } {
 
   # Create interface ports
   set IO [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:mcsio_bus_rtl:1.0 IO ]
+
   set TRACE [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:mbtrace_rtl:2.0 TRACE ]
+
 
   # Create ports
   set Clk [ create_bd_port -dir I -type clk Clk ]
@@ -210,7 +212,7 @@ proc create_root_design { parentCell } {
  ] $lmb_bram_I
 
   # Create instance: microblaze_I, and set properties
-  set microblaze_I [ create_bd_cell -type ip -vlnv xilinx.com:ip:microblaze:10.0 microblaze_I ]
+  set microblaze_I [ create_bd_cell -type ip -vlnv xilinx.com:ip:microblaze:11.0 microblaze_I ]
   set_property -dict [ list \
    CONFIG.C_ASYNC_WAKEUP {3} \
    CONFIG.C_DEBUG_ENABLED {0} \
@@ -283,6 +285,7 @@ proc create_root_design { parentCell } {
   # Restore current instance
   current_bd_instance $oldCurInst
 
+  validate_bd_design
   save_bd_design
 }
 # End of create_root_design()

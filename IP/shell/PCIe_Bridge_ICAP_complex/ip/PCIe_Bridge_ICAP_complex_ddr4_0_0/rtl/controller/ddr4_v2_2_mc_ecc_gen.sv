@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_mc_ecc_gen.sv
+//  /   /         Filename              : ddr4_v2_2_7_mc_ecc_gen.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          : Tue May 13 2014
 //  \___\/\___\
@@ -59,7 +59,7 @@
 //Device            : UltraScale
 //Design Name       : DDR4 SDRAM & DDR3 SDRAM
 //Purpose           :
-//                   ddr4_v2_2_4_mc_ecc_gen module
+//                   ddr4_v2_2_7_mc_ecc_gen module
 //Reference         :
 //Revision History  :
 //*****************************************************************************
@@ -102,7 +102,7 @@
 // At the same time the h_rows vector is generated from the
 // H transpose matrix.
 
-module ddr4_v2_2_4_mc_ecc_gen
+module ddr4_v2_2_7_mc_ecc_gen
   #(
     parameter CODE_WIDTH        = 72,
     parameter ECC_WIDTH         = 8,

@@ -74,6 +74,7 @@ module ddr4_phy_v2_2_0_iob # (
    ,parameter [39*BYTES-1:0] IOBTYPE     = {(BYTES*39){1'b0}}
    ,parameter DQS_BIAS                   = "TRUE"
    ,parameter DRAM_TYPE                  = "DDR3"
+   ,parameter EN_LVAUX                   = "FALSE"
    ,parameter BANK_TYPE                  = "HP_IO"
    ,parameter USE_DYNAMIC_DCI            = 1
 )(
@@ -90,7 +91,7 @@ module ddr4_phy_v2_2_0_iob # (
 genvar byteNum;
 generate
    for (byteNum = 0; byteNum < BYTES; byteNum = byteNum+1) begin:genByte
-      ddr4_phy_v2_2_0_iob_byte #(.IOBTYPE(IOBTYPE[byteNum*39+38:byteNum*39]), .DQS_BIAS(DQS_BIAS), .DRAM_TYPE(DRAM_TYPE), .BANK_TYPE(BANK_TYPE), .USE_DYNAMIC_DCI(USE_DYNAMIC_DCI)) u_ddr_iob_byte (
+      ddr4_phy_v2_2_0_iob_byte #(.IOBTYPE(IOBTYPE[byteNum*39+38:byteNum*39]), .DQS_BIAS(DQS_BIAS), .DRAM_TYPE(DRAM_TYPE), .EN_LVAUX(EN_LVAUX), .BANK_TYPE(BANK_TYPE), .USE_DYNAMIC_DCI(USE_DYNAMIC_DCI)) u_ddr_iob_byte (
           .iob2phy_d_in_byte    (iob2phy_d_in_byte[byteNum*13+12:byteNum*13])
 
          ,.iob_pin              (iob_pin[byteNum*13+12:byteNum*13])

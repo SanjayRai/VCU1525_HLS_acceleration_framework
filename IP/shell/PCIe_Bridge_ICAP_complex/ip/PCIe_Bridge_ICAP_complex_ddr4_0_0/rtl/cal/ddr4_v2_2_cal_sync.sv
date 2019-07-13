@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_sync.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_sync.sv
 // /___/   /\     Date Last Modified : $Date: 2015/01/22 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_sync module
+//                   ddr4_v2_2_7_cal_sync module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ps/1ps
 
-module ddr4_v2_2_4_cal_sync #(
+module ddr4_v2_2_7_cal_sync #(
    parameter        SYNC_MTBF               = 2
    ,parameter       WIDTH                   = 8
    ,parameter       INSERT_DELAY            = 0

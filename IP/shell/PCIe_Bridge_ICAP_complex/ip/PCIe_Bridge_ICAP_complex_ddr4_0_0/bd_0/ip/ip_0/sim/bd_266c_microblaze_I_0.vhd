@@ -1,4 +1,4 @@
--- (c) Copyright 1995-2018 Xilinx, Inc. All rights reserved.
+-- (c) Copyright 1995-2019 Xilinx, Inc. All rights reserved.
 -- 
 -- This file contains confidential and proprietary information
 -- of Xilinx, Inc. and is protected under U.S. and
@@ -46,15 +46,15 @@
 -- 
 -- DO NOT MODIFY THIS FILE.
 
--- IP VLNV: xilinx.com:ip:microblaze:10.0
--- IP Revision: 6
+-- IP VLNV: xilinx.com:ip:microblaze:11.0
+-- IP Revision: 1
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-LIBRARY microblaze_v10_0_6;
-USE microblaze_v10_0_6.MicroBlaze;
+LIBRARY microblaze_v11_0_1;
+USE microblaze_v11_0_1.MicroBlaze;
 
 ENTITY bd_266c_microblaze_I_0 IS
   PORT (
@@ -135,6 +135,7 @@ ARCHITECTURE bd_266c_microblaze_I_0_arch OF bd_266c_microblaze_I_0 IS
       C_ENDIANNESS : INTEGER;
       C_FAMILY : STRING;
       C_DATA_SIZE : INTEGER;
+      C_LMB_DATA_SIZE : INTEGER;
       C_INSTR_SIZE : INTEGER;
       C_IADDR_SIZE : INTEGER;
       C_PIADDR_SIZE : INTEGER;
@@ -292,9 +293,9 @@ ARCHITECTURE bd_266c_microblaze_I_0_arch OF bd_266c_microblaze_I_0 IS
       Config_Reset : IN STD_LOGIC;
       Scan_Reset : IN STD_LOGIC;
       Scan_Reset_Sel : IN STD_LOGIC;
-      RAM_Static : IN STD_LOGIC_VECTOR(1023 DOWNTO 0);
-      RAM_To : IN STD_LOGIC_VECTOR(16383 DOWNTO 0);
-      RAM_From : OUT STD_LOGIC_VECTOR(16383 DOWNTO 0);
+      Scan_En : IN STD_LOGIC;
+      RAM_To : IN STD_LOGIC_VECTOR(255 DOWNTO 0);
+      RAM_From : OUT STD_LOGIC_VECTOR(255 DOWNTO 0);
       Interrupt : IN STD_LOGIC;
       Interrupt_Address : IN STD_LOGIC_VECTOR(0 TO 31);
       Interrupt_Ack : OUT STD_LOGIC_VECTOR(0 TO 1);
@@ -786,10 +787,10 @@ ARCHITECTURE bd_266c_microblaze_I_0_arch OF bd_266c_microblaze_I_0 IS
   ATTRIBUTE X_INTERFACE_INFO OF Interrupt_Address: SIGNAL IS "xilinx.com:interface:mbinterrupt:1.0 INTERRUPT ADDRESS";
   ATTRIBUTE X_INTERFACE_PARAMETER OF Interrupt: SIGNAL IS "XIL_INTERFACENAME INTERRUPT, SENSITIVITY LEVEL_HIGH, LOW_LATENCY 0";
   ATTRIBUTE X_INTERFACE_INFO OF Interrupt: SIGNAL IS "xilinx.com:interface:mbinterrupt:1.0 INTERRUPT INTERRUPT";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF Reset: SIGNAL IS "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_HIGH, TYPE PROCESSOR";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF Reset: SIGNAL IS "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_HIGH, TYPE PROCESSOR, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF Reset: SIGNAL IS "xilinx.com:signal:reset:1.0 RST.RESET RST";
   ATTRIBUTE X_INTERFACE_PARAMETER OF Clk: SIGNAL IS "XIL_INTERFACENAME CLK.CLK, ASSOCIATED_BUSIF M0_AXIS:S0_AXIS:M1_AXIS:S1_AXIS:M2_AXIS:S2_AXIS:M3_AXIS:S3_AXIS:M4_AXIS:S4_AXIS:M5_AXIS:S5_AXIS:M6_AXIS:S6_AXIS:M7_AXIS:S7_AXIS:M8_AXIS:S8_AXIS:M9_AXIS:S9_AXIS:M10_AXIS:S10_AXIS:M11_AXIS:S11_AXIS:M12_AXIS:S12_AXIS:M13_AXIS:S13_AXIS:M14_AXIS:S14_AXIS:M15_AXIS:S15_AXIS:DLMB:ILMB:M_AXI_DP:M_AXI_IP:M_AXI_DC:M_AXI_IC:M_ACE_DC:M_ACE_IC:MON_DLMB:MON_ILMB:MON_AXI_DP:MON_AXI_IP:MON_AXI_DC:MON_AXI_IC:MON_ACE_DC:MON_ACE_IC, ASSOCIATED_RESET Reset, FREQ_HZ 1000000" & 
-"00, PHASE 0.000";
+"00, PHASE 0.000, CLK_DOMAIN bd_266c_Clk, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF Clk: SIGNAL IS "xilinx.com:signal:clock:1.0 CLK.CLK CLK";
 BEGIN
   U0 : MicroBlaze
@@ -809,6 +810,7 @@ BEGIN
       C_ENDIANNESS => 1,
       C_FAMILY => "virtexuplus",
       C_DATA_SIZE => 32,
+      C_LMB_DATA_SIZE => 32,
       C_INSTR_SIZE => 32,
       C_IADDR_SIZE => 32,
       C_PIADDR_SIZE => 32,
@@ -966,8 +968,8 @@ BEGIN
       Config_Reset => '0',
       Scan_Reset => '0',
       Scan_Reset_Sel => '0',
-      RAM_Static => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 1024)),
-      RAM_To => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 16384)),
+      Scan_En => '0',
+      RAM_To => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 256)),
       Interrupt => Interrupt,
       Interrupt_Address => Interrupt_Address,
       Interrupt_Ack => Interrupt_Ack,

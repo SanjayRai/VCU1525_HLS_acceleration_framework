@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -80,7 +80,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi #
+module ddr4_v2_2_7_axi #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -451,7 +451,7 @@ always @(posedge aclk)
 always @(posedge aclk)
   mc_init_complete_r <= mc_init_complete ;
 
-ddr4_v2_2_4_axi_register_slice #
+ddr4_v2_2_7_axi_register_slice #
 (
   .C_FAMILY                    ( C_FAMILY                ) ,
   .C_AXI_ID_WIDTH              ( C_S_AXI_ID_WIDTH        ) ,
@@ -567,7 +567,7 @@ axi_register_slice_d1
 
 generate 
   if (P_USE_UPSIZER) begin : USE_UPSIZER
-    ddr4_v2_2_4_axi_upsizer #
+    ddr4_v2_2_7_axi_upsizer #
       (
       .C_FAMILY                    ( C_FAMILY                ) ,
       .C_AXI_ID_WIDTH              ( C_S_AXI_ID_WIDTH        ) ,
@@ -725,7 +725,7 @@ generate
   end
 endgenerate
 
-ddr4_v2_2_4_axi_register_slice #
+ddr4_v2_2_7_axi_register_slice #
 (
   .C_FAMILY                    ( C_FAMILY                ) ,
   .C_AXI_ID_WIDTH              ( C_S_AXI_ID_WIDTH        ) ,
@@ -855,7 +855,7 @@ wire                                b_push;
 wire [C_S_AXI_ID_WIDTH-1:0]         b_awid;
 wire                                b_full;
    
-ddr4_v2_2_4_axi_aw_channel #
+ddr4_v2_2_7_axi_aw_channel #
 (
   .C_ID_WIDTH                       ( C_S_AXI_ID_WIDTH   ),
   .C_AXI_ADDR_WIDTH                 ( C_S_AXI_ADDR_WIDTH ),
@@ -898,7 +898,7 @@ axi_aw_channel_0
   .b_full                           ( b_full            )
 );
 
-ddr4_v2_2_4_axi_w_channel #
+ddr4_v2_2_7_axi_w_channel #
 (
   .C_DATA_WIDTH                     ( C_MC_DATA_WIDTH    ), 
   .C_AXI_ADDR_WIDTH                 ( C_S_AXI_ADDR_WIDTH ),
@@ -926,7 +926,7 @@ axi_w_channel_0
   .w_data_rdy                       ( w_data_rdy      )
 );
 
-ddr4_v2_2_4_axi_b_channel #
+ddr4_v2_2_7_axi_b_channel #
 (
   .C_ID_WIDTH                       ( C_S_AXI_ID_WIDTH   )
 )
@@ -960,7 +960,7 @@ wire  [3:0]                         arqos_int     ;
  
 
 
-ddr4_v2_2_4_axi_ar_channel #
+ddr4_v2_2_7_axi_ar_channel #
 (
   .C_ID_WIDTH                       ( C_S_AXI_ID_WIDTH   ),
   .C_AXI_ADDR_WIDTH                 ( C_S_AXI_ADDR_WIDTH ),
@@ -1001,7 +1001,7 @@ axi_ar_channel_0
   .arqos_int                        ( arqos_int         ) 
 );
 
-ddr4_v2_2_4_axi_r_channel #
+ddr4_v2_2_7_axi_r_channel #
 (
   .C_ID_WIDTH                       ( C_S_AXI_ID_WIDTH   ), 
   .C_DATA_WIDTH                     ( C_MC_DATA_WIDTH    ),
@@ -1032,7 +1032,7 @@ axi_r_channel_0
 );
 
 // Arbiter    
-ddr4_v2_2_4_axi_cmd_arbiter #
+ddr4_v2_2_7_axi_cmd_arbiter #
 (
   .C_MC_ADDR_WIDTH           ( C_MC_ADDR_WIDTH  ) ,
   .C_MC_BURST_LEN            ( C_MC_BURST_LEN   ) ,

@@ -69,6 +69,8 @@
 # Package      - fsgd2104
 # Speed grade  - -2
 # PCIe Block   - X1Y2
+# Xilinx BNo   - 0
+#
 #
 # MSI-X TYPE - HARD
 #
@@ -208,12 +210,12 @@ set_false_path -to [get_pins user_reset_reg/PRE]
 # CLOCK_ROOT LOCKing to Reduce CLOCK SKEW
 # Add/Edit  Clock Routing Option to improve clock path skew
 ###############################################################################
-set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins bufg_gt_sysclk/O]]
-set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_intclk/O]]
-set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_coreclk/O]]
-set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_userclk/O]]
-set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_pclk/O]]
-set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_mcapclk/O]]
+#set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins bufg_gt_sysclk/O]]
+#set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_intclk/O]]
+#set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_coreclk/O]]
+#set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_userclk/O]]
+#set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_pclk/O]]
+#set_property USER_CLOCK_ROOT X5Y6 [get_nets -of_objects [get_pins -hierarchical -filter NAME=~*/phy_clk_i/bufg_gt_mcapclk/O]]
 #
 #set_property CLOCK_DELAY_GROUP group_i0 [get_nets {gt_top_i/diablo_gt.diablo_gt_phy_wrapper/phy_clk_i/*TXOUTCLK*}]
 #set_property CLOCK_DELAY_GROUP group_i0 [get_nets {gt_top_i/diablo_gt.diablo_gt_phy_wrapper/phy_clk_i/*USERCLK*}]
@@ -234,3 +236,22 @@ set_property CLOCK_DELAY_GROUP group_i0 [get_nets -of_objects [get_pins -hierarc
 #
 #
 #
+
+#create_waiver -type METHODOLOGY -id {LUTAR-1} -user "pcie4_uscaleplus" -desc "The rst_in is synchronized before used in logic so it is safe to ignore" -internal -scoped -tags 1024539  -objects [get_cells -hierarchical -filter { NAME =~ *rst_in_meta_i_1* }] -objects [get_pins -filter {REF_PIN_NAME=~ PRE } -of_objects [get_cells -hierarchical  {*rst_in_* }]]
+
+#create_waiver -type METHODOLOGY -id {LUTAR-1} -user "pcie4_uscaleplus" -desc "The PS reset is synchronized before used to it is safe to ignore" -internal -scoped -tags 1024539  -objects [get_cells -hierarchical -filter { NAME =~ *FSM_sequential_pwr_on_fsm_i_2* }] -objects [get_pins -filter {REF_PIN_NAME=~ CLR } -of_objects [get_cells -hierarchical  {*rst_psrst_n_r_reg* }]]
+
+#create_waiver -type METHODOLOGY -id {LUTAR-1} -user "pcie4_uscaleplus" -desc "The user clk is used after user link up so it is safe to ignore" -internal -scoped -tags 1024539   -objects [get_cells -hierarchical -filter { NAME =~ *bufg_gt_userclk_i_2* }] -objects [get_pins -filter {REF_PIN_NAME=~ CLR } -of_objects [get_cells -hierarchical  {*BUFG_GT_SYNC* }]]
+
+#create_waiver -type METHODOLOGY -id {LUTAR-1} -user "pcie4_uscaleplus" -desc "The one hot encoding is used in FSM so it is safe to ignore" -internal -scoped -tags 1024539   -objects [get_cells -hierarchical -filter { NAME =~ *FSM_onehot_fsm[0]_i_1* }] -objects [get_pins -filter {REF_PIN_NAME=~ CLR } -of_objects [get_cells -hierarchical  {*prst_n_r_reg* }]]
+
+#create_waiver -type METHODOLOGY -id {LUTAR-1} -user "pcie4_uscaleplus" -desc "test" -internal -scoped -tags 1024539   -objects [get_cells -hierarchical -filter { NAME =~ *as_mac_in_detect_user_i_2* }] -objects [get_pins -filter {REF_PIN_NAME=~ PRE } -of_objects [get_cells -hierarchical  {*as_mac_in_detect* }]]
+
+#create_waiver -type METHODOLOGY -id {LUTAR-1} -user "pcie4_uscaleplus" -desc "The user link up is synchrozed before used as reset to user clk so it is safe to ignore" -internal -scoped -tags 1024539  -objects [get_cells -hierarchical -filter { NAME =~ *user_lnk_up_i_1* }] -objects [get_pins -filter {REF_PIN_NAME=~ CLR } -of_objects [get_cells -hierarchical  {*user_lnk_up_reg* }]]
+
+#create_waiver -type METHODOLOGY -id {LUTAR-1} -user "pcie4_uscaleplus" -desc "The user reset is generated from user link up and synchrozed so it is safe to ignore" -internal -scoped -tags 1024539   -objects [get_cells -hierarchical -filter { NAME =~ *user_reset_i_1* }] -objects [get_pins -filter {REF_PIN_NAME=~ PRE } -of_objects [get_cells -hierarchical  {*user_reset_reg* }]] -objects  [get_pins -filter {REF_PIN_NAME=~ PRE } -of_objects [get_cells -hierarchical  {*arststages_ff_reg* }]]
+
+#create_waiver -type METHODOLOGY -id {TIMING-9} -internal -scoped -tags 1024539   -user "pcie4_uscaleplus" -desc "The CDC logic is used for clock domain crossing so it can be ignored"
+
+#create_waiver -type CDC -id {CDC-11} -tags "1019576" -desc "properly_synced" -from [get_pins {pcie4_uscale_plus_0_i/inst/gt_top_i/diablo_gt.diablo_gt_phy_wrapper/gt_wizard.gtwizard_top_i/pcie4_uscale_plus_0_gt_i/inst/gen_gtwizard_gtye4_top.pcie4_uscale_plus_0_gt_gtwizard_gtye4_inst/gen_gtwizard_gtye4.gen_cpll_cal_gtye4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_5_gtye4_cpll_cal_inst/gtwizard_ultrascale_v1_7_6_5_gtye4_cpll_cal_tx_i/U_TXOUTCLK_FREQ_COUNTER/state_reg[0]/C}] -to [get_pins {pcie4_uscale_plus_0_i/inst/gt_top_i/diablo_gt.diablo_gt_phy_wrapper/gt_wizard.gtwizard_top_i/pcie4_uscale_plus_0_gt_i/inst/gen_gtwizard_gtye4_top.pcie4_uscale_plus_0_gt_gtwizard_gtye4_inst/gen_gtwizard_gtye4.gen_cpll_cal_gtye4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_5_gtye4_cpll_cal_inst/gtwizard_ultrascale_v1_7_6_5_gtye4_cpll_cal_tx_i/U_TXOUTCLK_FREQ_COUNTER/reset_synchronizer_testclk_rst_inst/rst_in_meta_reg/PRE}]
+

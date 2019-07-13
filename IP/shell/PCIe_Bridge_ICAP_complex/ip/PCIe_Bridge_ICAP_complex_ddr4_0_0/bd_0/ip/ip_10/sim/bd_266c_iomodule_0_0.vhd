@@ -1,4 +1,4 @@
--- (c) Copyright 1995-2018 Xilinx, Inc. All rights reserved.
+-- (c) Copyright 1995-2019 Xilinx, Inc. All rights reserved.
 -- 
 -- This file contains confidential and proprietary information
 -- of Xilinx, Inc. and is protected under U.S. and
@@ -47,14 +47,14 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:ip:iomodule:3.1
--- IP Revision: 3
+-- IP Revision: 4
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-LIBRARY iomodule_v3_1_3;
-USE iomodule_v3_1_3.iomodule;
+LIBRARY iomodule_v3_1_4;
+USE iomodule_v3_1_4.iomodule;
 
 ENTITY bd_266c_iomodule_0_0 IS
   PORT (
@@ -271,9 +271,9 @@ ARCHITECTURE bd_266c_iomodule_0_0_arch OF bd_266c_iomodule_0_0 IS
   ATTRIBUTE X_INTERFACE_INFO OF IO_Write_Strobe: SIGNAL IS "xilinx.com:interface:mcsio_bus:1.0 IO_BUS WRITE_STROBE";
   ATTRIBUTE X_INTERFACE_INFO OF IO_Read_Strobe: SIGNAL IS "xilinx.com:interface:mcsio_bus:1.0 IO_BUS READ_STROBE";
   ATTRIBUTE X_INTERFACE_INFO OF IO_Addr_Strobe: SIGNAL IS "xilinx.com:interface:mcsio_bus:1.0 IO_BUS ADDR_STROBE";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF Rst: SIGNAL IS "XIL_INTERFACENAME RST.Rst, POLARITY ACTIVE_HIGH, TYPE PERIPHERAL";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF Rst: SIGNAL IS "XIL_INTERFACENAME RST.Rst, POLARITY ACTIVE_HIGH, TYPE PERIPHERAL, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF Rst: SIGNAL IS "xilinx.com:signal:reset:1.0 RST.Rst RST";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF Clk: SIGNAL IS "XIL_INTERFACENAME CLK.CLK, ASSOCIATED_BUSIF SLMB, ASSOCIATED_RESET Rst:TMR_Rst, FREQ_HZ 100000000, PHASE 0.000";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF Clk: SIGNAL IS "XIL_INTERFACENAME CLK.CLK, ASSOCIATED_BUSIF SLMB, ASSOCIATED_RESET Rst:TMR_Rst, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN bd_266c_Clk, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF Clk: SIGNAL IS "xilinx.com:signal:clock:1.0 CLK.CLK CLK";
 BEGIN
   U0 : iomodule
@@ -366,7 +366,7 @@ BEGIN
       C_INTC_POSITIVE => X"FFFF",
       C_INTC_HAS_FAST => 1,
       C_INTC_ADDR_WIDTH => 17,
-      C_INTC_BASE_VECTORS => X"00000000",
+      C_INTC_BASE_VECTORS => X"0000000000000000",
       C_INTC_ASYNC_INTR => X"FFFF",
       C_INTC_NUM_SYNC_FF => 2
     )

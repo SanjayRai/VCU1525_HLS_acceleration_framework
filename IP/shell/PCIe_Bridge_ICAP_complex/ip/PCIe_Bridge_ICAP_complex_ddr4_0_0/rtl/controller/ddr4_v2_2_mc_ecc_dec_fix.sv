@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_mc_ecc_dec_fix.sv
+//  /   /         Filename              : ddr4_v2_2_7_mc_ecc_dec_fix.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          : Tue May 13 2014
 //  \___\/\___\
@@ -59,15 +59,16 @@
 //Device            : UltraScale
 //Design Name       : DDR4 SDRAM & DDR3 SDRAM
 //Purpose           :
-//                   ddr4_v2_2_4_mc_ecc_dec_fix module
+//                   ddr4_v2_2_7_mc_ecc_dec_fix module
 //Reference         :
 //Revision History  :
 //*****************************************************************************
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_ecc_dec_fix
+module ddr4_v2_2_7_mc_ecc_dec_fix
   #(
     parameter TCQ = 100,
+    parameter RKBITS             = 2,
     parameter PAYLOAD_WIDTH      = 64,
     parameter CODE_WIDTH         = 72,
     parameter DATA_WIDTH         = 64,
@@ -200,7 +201,7 @@ input                            ecc_status_valid_nxt;
 input      [1:0]                 winPortEncC;
 input                            non_per_rd_cas;
 input      [3:0]                 cmdRmw;
-input      [7:0]                 cmdRank;
+input      [RKBITS*4-1:0]        cmdRank;
 input      [4*LR_WIDTH-1:0]      cmdLRank;
 input      [4*ABITS-1:0]         cmdRow;
 input      [4*COLBITS-1:0]       cmdCol;
@@ -233,7 +234,7 @@ generate
                                         ( COLBITS == 11 ) ? { 4'b0,                                       cmdCol[winPortEncC*COLBITS+10], 1'b0, cmdCol[winPortEncC*COLBITS+:10] } :
                                                             { { ( 16 - COLBITS ) { 1'b0 } },                                                    cmdCol[winPortEncC*COLBITS+:10] } ;
 endgenerate
-assign addr_fifo_load_value[ 7: 4]  = cmdRank   [winPortEncC*2+:2];
+assign addr_fifo_load_value[ 7: 4]  = cmdRank   [winPortEncC*RKBITS+:RKBITS];
 assign addr_fifo_load_value[ 3: 0]  = ( MEM == "DDR4" ) ? { cmdGroup[winPortEncC*2+:2], cmdBank[winPortEncC*2+:2] }
                                                         : { cmdGroup[winPortEncC*2+:1], cmdBank[winPortEncC*2+:2] };
 

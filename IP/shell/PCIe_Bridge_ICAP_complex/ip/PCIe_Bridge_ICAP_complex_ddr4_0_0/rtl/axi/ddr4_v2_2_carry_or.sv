@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_carry_or.sv
+//  /   /         Filename           : ddr4_v2_2_7_carry_or.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -70,7 +70,7 @@
 `timescale 1ps/1ps
 
 
-module ddr4_v2_2_4_carry_or #
+module ddr4_v2_2_7_carry_or #
   (
    parameter         C_FAMILY                         = "virtex6"
                        // FPGA Family. Current version: virtex6 or spartan6.

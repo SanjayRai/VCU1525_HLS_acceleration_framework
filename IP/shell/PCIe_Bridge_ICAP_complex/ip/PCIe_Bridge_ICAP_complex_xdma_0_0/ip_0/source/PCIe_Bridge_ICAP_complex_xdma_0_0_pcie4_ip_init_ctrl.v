@@ -88,6 +88,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_init_ctrl #(
    localparam STATE_MGMT_RESET_DEASSERT = 3'b001;
    localparam STATE_PHY_RDY = 3'b100;
    localparam STATE_RESET_DEASSERT = 3'b101;
+   localparam STATE_RESET_DEASSERT2 = 3'b110;
    
    localparam CLK_QUARTER0  = 3'b0_00; // core=250, user=62.5, user2 = 62.5 
    localparam CLK_HALF0     = 3'b0_01; // core=250, user=125,  user2 = 125
@@ -119,6 +120,9 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_init_ctrl #(
    wire [1:0] 	       attr_crm_user_clk_freq;
    wire 	       user2_eq_core;
    reg [1:0] 	       counter;
+   reg [3:0] 	       hot_reset_timer;
+   reg [3:0] 	       reg_hot_reset_timer;
+   wire [3:0] 	       hot_reset_timer_w;
    
    (* keep = "true", max_fanout = 1000 *) reg 		       user_clk_en_int;
    
@@ -235,9 +239,18 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_init_ctrl #(
     else
       reg_state <= #TCQ reg_next_state;
   end
+
+  always @(posedge user_clk_i or negedge cold_reset_n)
+  begin
+    if (!cold_reset_n)
+      hot_reset_timer <= #TCQ 4'b0;
+    else
+      hot_reset_timer <= #TCQ reg_hot_reset_timer;
+  end
   
   always @* begin
 
+    reg_hot_reset_timer = hot_reset_timer_w;
     if (attr_pl_upstream_facing) begin // Design is a Upstream Port 
 
       reg_next_state = STATE_RESET;
@@ -266,7 +279,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_init_ctrl #(
         begin
           reg_reset_n_o = 1'b1;
           reg_pipe_reset_n_o = 1'b1;
-          if (!phy_rdy)
+          if ((!phy_rdy) || (attr_is_switch_port && cfg_hot_reset_in_i))
             reg_next_state = STATE_RESET;
           else
             reg_next_state = STATE_RESET_DEASSERT;
@@ -311,10 +324,22 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_init_ctrl #(
           if (!phy_rdy)
             reg_next_state = STATE_PHY_RDY;
           else if (attr_is_switch_port && cfg_hot_reset_in_i) begin  // Downstream Port Only
-            reg_next_state = STATE_RESET_DEASSERT;
-            reg_mgmt_reset_n_o = 1'b0;  
+            reg_next_state = STATE_RESET_DEASSERT2;
           end else
             reg_next_state = STATE_RESET_DEASSERT;
+        end
+        STATE_RESET_DEASSERT2:
+        begin
+          reg_reset_n_o = 1'b1;
+          reg_pipe_reset_n_o = 1'b1;
+          reg_hot_reset_timer = hot_reset_timer_w + 1;
+	  if ((hot_reset_timer_w == 4'b0) && cfg_phy_link_down_user_clk_o)
+          begin
+            reg_mgmt_reset_n_o = 1'b0;  
+            reg_next_state = STATE_RESET_DEASSERT;
+          end else begin
+            reg_next_state = STATE_RESET_DEASSERT2;
+          end 
         end
       endcase
      
@@ -369,6 +394,9 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_init_ctrl #(
    assign user_clkgate_en_o  = user_clkgate_en_int;
 
    assign user_clk_en_o  = user_clk_en_int;
+
+   assign hot_reset_timer_w = hot_reset_timer;
+
 
 
      // Retime cfg_phy_link_down to user clock

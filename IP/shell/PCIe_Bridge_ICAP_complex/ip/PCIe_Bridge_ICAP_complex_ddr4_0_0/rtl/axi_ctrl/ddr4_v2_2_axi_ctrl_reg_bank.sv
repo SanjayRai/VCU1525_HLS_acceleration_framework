@@ -46,7 +46,7 @@
 // --  
 ///////////////////////////////////////////////////////////////////////////////
 //
-// File name: ddr4_v2_2_4_axi_ctrl_reg_bank.v
+// File name: ddr4_v2_2_7_axi_ctrl_reg_bank.v
 //
 // Description: AXI Lite Controller
 //
@@ -58,7 +58,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_ctrl_reg_bank #
+module ddr4_v2_2_7_axi_ctrl_reg_bank #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -278,7 +278,7 @@ generate
 
   for (i = 0; i < C_NUM_REG; i = i + 1) begin : inst_reg
     if (|C_REG_MASK_ARRAY[i*C_DATA_WIDTH+:C_DATA_WIDTH] > 0) begin 
-      ddr4_v2_2_4_axi_ctrl_reg #
+      ddr4_v2_2_7_axi_ctrl_reg #
       (
         .C_DATA_WIDTH ( C_DATA_WIDTH                                   ) ,
         .C_REG_WIDTH  ( C_REG_WIDTH_ARRAY[i*C_DATA_WIDTH+:C_DATA_WIDTH]) ,

@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal.sv
 // /___/   /\     Date Last Modified : $Date: 2015/05/01 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,7 +58,7 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                  ddr4_v2_2_4_cal module
+//                  ddr4_v2_2_7_cal module
 // Reference        :
 // Revision History :
 //*****************************************************************************
@@ -67,7 +67,7 @@
 `define RESTORE
 `define RECONFIG_INIT_RESET_1
 
-module ddr4_v2_2_4_cal #
+module ddr4_v2_2_7_cal #
 (
     parameter       ABITS                      = 18
    ,parameter       BABITS                     = 2
@@ -150,6 +150,7 @@ module ddr4_v2_2_4_cal #
    ,parameter       MEMORY_CONFIGURATION       = "COMPONENT"
    ,parameter       DRAM_WIDTH                 = 8      // # of DQ per DQS
    ,parameter       RANKS                      = 1      //1, 2, 3, or 4
+   ,parameter       RNK_BITS                   = 1
    ,parameter       nCK_PER_CLK                = 4      // # of memory CKs per fabric CLK
    ,parameter       RTL_VERSION                = 0
    ,parameter       MEM_CODE                   = 0
@@ -210,6 +211,7 @@ module ddr4_v2_2_4_cal #
    ,parameter       C_CORE_INFO1               = 0
    ,parameter       C_CORE_INFO2               = 0
    ,parameter       BISC_EN		       = 1
+   ,parameter       RESTORE_CRC                = 0
 )
 (
     input                          pllGate
@@ -246,7 +248,7 @@ module ddr4_v2_2_4_cal #
   
    ,output       [DBYTES*7-1:0]  rd_vref_value
 
-   ,(* max_fanout = 50 *) output reg                  calDone
+   ,output reg                  calDone
    ,output                [7:0] cal_CAS_n
    ,output                [7:0] cal_RAS_n
    ,output                [7:0] cal_WE_n
@@ -337,6 +339,7 @@ module ddr4_v2_2_4_cal #
    ,output wire        cal_warning
    ,output wire [8:0]  cal_warning_nibble
    ,output wire [8:0]  cal_warning_code
+   ,output             cal_crc_error
    
    ,input  wire [36:0] sl_iport0
    ,output wire [16:0] sl_oport0
@@ -661,7 +664,7 @@ localparam
   // RC0D DIMM Configuration Control Word.
   // Direct DualCS mode, RDIMM for now
   // RCD mirroring is disabled. Mirroring will be done in this block since mirroring is needed for Non-RDIMM cases as well.
-  localparam  DDR4_REG_CS_MODE = ((RANKS>2) && ((SLOT0_CONFIG == 8'b0)||(SLOT1_CONFIG == 8'b0))) ? 2'b01 : 2'b00; // CS Mode, RDIMM register RC0D DA[1:0], 00 - Direct Dual CS mode, 01 - Direct Quad CS mode
+  localparam  DDR4_REG_CS_MODE = (RANKS==8) ? 2'b01 : (((RANKS>2) && ((SLOT0_CONFIG == 8'b0)||(SLOT1_CONFIG == 8'b0))) ? 2'b01 : 2'b00); // CS Mode, RDIMM register RC0D DA[1:0], 00 - Direct Dual CS mode, 01 - Direct Quad CS mode
   localparam  DDR4_REG_RC0D = {9'b0_0000_1101, CA_MIRROR == "ON" ? 1'b1 : 1'b0, (LRDIMM_EN ? 1'b0 : 1'b1), DDR4_REG_CS_MODE};
 
   // RC0E Parity Control word.
@@ -759,7 +762,8 @@ localparam
 
   localparam NUM_BRAMS=(J0+J1+J2+J3) >= 1 ? 3 :
                        (K0+K1+K2+K3) >= 1 ? 2 :
-					   (L0+L1+L2+L3) >= 1 ? 2 : 1;
+		       (L0+L1+L2+L3) >= 1 ? 2 : 
+                       (RANKS == 8)       ? 3 : 1;
   localparam BRAM_SIZE= 36 * 1024 * NUM_BRAMS;
   
   // Number of fabric cycles to create tRFC time
@@ -910,7 +914,7 @@ assign ub_xsdb_rd_data  = bramA_do;
 // Instantiate block used only in simulations
 //synthesis translate_off
 
-ddr4_v2_2_4_cal_debug_microblaze #
+ddr4_v2_2_7_cal_debug_microblaze #
   (
    .CAL_STATUS_REG_SIZE(CAL_STATUS_REG_SIZE),
    .LRDIMM_CAL_SIZE    (LRDIMM_CAL_SIZE),
@@ -954,7 +958,7 @@ ddr4_v2_2_4_cal_debug_microblaze #
 
 // Address Decoder - Shift to change from byte address to word address
 
-ddr4_v2_2_4_cal_addr_decode # (
+ddr4_v2_2_7_cal_addr_decode # (
     .MEMORY_CONFIGURATION (MEMORY_CONFIGURATION),
     .DRAM_WIDTH           (DRAM_WIDTH),
     .DBYTES               (DBYTES),
@@ -965,6 +969,7 @@ ddr4_v2_2_4_cal_addr_decode # (
     .CKBITS               (CKBITS),
     .CSBITS               (CSBITS),
     .RANKS                (RANKS),
+    .RNK_BITS             (RNK_BITS),
     .S_HEIGHT             (S_HEIGHT),
     .LR_WIDTH             (LR_WIDTH),
     .ODTBITS              (ODTBITS),
@@ -1139,7 +1144,8 @@ ddr4_v2_2_4_cal_addr_decode # (
     .cal_error_code         (cal_error_code),
     .cal_warning            (cal_warning),
     .cal_warning_nibble     (cal_warning_nibble),
-    .cal_warning_code       (cal_warning_code)
+    .cal_warning_code       (cal_warning_code),
+    .cal_crc_error          (cal_crc_error)
 	,.dbg_cal_seq           (dbg_cal_seq)
 	,.dbg_cal_seq_cnt       (dbg_cal_seq_cnt)
 	,.dbg_cal_seq_rd_cnt    (dbg_cal_seq_rd_cnt)
@@ -1154,7 +1160,7 @@ ddr4_v2_2_4_cal_addr_decode # (
 );
 
 //rom configuration
-ddr4_v2_2_4_cal_config_rom  #
+ddr4_v2_2_7_cal_config_rom  #
 (
  .MEM0    ( (MEM == "DDR4") ? 1 : 0),
  .MEM1    (ABITS),
@@ -1206,9 +1212,8 @@ ddr4_v2_2_4_cal_config_rom  #
  .MEM47   (SLOTS),
  .MEM48   (TRFC_CYCLES),
  .MEM49   (MIGRATION_EN),
- .MEM50   (CKBITS)
- //.MEM50      (),
- //.MEM51      (),
+ .MEM50   (CKBITS),
+ .MEM51   (RESTORE_CRC)
  //.MEM52      (),
  //.MEM53      (),
  //.MEM54      (),
@@ -1241,7 +1246,7 @@ ddr4_v2_2_4_cal_config_rom  #
   wire s_drdy;
 
 `ifndef XSDB_SLV_DIS
-(* DONT_TOUCH = "true" *) ddr4_v2_2_4_chipscope_xsdb_slave 
+(* DONT_TOUCH = "true" *) ddr4_v2_2_7_chipscope_xsdb_slave 
 #(
     .C_XDEVICEFAMILY		(C_FAMILY),
     .C_MAJOR_VERSION		(C_MAJOR_VERSION),//		 = 11,  // ise major version
@@ -1282,7 +1287,7 @@ assign sl_oport0 = 16'b0;
 reg t1, t2 = 0;
 
 `ifdef RESTORE
-ddr4_v2_2_4_cal_xsdb_arbiter #(
+ddr4_v2_2_7_cal_xsdb_arbiter #(
   .TCQ        (TCQ)
 ) 
 u_xsdb_arbiter 
@@ -1338,7 +1343,7 @@ assign bramB_en_stch = (bramB_en | t1);
 //-------------------------------------------------------------------
 //Bram for XSDB and uB wr/rd
 //-------------------------------------------------------------------
-(* DONT_TOUCH = "true" *) ddr4_v2_2_4_cal_xsdb_bram
+(* DONT_TOUCH = "true" *) ddr4_v2_2_7_cal_xsdb_bram
 #(
 		.START_ADDRESS                   (18),
 		.SPREAD_SHEET_VERSION            (PARAM_MAP_VERSION),
@@ -1547,11 +1552,20 @@ assign cal_mrs_int  = ub_ready || (RTL_DDR_INIT == 0) ? ub_cal_mrs : init_cal_mr
 	 end
       end
    endgenerate
-   
+  
+   localparam RANK_SLAB = (RANKS <= 4) ? 4 : 8 ;
    // DDR3/4 mirroring for Odd Ranks
-   reg [7:0] cs_odd_vec[3:0];
-   
-   wire [7:0] cs_odd = cs_odd_vec[0] | cs_odd_vec[1] | cs_odd_vec[2] | cs_odd_vec[3];
+   reg  [7:0] cs_odd_vec[RANK_SLAB-1:0];
+   wire [7:0] cs_odd;
+
+   generate
+   if (RANK_SLAB == 4) begin: Ranks_421
+     assign cs_odd = cs_odd_vec[0] | cs_odd_vec[1] | cs_odd_vec[2] | cs_odd_vec[3];
+   end else begin: Ranks_8
+     assign cs_odd = cs_odd_vec[0] | cs_odd_vec[1] | cs_odd_vec[2] | cs_odd_vec[3] | cs_odd_vec[4] | cs_odd_vec[5] | cs_odd_vec[6] | cs_odd_vec[7];
+   end
+   endgenerate
+
    generate      
       if (CA_MIRROR == "ON") begin
 	 for (j=0; j<CSBITS; j=j+1) begin
@@ -1867,38 +1881,92 @@ always @ (posedge clk) begin
    end
 end
    
-   
-   // Although there are 8-bit in slot0_config, slot1_config, 
-   // Only 4 CS_n are supported in decoding now (to help timing)
-always@(*) begin
-   casez(cs_mask_int)
-     8'b???1 :
-       begin
-	  cs_mask         = 8'b0001;
-	  cs_mask_int_nxt = cs_mask_int & 8'b1110;
-       end
-     8'b??10 :
-       begin
-	  cs_mask         = 8'b0010;
-	  cs_mask_int_nxt = cs_mask_int & 8'b1100;
-       end
-     8'b?100 :
-       begin
-	  cs_mask         = 8'b0100;
-	  cs_mask_int_nxt = cs_mask_int & 8'b1000;
-       end
-     8'b1000 :     
-       begin
-	  cs_mask         = 8'b1000;
-	  cs_mask_int_nxt = cs_mask_int & 8'b0000;
-       end
-     default:
-       begin
-	  cs_mask         = 8'b0000;
-	  cs_mask_int_nxt = cs_mask_int & 8'b0000;
-       end
-   endcase
+generate
+if (RANKS <= 4) begin: cs_mask_norm
+  // Although there are 8-bit in slot0_config, slot1_config, 
+  // Only 4 CS_n are supported in decoding now (to help timing)
+  always@(*) begin
+     casez(cs_mask_int)
+       8'b???1 :
+         begin
+  	  cs_mask         = 8'b0001;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b1110;
+         end
+       8'b??10 :
+         begin
+  	  cs_mask         = 8'b0010;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b1100;
+         end
+       8'b?100 :
+         begin
+  	  cs_mask         = 8'b0100;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b1000;
+         end
+       8'b1000 :     
+         begin
+  	  cs_mask         = 8'b1000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b0000;
+         end
+       default:
+         begin
+  	  cs_mask         = 8'b0000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b0000;
+         end
+     endcase
+  end
+end else begin: cs_mask_8ranks
+  // Dual slot Quad Rank config can support 8 ranks
+  always@(*) begin
+     casez(cs_mask_int)
+       8'b???????1 :
+         begin
+  	  cs_mask         = 8'b00000001;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b11111110;
+         end
+       8'b??????10 :
+         begin
+  	  cs_mask         = 8'b00000010;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b11111100;
+         end
+       8'b?????100 :
+         begin
+  	  cs_mask         = 8'b00000100;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b11111000;
+         end
+       8'b????1000 :     
+         begin
+  	  cs_mask         = 8'b00001000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b11110000;
+         end
+       8'b???10000 :     
+         begin
+  	  cs_mask         = 8'b00010000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b11100000;
+         end
+       8'b??100000 :     
+         begin
+  	  cs_mask         = 8'b00100000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b11000000;
+         end
+       8'b?1000000 :     
+         begin
+  	  cs_mask         = 8'b01000000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b10000000;
+         end
+       8'b10000000 :     
+         begin
+  	  cs_mask         = 8'b10000000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b00000000;
+         end
+       default:
+         begin
+  	  cs_mask         = 8'b00000000;
+  	  cs_mask_int_nxt = cs_mask_int & 8'b00000000;
+         end
+     endcase
+  end
 end
+endgenerate
 
 // Done writing MRS when
 // DDR3: all functional CS have been gone through
@@ -2043,10 +2111,14 @@ endcase
          init_cal_BA[15:8] <= #TCQ 8'b00000000;
          init_cal_BA[7:0] <= #TCQ 8'b11111111;
 	 if (LRDIMM_QUAD_RANK) begin
-	    if      (cs_mask == 8'b0001) setMR(MR5_0);
-	    else if (cs_mask == 8'b0010) setMR(MR5_1);
-	    else if (cs_mask == 8'b0100) setMR(MR5_2);
-	    else                         setMR(MR5_3);
+	    if      (cs_mask == 8'h01) setMR(MR5_0);
+	    else if (cs_mask == 8'h02) setMR(MR5_1);
+	    else if (cs_mask == 8'h04) setMR(MR5_2);
+	    else if (cs_mask == 8'h08) setMR(MR5_3);
+	    else if (cs_mask == 8'h10) setMR(MR5_0);
+	    else if (cs_mask == 8'h20) setMR(MR5_1);
+	    else if (cs_mask == 8'h40) setMR(MR5_2);
+	    else                       setMR(MR5_3);
 	 end
 	 else begin
            setMR(MR5);

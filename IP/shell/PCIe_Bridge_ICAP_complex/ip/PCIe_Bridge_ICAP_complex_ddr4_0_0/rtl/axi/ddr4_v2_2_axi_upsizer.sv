@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_upsizer.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_upsizer.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -82,7 +82,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_upsizer #
+module ddr4_v2_2_7_axi_upsizer #
   (
    parameter         C_FAMILY                         = "rtl", 
                        // FPGA Family. Current version: virtex6 or spartan6.
@@ -338,7 +338,7 @@ module ddr4_v2_2_4_axi_upsizer #
   assign M_AXI_WUSER   = {C_AXI_WUSER_WIDTH{1'b0}};
   assign S_AXI_RUSER   = {C_AXI_RUSER_WIDTH{1'b0}};
 
-    ddr4_v2_2_4_axi_register_slice #
+    ddr4_v2_2_7_axi_register_slice #
       (
         .C_FAMILY                         (C_FAMILY),
         .C_AXI_ID_WIDTH                   (C_AXI_ID_WIDTH),
@@ -446,7 +446,7 @@ module ddr4_v2_2_4_axi_upsizer #
         .M_AXI_RREADY                     (  )
       );
   
-    ddr4_v2_2_4_axi_register_slice #
+    ddr4_v2_2_7_axi_register_slice #
       (
         .C_FAMILY                         (C_FAMILY),
         .C_AXI_ID_WIDTH                   (C_AXI_ID_WIDTH),
@@ -582,7 +582,7 @@ module ddr4_v2_2_4_axi_upsizer #
       wire                              wr_cmd_ready;
       
       // Write Address Channel.
-      ddr4_v2_2_4_a_upsizer #
+      ddr4_v2_2_7_a_upsizer #
       (
        //.C_FAMILY                    (C_FAMILY),
        .C_AXI_ID_WIDTH              (C_AXI_ID_WIDTH),
@@ -651,7 +651,7 @@ module ddr4_v2_2_4_axi_upsizer #
        );
        
       // Write Data channel.
-      ddr4_v2_2_4_w_upsizer #
+      ddr4_v2_2_7_w_upsizer #
       (
        //.C_FAMILY                    (C_FAMILY),
        .C_S_AXI_DATA_WIDTH          (C_S_AXI_DATA_WIDTH),
@@ -761,7 +761,7 @@ module ddr4_v2_2_4_axi_upsizer #
       wire                              rd_cmd_ready;
       
       // Write Address Channel.
-      ddr4_v2_2_4_a_upsizer #
+      ddr4_v2_2_7_a_upsizer #
       (
        //.C_FAMILY                    (C_FAMILY),
        .C_AXI_ID_WIDTH              (C_AXI_ID_WIDTH),
@@ -830,7 +830,7 @@ module ddr4_v2_2_4_axi_upsizer #
        );
        
       // Read Data channel.
-      ddr4_v2_2_4_r_upsizer #
+      ddr4_v2_2_7_r_upsizer #
       (
        //.C_FAMILY                    (C_FAMILY),
        .C_AXI_ID_WIDTH              (C_AXI_ID_WIDTH),

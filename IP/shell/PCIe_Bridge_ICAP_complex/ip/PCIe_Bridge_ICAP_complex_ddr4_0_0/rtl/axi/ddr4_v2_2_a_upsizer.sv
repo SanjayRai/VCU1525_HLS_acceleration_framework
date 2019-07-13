@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_a_upsizer.sv
+//  /   /         Filename           : ddr4_v2_2_7_a_upsizer.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -72,7 +72,7 @@
 `timescale 1ps/1ps
 
 
-module ddr4_v2_2_4_a_upsizer #
+module ddr4_v2_2_7_a_upsizer #
   (
    parameter         C_FAMILY                         = "rtl", 
                        // FPGA Family. Current version: virtex6 or spartan6.
@@ -661,7 +661,7 @@ module ddr4_v2_2_4_a_upsizer #
          .LI(last_word_for_mask_sel[bit_cnt])
         );
         
-        ddr4_v2_2_4_carry_latch_and #
+        ddr4_v2_2_7_carry_latch_and #
           (
            .C_FAMILY(C_FAMILY)
            ) last_mask_inst
@@ -696,7 +696,7 @@ module ddr4_v2_2_4_a_upsizer #
       
       assign sel_access_need_extra_word = access_is_incr & cmd_modified_i;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) access_need_extra_word_inst
@@ -792,7 +792,7 @@ module ddr4_v2_2_4_a_upsizer #
       
       assign sel_s_axi_avalid = S_AXI_AVALID & ~ARESET;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) avalid_inst
@@ -879,7 +879,7 @@ module ddr4_v2_2_4_a_upsizer #
       wire sel_cmd_id_check;
       wire sel_cmd_push;
       
-      ddr4_v2_2_4_comparator #
+      ddr4_v2_2_7_comparator #
         (
          .C_FAMILY(C_FAMILY),
          .C_DATA_WIDTH(C_AXI_ID_WIDTH)
@@ -893,7 +893,7 @@ module ddr4_v2_2_4_a_upsizer #
          
       assign sel_cmd_id_check = ~cmd_empty;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) cmd_id_check_inst_1
@@ -903,7 +903,7 @@ module ddr4_v2_2_4_a_upsizer #
          .COUT(cmd_id_check_i)
          );
 
-      ddr4_v2_2_4_carry_or #
+      ddr4_v2_2_7_carry_or #
         (
          .C_FAMILY(C_FAMILY)
          ) cmd_id_check_inst_2
@@ -913,7 +913,7 @@ module ddr4_v2_2_4_a_upsizer #
          .COUT(cmd_id_check)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) allow_new_cmd_inst_1
@@ -923,7 +923,7 @@ module ddr4_v2_2_4_a_upsizer #
          .COUT(allow_new_cmd_i)
          );
 
-      ddr4_v2_2_4_carry_or #
+      ddr4_v2_2_7_carry_or #
         (
          .C_FAMILY(C_FAMILY)
          ) allow_new_cmd_inst_2
@@ -935,7 +935,7 @@ module ddr4_v2_2_4_a_upsizer #
          
       assign sel_cmd_push = ~cmd_push_block;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) cmd_push_inst
@@ -999,7 +999,7 @@ module ddr4_v2_2_4_a_upsizer #
   // Instantiated queue.
   generate
     if (C_SUPPORT_BURSTS == 1) begin : USE_BURSTS
-      ddr4_v2_2_4_command_fifo #
+      ddr4_v2_2_7_command_fifo #
       (
        .C_FAMILY                    (C_FAMILY),
        .C_ENABLE_S_VALID_CARRY      (1),
@@ -1026,7 +1026,7 @@ module ddr4_v2_2_4_a_upsizer #
     
       wire [C_M_AXI_BYTES_LOG-1:0]        cmd_first_word_out;
   
-      ddr4_v2_2_4_command_fifo #
+      ddr4_v2_2_7_command_fifo #
       (
        .C_FAMILY                    (C_FAMILY),
        .C_ENABLE_S_VALID_CARRY      (1),

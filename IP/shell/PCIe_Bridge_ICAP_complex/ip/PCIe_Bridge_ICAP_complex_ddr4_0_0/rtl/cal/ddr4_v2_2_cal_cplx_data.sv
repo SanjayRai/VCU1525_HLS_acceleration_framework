@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_cplx_data.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_cplx_data.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/23 $
 // \   \  /  \    Date Created       : Tue May 13 2014
 //  \___\/\___\
@@ -59,7 +59,7 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_cplx_data module
+//                   ddr4_v2_2_7_cal_cplx_data module
 //
 // Reference        :
 // Revision History :
@@ -68,7 +68,7 @@
 
 `timescale 1ps/1ps
 
-module ddr4_v2_2_4_cal_cplx_data #
+module ddr4_v2_2_7_cal_cplx_data #
   (
    parameter TCQ           = 100,        // clk->out delay (sim only)
    parameter DQS_CNT_WIDTH = 5,

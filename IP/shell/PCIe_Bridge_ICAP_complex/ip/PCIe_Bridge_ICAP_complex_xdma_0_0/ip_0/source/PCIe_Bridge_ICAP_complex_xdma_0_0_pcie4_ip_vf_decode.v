@@ -84,14 +84,16 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_vf_decode #(
  ,input wire [31:0]   cfg_ext_write_data_i
  ,input wire [3:0]    cfg_ext_write_byte_enable_i
  ,input wire [3:0]    cfg_flr_in_process_i
+ ,input wire [7:0]    cfg_vf_flr_func_num_i
+ ,input wire          cfg_vf_flr_done_i
 
  ,output reg [NUM_VFS-1:0]   cfg_vf_flr_in_process_o
  ,output reg [2*NUM_VFS-1:0] cfg_vf_status_o          // Bit 0: Memory Space Enable; Bit 1: Bus Master Enable
  ,output reg [3*NUM_VFS-1:0] cfg_vf_power_state_o     // 000b - D0-Uninitialized; 001b - D0-Active; 010b - D1; 100b - D3hot
  ,output reg [NUM_VFS-1:0]   cfg_vf_tph_requester_enable_o
  ,output reg [3*NUM_VFS-1:0] cfg_vf_tph_st_mode_o     
- ,output reg [NUM_VFS-1:0]   cfg_interrupt_msix_vf_enable_o
- ,output reg [NUM_VFS-1:0]   cfg_interrupt_msix_vf_mask_o
+ , (* keep = "true", max_fanout = 1000 *) output reg [NUM_VFS-1:0]   cfg_interrupt_msix_vf_enable_o
+ , (* keep = "true", max_fanout = 1000 *) output reg [NUM_VFS-1:0]   cfg_interrupt_msix_vf_mask_o
 
   );
 
@@ -143,11 +145,11 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_vf_decode #(
   reg [NUM_VFS-1:0]   cfg_vf_active;
 
   wire [7:0]          cfg_ext_function_number_w;
-  wire [7:0]          cfg_ext_function_number_w_2_b0;
-  wire [7:0]          cfg_ext_function_number_w_2_b1;
-  wire [7:0]          cfg_ext_function_number_w_3_b0;
-  wire [7:0]          cfg_ext_function_number_w_3_b1;
-  wire [7:0]          cfg_ext_function_number_w_3_b2;
+  wire [9:0]          cfg_ext_function_number_w_2_b0;
+  wire [9:0]          cfg_ext_function_number_w_2_b1;
+  wire [10:0]         cfg_ext_function_number_w_3_b0;
+  wire [10:0]         cfg_ext_function_number_w_3_b1;
+  wire [10:0]         cfg_ext_function_number_w_3_b2;
   wire [3:0]          pf_mapenable;
   wire                pf_as_vf;
   wire [2:0]          pf_as_vf_mapd;
@@ -371,7 +373,15 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_vf_decode #(
 
     end
 
+    if (cfg_vf_flr_done_i) begin
+      for (i = 0; i < 252; i = i + 1) begin
+        if (cfg_vf_flr_func_num_i == (i+4))
+          cfg_vf_flr_in_process_w[i] = 1'b0;
+      end
+    end
+
   end
+
 
   assign cfg_ext_function_number_w = cfg_ext_function_number - 4;
   assign cfg_ext_function_number_w_2_b0 = 2*(cfg_ext_function_number_w)+0;

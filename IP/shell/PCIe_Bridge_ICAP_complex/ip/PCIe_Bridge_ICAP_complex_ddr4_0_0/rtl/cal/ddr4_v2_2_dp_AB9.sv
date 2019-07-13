@@ -56,14 +56,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_ddr_xsdb_bram module
+//                   ddr4_v2_2_7_ddr_xsdb_bram module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 `timescale 1ns / 1ps
 
 
-module ddr4_v2_2_4_cfg_mem_mod # (
+module ddr4_v2_2_7_cfg_mem_mod # (
                         // Number of Memory Bits required. Based on this we calculate how many BRAMs are required
                         parameter SIZE         = 36 * 1024 * 1,
                         // You don't need to override this 
@@ -122,7 +122,7 @@ wire dec_ena = ADDR_WIDTH == ADDR_WIDTH_INT || NUM_BRAMS == 1 ? ena : ena & (i =
 wire dec_enb = ADDR_WIDTH == ADDR_WIDTH_INT || NUM_BRAMS == 1 ? enb : enb & (i == addrb[ADDR_MSB-1:ADDR_WIDTH_INT]);
 
 
-  ddr4_v2_2_4_bram_tdp # (
+  ddr4_v2_2_7_bram_tdp # (
               .INIT(INIT[256*9*(i+1)-1:256*9*i]),
               .PIPELINE_REG(PIPELINE_REG)
              )
@@ -171,7 +171,7 @@ end
 
 endmodule
 
-module ddr4_v2_2_4_bram_tdp #(
+module ddr4_v2_2_7_bram_tdp #(
                   parameter [256*9-1:0] INIT = 'd0,
                   parameter ADDR_WIDTH   = 12,
                   parameter DATA_WIDTH   = 9,

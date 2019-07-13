@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Tue May 13 2014
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc module
+//                   ddr4_v2_2_7_mc module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc # (parameter
+module ddr4_v2_2_7_mc # (parameter
     ABITS   = 18
    ,BABITS  = 2
    ,BGBITS  = 2
@@ -88,6 +88,8 @@ module ddr4_v2_2_4_mc # (parameter
    ,ADDR_FIFO_WIDTH = 30
    ,DBAW    = 5
    ,RANKS   = 1
+   ,RKBITS = (RANKS <= 4) ? 2 : 3
+   ,RANK_SLAB = (RANKS <= 4) ? 4 : 8
    ,RANK_SLOT = 1
    ,ORDERING  = "NORM"
    ,TXN_FIFO_BYPASS = "ON"
@@ -169,7 +171,7 @@ module ddr4_v2_2_4_mc # (parameter
    ,output                  winInjTxn
    ,output                  winRmw
    ,output                  gt_data_ready
-   ,output            [1:0] win_rank_cas
+   ,output   [RKBITS-1:0]   win_rank_cas
 
    ,output                  accept
    ,output                  accept_ns
@@ -209,7 +211,7 @@ module ddr4_v2_2_4_mc # (parameter
    ,input    [COLBITS-1:0] col
    ,input       [DBAW-1:0] dBufAdr
    ,input                  hiPri
-   ,input            [1:0] rank
+   ,input   [RKBITS-1:0]   rank
    ,input      [ABITS-1:0] row
    ,input                  size
    ,input                  useAdr
@@ -250,7 +252,7 @@ wire        zqIssAll;
 wire  [3:0] txn_fifo_full;
 wire  [3:0] cas_fifo_full;
 wire  [3:0] refOK;
-wire  [1:0] refRank;
+wire  [RKBITS-1:0] refRank;
 wire        refReq;
 wire  [3:0] actReq;
 wire  [3:0] actReqT;
@@ -266,15 +268,15 @@ wire  [1:0] winGroupP;
 wire  [7:0] readSlot;
 wire  [7:0] writeSlot;
 wire        tranSentC;
-wire  [1:0] winRankA;
-wire  [1:0] winRankC;
-wire  [1:0] winRankP;
+wire  [RKBITS-1:0] winRankA;
+wire  [RKBITS-1:0] winRankC;
+wire  [RKBITS-1:0] winRankP;
 wire        winAP;
 wire        winSize;
 wire        winAct;
 wire  [3:0] winPortA;
 wire  [1:0] winPortEncC;
-wire  [3:0] act_rank_update;
+wire  [RANK_SLAB-1:0] act_rank_update;
 wire  [3:0] act_winPort_nxt;
 wire  [1:0] win_bank_cas;
 wire  [1:0] win_group_cas;
@@ -289,9 +291,9 @@ wire  [3:0] cmdHiPri;
 wire  [7:0] cmd_group_cas;
 wire  [7:0] cmdGroup;
 wire  [7:0] cmdGroupP;
-wire  [7:0] cmd_rank_cas;
-wire  [7:0] cmdRank;
-wire  [7:0] cmdRankP;
+wire  [RKBITS*4-1:0] cmd_rank_cas;
+wire  [RKBITS*4-1:0] cmdRank;
+wire  [RKBITS*4-1:0] cmdRankP;
 wire  [3:0] cmdSize;
 wire  [1:0] winBankA;
 wire  [1:0] winBankC;
@@ -330,6 +332,7 @@ wire [3:0] cas_fifo_empty;
 wire       int_sreIss;
 wire [RANKS-1:0] int_sreCkeDis;
 wire 	  int_srxIss;
+wire 	  prevCmdAP;
 
 wire [2:0] dbg_sre_sm_ps;
 wire [3:0] dbg_refSt;
@@ -382,7 +385,7 @@ genvar bg;
 generate
    for (bg = 0; bg <= 3; bg = bg + 1) begin:bgr
       assign per_rd_req_vec[bg] = per_rd_req & (bg == 0); // Only inject periodic read into Group 0 FSM
-      ddr4_v2_2_4_mc_group #(
+      ddr4_v2_2_7_mc_group #(
           .ABITS   (ABITS)
          ,.COLBITS (COLBITS)
          ,.DBAW    (DBAW)
@@ -392,6 +395,8 @@ generate
          ,.MEM     (MEM)
          ,.tRCD    (tRCD)
          ,.tRP     (tRP)
+         ,.RKBITS          (RKBITS)
+         ,.RANK_SLAB       (RANK_SLAB)
          ,.TXN_FIFO_BYPASS (TXN_FIFO_BYPASS)
          ,.TXN_FIFO_PIPE   (TXN_FIFO_PIPE)
          ,.PER_RD_PERF     (PER_RD_PERF)
@@ -424,10 +429,10 @@ generate
          ,.cmdGroupP(cmdGroupP[bg*2+:2])
          ,.cmdGroup (cmdGroup[bg*2+:2])
          ,.cmdHiPri (cmdHiPri[bg])
-         ,.cmd_rank_cas   (cmd_rank_cas[bg*2+:2])
+         ,.cmd_rank_cas   (cmd_rank_cas[bg*RKBITS+:RKBITS])
          ,.cmd_l_rank_cas (cmd_l_rank_cas[bg*LR_WIDTH+:LR_WIDTH])
-         ,.cmdRank  (cmdRank[bg*2+:2])
-         ,.cmdRankP (cmdRankP[bg*2+:2])
+         ,.cmdRank  (cmdRank[bg*RKBITS+:RKBITS])
+         ,.cmdRankP (cmdRankP[bg*RKBITS+:RKBITS])
          ,.cmdLRank (cmdLRank[bg*LR_WIDTH+:LR_WIDTH])
          ,.cmdLRankP(cmdLRankP[bg*LR_WIDTH+:LR_WIDTH])
          ,.cmdRow   (cmdRow[bg*ABITS+:ABITS])
@@ -476,7 +481,7 @@ generate
    end
 endgenerate
 
-ddr4_v2_2_4_mc_act_timer #(
+ddr4_v2_2_7_mc_act_timer #(
     .tFAW   (tFAW)
    ,.tFAW_dlr(tFAW_dlr)
    ,.tRRD_L (tRRD_L)
@@ -485,6 +490,8 @@ ddr4_v2_2_4_mc_act_timer #(
    ,.BGBITS  (BGBITS)
    ,.S_HEIGHT(S_HEIGHT)
    ,.LR_WIDTH(LR_WIDTH)
+   ,.RKBITS          (RKBITS)
+   ,.RANK_SLAB       (RANK_SLAB)
    ,.MEM     (MEM)
    ,.TCQ    (TCQ)   
 )u_ddr_mc_act_timer(
@@ -503,8 +510,10 @@ ddr4_v2_2_4_mc_act_timer #(
    ,.act_rank_update (act_rank_update)
 );
 
-ddr4_v2_2_4_mc_arb_a # (
+ddr4_v2_2_7_mc_arb_a # (
     .TCQ (TCQ)
+   ,.RKBITS    (RKBITS)
+   ,.RANK_SLAB (RANK_SLAB)
 )u_ddr_mc_arb_a(
     .clk     (clk)
    ,.rst     (rst_r1)
@@ -518,12 +527,14 @@ ddr4_v2_2_4_mc_arb_a # (
    ,.req     (actReqT)
 );
 
-ddr4_v2_2_4_mc_rd_wr #(
+ddr4_v2_2_7_mc_rd_wr #(
     .RDSLOT (256)
    ,.WRSLOT (128)
    ,.tWTR_L (tWTR_L)
    ,.tWTR_S (tWTR_S)
    ,.tRTW   (tRTW)
+   ,.RKBITS    (RKBITS)
+   ,.RANK_SLAB (RANK_SLAB)
    ,.S_HEIGHT (S_HEIGHT)
    ,.LR_WIDTH (LR_WIDTH)
    ,.STARVATION_EN      (STARVATION_EN)
@@ -552,8 +563,10 @@ ddr4_v2_2_4_mc_rd_wr #(
    ,.tCWL     (tCWL)
 );
 
-ddr4_v2_2_4_mc_arb_c #(
+ddr4_v2_2_7_mc_arb_c #(
     .TCQ       (TCQ)
+    ,.RKBITS    (RKBITS)
+    ,.RANK_SLAB (RANK_SLAB)
     ,.S_HEIGHT (S_HEIGHT)
     ,.LR_WIDTH (LR_WIDTH)
     ,.ORDERING (ORDERING)
@@ -587,12 +600,14 @@ ddr4_v2_2_4_mc_arb_c #(
    ,.preReqM  (4'b0)
 );
 
-ddr4_v2_2_4_mc_arb_mux_p #(
+ddr4_v2_2_7_mc_arb_mux_p #(
     .MEM   (MEM)
    ,.ABITS (ABITS)
    ,.ALIAS_P_CNT (ALIAS_P_CNT)
    ,.S_HEIGHT (S_HEIGHT)
    ,.LR_WIDTH (LR_WIDTH)
+   ,.RKBITS    (RKBITS)
+   ,.RANK_SLAB (RANK_SLAB)
    ,.TCQ   (TCQ)
    ,.tRAS  (tRAS)
    ,.tRTP  (tRTP)
@@ -632,9 +647,11 @@ ddr4_v2_2_4_mc_arb_mux_p #(
    ,.preReqM   (preReqM)
 );
 
-ddr4_v2_2_4_mc_ctl #(
+ddr4_v2_2_7_mc_ctl #(
     .RANKS   (RANKS)
    ,.RANK_SLOT (RANK_SLOT)
+   ,.RKBITS    (RKBITS)
+   ,.RANK_SLAB (RANK_SLAB)
    ,.ABITS   (ABITS)
    ,.BABITS  (BABITS)
    ,.BGBITS  (BGBITS)
@@ -670,6 +687,7 @@ ddr4_v2_2_4_mc_ctl #(
 
    ,.casSlot2  (casSlot2)
    ,.tranSentC (tranSentC)
+   ,.prevCmdAP (prevCmdAP)
 
    ,.winBankAT  (winBankA)
    ,.win_bank_cas (win_bank_cas)
@@ -716,8 +734,10 @@ ddr4_v2_2_4_mc_ctl #(
    ,.int_srxIss (int_srxIss)
 );
 
-ddr4_v2_2_4_mc_cmd_mux_ap #(
+ddr4_v2_2_7_mc_cmd_mux_ap #(
     .ABITS (ABITS)
+   ,.RKBITS    (RKBITS)
+   ,.RANK_SLAB (RANK_SLAB)
    ,.LR_WIDTH (LR_WIDTH)
 )u_ddr_mc_cmd_mux_a(
     .winBank  (winBankA)
@@ -735,8 +755,10 @@ ddr4_v2_2_4_mc_cmd_mux_ap #(
    ,.sel      (winPortA)
 );
 
-ddr4_v2_2_4_mc_cmd_mux_c #(
+ddr4_v2_2_7_mc_cmd_mux_c #(
     .COLBITS (COLBITS)
+   ,.RKBITS    (RKBITS)
+   ,.RANK_SLAB (RANK_SLAB)
    ,.LR_WIDTH (LR_WIDTH)
    ,.DBAW    (DBAW)
 )u_ddr_mc_cmd_mux_c(
@@ -765,10 +787,12 @@ ddr4_v2_2_4_mc_cmd_mux_c #(
    ,.sel      (winPortC)
 );
 
-ddr4_v2_2_4_mc_ref #(
+ddr4_v2_2_7_mc_ref #(
     .NUMREF     (NUMREF)
    ,.RANKS      (RANKS)
    ,.RANK_SLOT  (RANK_SLOT)
+   ,.RKBITS     (RKBITS)
+   ,.RANK_SLAB  (RANK_SLAB)
    ,.S_HEIGHT   (S_HEIGHT)
    ,.LR_WIDTH   (LR_WIDTH)
    ,.tREFI      (tREFI)
@@ -794,6 +818,7 @@ ddr4_v2_2_4_mc_ref #(
    ,.refReq                 (refReq)
    ,.ref_ack                (ref_ack)
    ,.zq_ack                 (zq_ack)
+   ,.prevCmdAP              (prevCmdAP)
 
    ,.mcCKt                  (mcCKt)
    ,.mcCKc                  (mcCKc)
@@ -809,8 +834,8 @@ ddr4_v2_2_4_mc_ref #(
    ,.txn_fifo_empty         (txn_fifo_empty)
    ,.cas_fifo_empty         (cas_fifo_empty)
    ,.mc_block_req           (mc_block_req)
-   ,.int_sreIss             (int_sreIss)
-   ,.int_sreCkeDis          (int_sreCkeDis)
+   ,.sreIss                 (int_sreIss)
+   ,.sreCkeDis              (int_sreCkeDis)
    ,.stop_gate_tracking_ack (stop_gate_tracking_ack)
    ,.stop_gate_tracking_req (stop_gate_tracking_req)
    ,.cmd_complete           (cmd_complete)
@@ -846,7 +871,7 @@ always @ (posedge clk) begin
       stop_prd_reads <= #TCQ 1;
 end
 
-ddr4_v2_2_4_mc_periodic #(
+ddr4_v2_2_7_mc_periodic #(
     .TCQ    (TCQ)
 )u_ddr_mc_periodic(
     .clk    (clk)
@@ -865,7 +890,7 @@ ddr4_v2_2_4_mc_periodic #(
    ,.per_rd_accept            (per_rd_accept[0])
 );
 
-ddr4_v2_2_4_mc_ecc #(
+ddr4_v2_2_7_mc_ecc #(
     .PAYLOAD_WIDTH       (PAYLOAD_WIDTH)
    ,.PAYLOAD_DM_WIDTH    (PAYLOAD_DM_WIDTH)
    ,.ECC_WIDTH           (ECC_WIDTH)
@@ -881,6 +906,7 @@ ddr4_v2_2_4_mc_ecc #(
    ,.MEM                 (MEM)
    ,.ABITS               (ABITS)
    ,.COLBITS             (COLBITS)
+   ,.RKBITS              (RKBITS)
    ,.TCQ                 (TCQ)
 )u_ddr_mc_ecc(
     .clk    (clk)

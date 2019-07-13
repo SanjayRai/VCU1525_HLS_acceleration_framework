@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_r_upsizer.sv
+//  /   /         Filename           : ddr4_v2_2_7_r_upsizer.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -69,7 +69,7 @@
 `timescale 1ps/1ps
 
 
-module ddr4_v2_2_4_r_upsizer #
+module ddr4_v2_2_7_r_upsizer #
   (
    parameter         C_FAMILY                         = "rtl", 
                        // FPGA Family. Current version: virtex6 or spartan6.
@@ -303,7 +303,7 @@ module ddr4_v2_2_4_r_upsizer #
       
       // Optimize next word address wrap branch of expression.
       //
-      ddr4_v2_2_4_comparator_sel_static #
+      ddr4_v2_2_7_comparator_sel_static #
         (
          .C_FAMILY(C_FAMILY),
          .C_VALUE({C_M_AXI_BYTES_LOG{1'b0}}),
@@ -319,7 +319,7 @@ module ddr4_v2_2_4_r_upsizer #
          
       assign sel_word_complete_next_wrap = ~cmd_fix & ~cmd_complete_wrap;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_inst
@@ -331,7 +331,7 @@ module ddr4_v2_2_4_r_upsizer #
          
       assign sel_m_axi_rready = cmd_valid & S_AXI_RREADY_I;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_ready_inst
@@ -341,7 +341,7 @@ module ddr4_v2_2_4_r_upsizer #
          .COUT(word_complete_next_wrap_ready)
          );
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_next_wrap_pop_inst
@@ -355,7 +355,7 @@ module ddr4_v2_2_4_r_upsizer #
       //
       assign sel_word_complete_last_word = ~cmd_fix & ~use_wrap_buffer;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_last_word_inst
@@ -367,7 +367,7 @@ module ddr4_v2_2_4_r_upsizer #
       
       assign sel_word_complete_rest = cmd_fix | ( ~cmd_modified & ( C_PACKING_LEVEL == C_DEFAULT_PACK ) );
       
-      ddr4_v2_2_4_carry_or #
+      ddr4_v2_2_7_carry_or #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_inst
@@ -377,7 +377,7 @@ module ddr4_v2_2_4_r_upsizer #
          .COUT(word_complete_rest)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_ready_inst
@@ -387,7 +387,7 @@ module ddr4_v2_2_4_r_upsizer #
          .COUT(word_complete_rest_ready)
          );
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) word_complete_rest_pop_inst
@@ -426,7 +426,7 @@ module ddr4_v2_2_4_r_upsizer #
       
       assign sel_cmd_ready  = cmd_valid & pop_si_data;
     
-      ddr4_v2_2_4_carry_latch_and #
+      ddr4_v2_2_7_carry_latch_and #
         (
          .C_FAMILY(C_FAMILY)
          ) cmd_ready_inst
@@ -706,7 +706,7 @@ module ddr4_v2_2_4_r_upsizer #
       wire last_beat_ii;
       
       
-      ddr4_v2_2_4_comparator_sel_static #
+      ddr4_v2_2_7_comparator_sel_static #
         (
          .C_FAMILY(C_FAMILY),
          .C_VALUE(8'b0),
@@ -728,7 +728,7 @@ module ddr4_v2_2_4_r_upsizer #
         
         assign sel_last_beat = ~wrap_buffer_available;
         
-        ddr4_v2_2_4_carry_and #
+        ddr4_v2_2_7_carry_and #
           (
            .C_FAMILY(C_FAMILY)
            ) last_beat_inst_1
@@ -738,7 +738,7 @@ module ddr4_v2_2_4_r_upsizer #
            .COUT(last_beat_i)
            );
   
-        ddr4_v2_2_4_carry_or #
+        ddr4_v2_2_7_carry_or #
           (
            .C_FAMILY(C_FAMILY)
            ) last_beat_wrap_inst
@@ -753,7 +753,7 @@ module ddr4_v2_2_4_r_upsizer #
            
       end
         
-      ddr4_v2_2_4_comparator_sel #
+      ddr4_v2_2_7_comparator_sel #
         (
          .C_FAMILY(C_FAMILY),
          .C_DATA_WIDTH(C_M_AXI_BYTES_LOG)

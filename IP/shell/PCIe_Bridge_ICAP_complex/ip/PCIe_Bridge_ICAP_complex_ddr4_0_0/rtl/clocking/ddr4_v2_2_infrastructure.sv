@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_infrastructure.sv
+//  /   /         Filename           : ddr4_v2_2_7_infrastructure.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -65,7 +65,7 @@
 
 `timescale 1ps/1ps
 
-module ddr4_v2_2_4_infrastructure #
+module ddr4_v2_2_7_infrastructure #
   (
    parameter CLKIN_PERIOD_MMCM     = 3750,// Input clock period
    parameter CLKFBOUT_MULT_MMCM    = 4,   // write MMCM VCO multiplier
@@ -222,7 +222,7 @@ module ddr4_v2_2_4_infrastructure #
   // MMCM instance generates the fabric and the microblaze clock
   // and generates selected additional clocks in GUI
   generate
-    if (C_FAMILY == "zynquplus" || C_FAMILY == "kintexuplus" || C_FAMILY == "virtexuplus" || C_FAMILY == "virtexuplusHBM") begin: gen_mmcme4
+    if (C_FAMILY == "zynquplus" || C_FAMILY == "kintexuplus" || C_FAMILY == "virtexuplus" || C_FAMILY == "virtexuplusHBM" || C_FAMILY == "virtexuplus58g") begin: gen_mmcme4
       MMCME4_ADV
       #(.BANDWIDTH            ("OPTIMIZED"),
         .CLKOUT4_CASCADE      ("FALSE"),

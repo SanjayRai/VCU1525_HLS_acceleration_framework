@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_b_channel.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_b_channel.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -94,7 +94,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_b_channel #
+module ddr4_v2_2_7_axi_b_channel #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -159,7 +159,7 @@ assign bresp      = P_OKAY;
 assign bvalid     = ~empty;
 assign b_pop      = bvalid & bready;
 
-ddr4_v2_2_4_axi_fifo #
+ddr4_v2_2_7_axi_fifo #
   (
   .C_WIDTH                  (P_WIDTH),
   .C_AWIDTH                 (P_AWIDTH),

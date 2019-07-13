@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_group.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc_group.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_group module
+//                   ddr4_v2_2_7_mc_group module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_group # (parameter
+module ddr4_v2_2_7_mc_group # (parameter
     ABITS = 18
    ,COLBITS = 10
    ,DBAW = 5
@@ -75,6 +75,8 @@ module ddr4_v2_2_4_mc_group # (parameter
    ,MEM = "DDR4"
    ,tRCD = 15
    ,tRP = 15
+   ,RKBITS = 2
+   ,RANK_SLAB = 4
    ,TXN_FIFO_BYPASS = "ON"
    ,TXN_FIFO_PIPE   = "OFF"
    ,PER_RD_PERF     = 1'b1
@@ -112,10 +114,10 @@ module ddr4_v2_2_4_mc_group # (parameter
    ,output reg         [1:0] cmd_group_cas
    ,output reg         [1:0] cmdGroup
    ,output reg         [1:0] cmdGroupP
-   ,output reg         [1:0] cmd_rank_cas
+   ,output reg [RKBITS-1:0]  cmd_rank_cas
    ,output reg   [LR_WIDTH-1:0] cmd_l_rank_cas
-   ,output reg         [1:0] cmdRank
-   ,output reg         [1:0] cmdRankP
+   ,output reg [RKBITS-1:0]  cmdRank
+   ,output reg [RKBITS-1:0]  cmdRankP
    ,output reg   [LR_WIDTH-1:0] cmdLRank
    ,output reg   [LR_WIDTH-1:0] cmdLRankP
    ,output reg               cmdHiPri
@@ -131,7 +133,7 @@ module ddr4_v2_2_4_mc_group # (parameter
    ,input         [1:0] group
    ,input [LR_WIDTH-1:0]l_rank
    ,input               hiPri
-   ,input         [1:0] rank
+   ,input [RKBITS-1:0]  rank
    ,input   [ABITS-1:0] row
    ,input               size
    ,input               useAdr
@@ -143,7 +145,7 @@ module ddr4_v2_2_4_mc_group # (parameter
    ,output reg          per_rd_accept
 
    ,input               readMode
-   ,input         [1:0] refRank
+   ,input [RKBITS-1:0]  refRank
    ,input [LR_WIDTH-1:0]refLRank
    ,input               refReq
    ,input               per_rd_req
@@ -172,7 +174,7 @@ localparam ROW_LSB        = 24;
 localparam COL_MSB        = 23;
 localparam COL_LSB        =  8;
 localparam WSPACE_MSB     =  7;
-localparam RANK_MSB       =  5;
+localparam RANK_MSB       =  4 + RKBITS - 1;
 localparam RANK_LSB       =  4;
 localparam GROUP_MSB      =  3;
 localparam GROUP_LSB      =  2;
@@ -242,14 +244,14 @@ generate
   end
 endgenerate
 
-reg [3:0] trcd_cntr             [3:0][S_HEIGHT_ALIASED-1:0][3:0];
-reg [3:0] trcd_cntr_nxt         [3:0][S_HEIGHT_ALIASED-1:0][3:0];
-reg       trcd_cntr_is_zero     [3:0][S_HEIGHT_ALIASED-1:0][3:0];
-reg       trcd_cntr_is_zero_nxt [3:0][S_HEIGHT_ALIASED-1:0][3:0];
+reg [3:0] trcd_cntr             [RANK_SLAB-1:0][S_HEIGHT_ALIASED-1:0][3:0];
+reg [3:0] trcd_cntr_nxt         [RANK_SLAB-1:0][S_HEIGHT_ALIASED-1:0][3:0];
+reg       trcd_cntr_is_zero     [RANK_SLAB-1:0][S_HEIGHT_ALIASED-1:0][3:0];
+reg       trcd_cntr_is_zero_nxt [RANK_SLAB-1:0][S_HEIGHT_ALIASED-1:0][3:0];
 reg [4:0] trp_cntr;
 reg       trp_cntr_is_zero;
-reg [3:0] tras_cntr_rb          [3:0][S_HEIGHT_ALIASED-1:0][3:0];
-reg [3:0] tras_cntr_rb_nxt      [3:0][S_HEIGHT_ALIASED-1:0][3:0];
+reg [3:0] tras_cntr_rb          [RANK_SLAB-1:0][S_HEIGHT_ALIASED-1:0][3:0];
+reg [3:0] tras_cntr_rb_nxt      [RANK_SLAB-1:0][S_HEIGHT_ALIASED-1:0][3:0];
 reg [2:0] cmdCmd;
 reg       actReqR;
 reg       set_act_req;
@@ -277,20 +279,20 @@ localparam PAGE_STATUS_BITS = 2;
 // upper bits - page
 // bit  1     - Autoprecharge in progress
 // bit  0     - page open
-reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo     [0:3][S_HEIGHT_ALIASED-1:0][0:3]; // [rank_index][logical_rank_index][bank_index]
-reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_nxt [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_ref [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_act [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_exp [0:3][S_HEIGHT_ALIASED-1:0][0:3];
+reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo     [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3]; // [rank_index][logical_rank_index][bank_index]
+reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_nxt [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_ref [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_act [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg [LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS-1:0] pageInfo_exp [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
 
 // Autoprecharge timers
-reg [4:0]     ap_cntr             [0:3][S_HEIGHT_ALIASED-1:0][0:3]; // [rank_index][logical_rank_index][bank_index]
-reg [4:0]     ap_cntr_nxt         [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg [4:0]     ap_cntr_dec         [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg           ap_cntr_zero        [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg           ap_cntr_zero_nxt    [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg           ap_cntr_expired     [0:3][S_HEIGHT_ALIASED-1:0][0:3];
-reg           ap_cntr_expired_nxt [0:3][S_HEIGHT_ALIASED-1:0][0:3];
+reg [4:0]     ap_cntr             [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3]; // [rank_index][logical_rank_index][bank_index]
+reg [4:0]     ap_cntr_nxt         [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg [4:0]     ap_cntr_dec         [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg           ap_cntr_zero        [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg           ap_cntr_zero_nxt    [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg           ap_cntr_expired     [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
+reg           ap_cntr_expired_nxt [0:RANK_SLAB-1][S_HEIGHT_ALIASED-1:0][0:3];
 reg [4:0]     ap_load_value;
 
 // Flops to time periodic read injection without corrupting NI traffic
@@ -446,7 +448,7 @@ wire               fifo_output_ap      = txn_fifo_output[ AP_FIELD ];
 wire [2:0]         fifo_output_cmd     = txn_fifo_output[ CMD_MSB   : CMD_LSB   ];
 wire [ABITS-1:0]   fifo_output_row     = txn_fifo_output[ ROW_MSB   : ROW_LSB   ]; // spyglass disable W164a
 wire [COLBITS-1:0] fifo_output_col     = txn_fifo_output[ COL_MSB   : COL_LSB   ]; // spyglass disable W164a
-wire [1:0]         fifo_output_rank    = txn_fifo_output[ RANK_MSB  : RANK_LSB  ];
+wire [RKBITS-1:0]  fifo_output_rank    = txn_fifo_output[ RANK_MSB  : RANK_LSB  ];
 wire [1:0]         fifo_output_group   = txn_fifo_output[ GROUP_MSB : GROUP_LSB ];
 wire [1:0]         fifo_output_bank    = txn_fifo_output[ BANK_MSB  : BANK_LSB  ];
 wire [LR_WIDTH-1:0]fifo_output_l_rank;
@@ -489,7 +491,7 @@ wire wr_req_nxt                = ( wrReqR | set_wr_req ) & ~cas_won;
 // Sticky flops to capture precharge and activate command requests
 wire       pre_req_nxt         = ( preReqR | set_pre_req ) & ~pre_won;
 wire [1:0] pre_bank_nxt        = set_pre_req ? cmdBank  : cmdBankP;
-wire [1:0] pre_rank_nxt        = set_pre_req ? cmdRank  : cmdRankP;
+wire [RKBITS-1:0] pre_rank_nxt = set_pre_req ? cmdRank  : cmdRankP;
 
 // When Logical Rank aliasing is turned on the precharge logical rank comes
 // from the page table. When Logical Rank aliasing is turned off the precharge 
@@ -530,10 +532,10 @@ generate
 always @(*) begin
   for (fifo_entry = 0; fifo_entry < CAS_FIFO_DEPTH; fifo_entry++) begin
     if (ALIAS_PAGE == "OFF" && S_HEIGHT > 1)
-      cas_pend_cam     [fifo_entry] = { cmdRank, cmdBank } == { cas_pend_fifo[fifo_entry][5:4], cas_pend_fifo[fifo_entry][1:0] } &
+      cas_pend_cam     [fifo_entry] = { cmdRank, cmdBank } == { cas_pend_fifo[fifo_entry][RANK_MSB:RANK_LSB], cas_pend_fifo[fifo_entry][1:0] } &
                                       cmdLRank == cas_pend_fifo[fifo_entry][LR_LSB+LR_WIDTH-1:LR_LSB];
     else
-      cas_pend_cam     [fifo_entry] = { cmdRank, cmdBank } == { cas_pend_fifo[fifo_entry][5:4], cas_pend_fifo[fifo_entry][1:0] };
+      cas_pend_cam     [fifo_entry] = { cmdRank, cmdBank } == { cas_pend_fifo[fifo_entry][RANK_MSB:RANK_LSB], cas_pend_fifo[fifo_entry][1:0] };
 
     cas_pend_ap_status [fifo_entry] = cas_pend_fifo[fifo_entry][ AP_FIELD ];
   end
@@ -704,7 +706,7 @@ wire                       cas_pend_output_ap      = cas_pend_fifo_output[ AP_FI
 wire [2:0]                 cas_pend_output_cmd     = cas_pend_fifo_output[ CMD_MSB   : CMD_LSB   ];
 wire [ABITS-1:0]           cas_pend_output_row     = cas_pend_fifo_output[ ROW_MSB   : ROW_LSB   ]; // spyglass disable W164a
 wire [COLBITS-1:0]         cas_pend_output_col     = cas_pend_fifo_output[ COL_MSB   : COL_LSB   ]; // spyglass disable W164a
-wire [1:0]                 cas_pend_output_rank    = cas_pend_fifo_output[ RANK_MSB  : RANK_LSB  ];
+wire [RKBITS-1:0]          cas_pend_output_rank    = cas_pend_fifo_output[ RANK_MSB  : RANK_LSB  ];
 wire [1:0]                 cas_pend_output_group   = cas_pend_fifo_output[ GROUP_MSB : GROUP_LSB ];
 wire [1:0]                 cas_pend_output_bank    = cas_pend_fifo_output[ BANK_MSB  : BANK_LSB  ];
 wire [LR_WIDTH-1:0]        cas_pend_output_l_rank;
@@ -717,7 +719,7 @@ endgenerate
 wire [DBAW-1:0]            cas_dbuf_output         = cas_dbuf_fifo[cas_fifo_rptr];
 
 wire [1:0]         cmd_group_cas_nxt     = cas_pend_output_group;
-wire [1:0]         cmd_rank_cas_nxt      = cas_pend_output_rank;
+wire [RKBITS-1:0]  cmd_rank_cas_nxt      = cas_pend_output_rank;
 wire [1:0]         cmd_bank_cas_nxt      = cas_pend_output_bank;
 wire [COLBITS-1:0] cmd_col_nxt           = cas_pend_output_col;
 wire               cmd_ap_nxt            = cas_pend_output_ap;
@@ -802,7 +804,7 @@ wire [4:0] ap_load_value_nxt = wrReqR ? ( wr_ap_load_value + { 1'b0, tRPF } ) : 
 
 // Track page open and CAS with autoprecharge to Activate time on a per Rank per Bank basis
 always @(*) begin
-  for (rank_index = 0; rank_index <= 3; rank_index++) begin
+  for (rank_index = 0; rank_index <= RANK_SLAB-1; rank_index++) begin
     for (lr_index = 0; lr_index <= S_HEIGHT_ALIASED-1; lr_index++) begin
       for (bank_index = 0; bank_index <= 3; bank_index++) begin
 
@@ -845,7 +847,7 @@ end
 
 always @(posedge clk) begin
   if (rst_r1) begin
-    for (rank_index = 0; rank_index <= 3; rank_index++) begin
+    for (rank_index = 0; rank_index <= RANK_SLAB-1; rank_index++) begin
       for (lr_index = 0; lr_index <= S_HEIGHT_ALIASED-1; lr_index++) begin
       for (bank_index = 0; bank_index <= 3; bank_index++) begin
           pageInfo     [rank_index][lr_index][bank_index]   <= {LR_WIDTH_ALIASED+ABITS+PAGE_STATUS_BITS{1'b0}};
@@ -875,9 +877,9 @@ always @(posedge clk) begin
     cmdBankP             <= #TCQ 2'b0;
     cmdGroupP            <= #TCQ 2'b0;
     cmdLRankP            <= #TCQ '0;
-    cmdRankP             <= #TCQ 2'b0;
+    cmdRankP             <= #TCQ {RKBITS{1'b0}};
     cmd_group_cas        <= #TCQ 2'b0;
-    cmd_rank_cas         <= #TCQ 2'b0;
+    cmd_rank_cas         <= #TCQ {RKBITS{1'b0}};
     cmd_l_rank_cas       <= #TCQ '0;
     cmd_bank_cas         <= #TCQ 2'b0;
     cmdCol               <= #TCQ '0;
@@ -888,7 +890,7 @@ always @(posedge clk) begin
     periodic_read_address  <= #TCQ ( ( 1'b1 << PER_RD_FIELD ) | ( NATRD << CMD_LSB ) );
     cas_fifo_valid         <= #TCQ '0;
   end else begin
-    for (rank_index = 0; rank_index <= 3; rank_index++) begin
+    for (rank_index = 0; rank_index <= RANK_SLAB-1; rank_index++) begin
       for (lr_index = 0; lr_index <= S_HEIGHT_ALIASED-1; lr_index++) begin
       for (bank_index = 0; bank_index <= 3; bank_index++) begin
           pageInfo     [rank_index][lr_index][bank_index]    <= #TCQ pageInfo_nxt     [rank_index][lr_index][bank_index];
@@ -935,7 +937,7 @@ end
 
 
 always @(posedge clk) begin
-    for (rank_index = 0; rank_index <= 3; rank_index++) begin
+    for (rank_index = 0; rank_index <= RANK_SLAB-1; rank_index++) begin
       for (lr_index = 0; lr_index <= S_HEIGHT_ALIASED-1; lr_index++) begin
       for (bank_index = 0; bank_index <= 3; bank_index++) begin
           ap_cntr_expired  [rank_index][lr_index][bank_index]  <= #TCQ ap_cntr_expired_nxt  [rank_index][lr_index][bank_index];
@@ -1075,7 +1077,7 @@ always @(posedge clk) mc_group_019: if (~rst_r1) cover property (e_mc_group_019_
 reg    e_ref_rank_clear_dly;
 wire   e_ref_rank_clear_nxt = ref_rank_clear & ( grSt==grIDLE );
 always    @(posedge clk) e_ref_rank_clear_dly  <= #TCQ ( e_ref_rank_clear_nxt );
-reg [1:0] e_ref_rank_dly;
+reg [RKBITS-1:0] e_ref_rank_dly;
 always    @(posedge clk) e_ref_rank_dly  <= #TCQ ( refRank );
 wire   e_mc_group_020_ref    = e_ref_rank_clear_dly & ref_rank_clear & ( grSt==grIDLE ) & ~( e_ref_rank_dly == refRank );
 always @(posedge clk) mc_group_020: if (~rst_r1) cover property (e_mc_group_020_ref);
@@ -1120,7 +1122,7 @@ reg [3:0] e_num_ap_in_prog;
 always @(*) begin
   e_all_pages_open = 1'b1;
   e_num_ap_in_prog = 4'b0;
-  for (rank_index = 0; rank_index <= 3; rank_index++) begin
+  for (rank_index = 0; rank_index <= RANK_SLAB-1; rank_index++) begin
     for (lr_index = 0; lr_index <= S_HEIGHT_ALIASED-1; lr_index++) begin
       for (bank_index = 0; bank_index <= 3; bank_index++) begin
         e_all_pages_open &= pageInfo[rank_index][lr_index][bank_index][0];

@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_act_timer.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc_act_timer.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_act_timer module
+//                   ddr4_v2_2_7_mc_act_timer module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_act_timer #(parameter
+module ddr4_v2_2_7_mc_act_timer #(parameter
     tFAW   = 500
    ,tFAW_dlr = 500
    ,tRRD_L = 500
@@ -74,6 +74,8 @@ module ddr4_v2_2_4_mc_act_timer #(parameter
    ,BGBITS  = 2
    ,S_HEIGHT = 1
    ,LR_WIDTH = 1
+   ,RKBITS    = 2
+   ,RANK_SLAB = 4
    ,MEM     = "DDR4"
    ,TCQ    = 0.1   
 )(
@@ -83,39 +85,52 @@ module ddr4_v2_2_4_mc_act_timer #(parameter
    ,output [3:0] actReqT
 
    ,input [3:0] actReq
-   ,input [7:0] cmdRank
+   ,input [RKBITS*4-1:0] cmdRank
    ,input [4*LR_WIDTH-1:0] cmdLRank
    ,input [3:0] winPort
-   ,input [1:0] winRank
+   ,input [RKBITS-1:0] winRank
    ,input [LR_WIDTH-1:0] winLRank
    ,input [3:0] act_winPort_nxt
-   ,input [3:0] act_rank_update
+   ,input [RANK_SLAB-1:0] act_rank_update
 );
 
 integer i, j;
 
 localparam TWO_GROUP_DDR4 = ( ( BGBITS == 1 ) & ( MEM == "DDR4" ) ) ? "TRUE" : "FALSE";
 
-wire [3:0] rrdOK[0:3];
-wire [3:0] fawOK;
+wire [3:0] rrdOK[0:RANK_SLAB-1];
+wire [RANK_SLAB-1:0] fawOK;
 
+generate
+if (RANK_SLAB == 4) begin: aReqT_4R
 assign actReqT =   ( rrdOK[0] & { 4 { fawOK[0] } } )
                  | ( rrdOK[1] & { 4 { fawOK[1] } } )
                  | ( rrdOK[2] & { 4 { fawOK[2] } } )
                  | ( rrdOK[3] & { 4 { fawOK[3] } } );
+end else begin:aReqT_8R
+assign actReqT =   ( rrdOK[0] & { 4 { fawOK[0] } } )
+                 | ( rrdOK[1] & { 4 { fawOK[1] } } )
+                 | ( rrdOK[2] & { 4 { fawOK[2] } } )
+                 | ( rrdOK[3] & { 4 { fawOK[3] } } )
+                 | ( rrdOK[4] & { 4 { fawOK[4] } } )
+                 | ( rrdOK[5] & { 4 { fawOK[5] } } )
+                 | ( rrdOK[6] & { 4 { fawOK[6] } } )
+                 | ( rrdOK[7] & { 4 { fawOK[7] } } );
+end
+endgenerate
 
-reg [3:0] update;
+reg [RANK_SLAB-1:0] update;
 reg [1:0] winGr;
 reg [1:0] winGr2;
-reg [3:0] actReqs[0:3];
+reg [3:0] actReqs[0:RANK_SLAB-1];
 reg [LR_WIDTH-1:0] winLRank_nxt;
 
 always @(*) begin
-   for (i = 0; i <= 3; i++) actReqs[i] = 4'b0;
-   if (actReq[0]) actReqs[cmdRank[1:0]][0] = 1'b1;
-   if (actReq[1]) actReqs[cmdRank[3:2]][1] = 1'b1;
-   if (actReq[2]) actReqs[cmdRank[5:4]][2] = 1'b1;
-   if (actReq[3]) actReqs[cmdRank[7:6]][3] = 1'b1;
+   for (i = 0; i <= RANK_SLAB-1; i++) actReqs[i] = 4'b0;
+   if (actReq[0]) actReqs[cmdRank[RKBITS*1-1:RKBITS*0]][0] = 1'b1;
+   if (actReq[1]) actReqs[cmdRank[RKBITS*2-1:RKBITS*1]][1] = 1'b1;
+   if (actReq[2]) actReqs[cmdRank[RKBITS*3-1:RKBITS*2]][2] = 1'b1;
+   if (actReq[3]) actReqs[cmdRank[RKBITS*4-1:RKBITS*3]][3] = 1'b1;
 end
 
 always @(*) begin
@@ -139,7 +154,7 @@ always @(*) begin
 end
 
 always @(*) begin
-   update = 4'b0;
+   update = {RANK_SLAB{1'b0}};
    winGr = 2'b0;
    winGr2 = 2'b0;
    casez (winPort)
@@ -164,7 +179,7 @@ always @(*) begin
          winGr2 = 2'd2;
       end
       default: begin
-         update = 4'b0;
+         update = {RANK_SLAB{1'b0}};
          winGr  = 2'b0;
          winGr2 = 2'b0;
       end
@@ -173,8 +188,8 @@ end
 
 genvar r;
 generate
-   for (r = 0; r <= 3; r = r + 1) begin:rr
-      ddr4_v2_2_4_mc_act_rank #(
+   for (r = 0; r <= RANK_SLAB-1; r = r + 1) begin:rr
+      ddr4_v2_2_7_mc_act_rank #(
          .tFAW   (tFAW)
         ,.tFAW_dlr(tFAW_dlr)
         ,.tRRD_L (tRRD_L)
@@ -212,37 +227,37 @@ endgenerate
 // ---------------------------------------------------------------------------------------------
 
 // Act request blocked by tRRD
-wire   e_mc_act_timer_000_rrd = actReq[0] & fawOK[cmdRank[1:0]] & ~rrdOK[cmdRank[1:0]][0];
+wire   e_mc_act_timer_000_rrd = actReq[0] & fawOK[cmdRank[RKBITS*1-1:RKBITS*0]] & ~rrdOK[cmdRank[RKBITS*1-1:RKBITS*0]][0];
 always @(posedge clk) mc_act_timer_000: if (~rst) cover property (e_mc_act_timer_000_rrd);
 
 // Three Act requests blocked by tRRD
 wire   e_mc_act_timer_001_rrd = ( & actReq[2:0] ) 
-                                & fawOK[cmdRank[1:0]] & fawOK[cmdRank[3:2]] & fawOK[cmdRank[5:4]] 
-                                & ~rrdOK[cmdRank[1:0]][0] & ~rrdOK[cmdRank[3:2]][0] & ~rrdOK[cmdRank[5:4]][0];
+                                & fawOK[cmdRank[RKBITS*1-1:RKBITS*0]] & fawOK[cmdRank[RKBITS*2-1:RKBITS*1]] & fawOK[cmdRank[RKBITS*3-1:RKBITS*2]] 
+                                & ~rrdOK[cmdRank[RKBITS*1-1:RKBITS*0]][0] & ~rrdOK[cmdRank[RKBITS*2-1:RKBITS*1]][0] & ~rrdOK[cmdRank[RKBITS*3-1:RKBITS*2]][0];
 always @(posedge clk) mc_act_timer_001: if (~rst) cover property (e_mc_act_timer_001_rrd);
 
 // Act requests to two different ranks blocked by tRRD
 wire   e_mc_act_timer_002_rrd = ( & actReq[1:0] ) 
-                                & fawOK[cmdRank[1:0]] & fawOK[cmdRank[3:2]]
-                                & ~rrdOK[cmdRank[1:0]][0] & ~rrdOK[cmdRank[3:2]][0]
-                                & ~( cmdRank[1:0] == cmdRank[3:2] );
+                                & fawOK[cmdRank[RKBITS*1-1:RKBITS*0]] & fawOK[cmdRank[RKBITS*2-1:RKBITS*1]]
+                                & ~rrdOK[cmdRank[RKBITS*1-1:RKBITS*0]][0] & ~rrdOK[cmdRank[RKBITS*2-1:RKBITS*1]][0]
+                                & ~( cmdRank[RKBITS*1-1:RKBITS*0] == cmdRank[RKBITS*2-1:RKBITS*1] );
 always @(posedge clk) mc_act_timer_002: if (~rst) cover property (e_mc_act_timer_002_rrd);
 
 // Act request blocked by tFAW
-wire   e_mc_act_timer_003_faw = actReq[0] & ~fawOK[cmdRank[1:0]] & rrdOK[cmdRank[1:0]][0];
+wire   e_mc_act_timer_003_faw = actReq[0] & ~fawOK[cmdRank[RKBITS*1-1:RKBITS*0]] & rrdOK[cmdRank[RKBITS*1-1:RKBITS*0]][0];
 always @(posedge clk) mc_act_timer_003: if (~rst) cover property (e_mc_act_timer_003_faw);
 
 // Three Act requests blocked by tFAW
 wire   e_mc_act_timer_004_faw = ( & actReq[3:1] ) 
-                                & ~fawOK[cmdRank[7:6]] & ~fawOK[cmdRank[3:2]] & ~fawOK[cmdRank[5:4]] 
-                                & rrdOK[cmdRank[7:6]][0] & rrdOK[cmdRank[3:2]][0] & rrdOK[cmdRank[5:4]][0];
+                                & ~fawOK[cmdRank[RKBITS*4-1:RKBITS*3]] & ~fawOK[cmdRank[RKBITS*2-1:RKBITS*1]] & ~fawOK[cmdRank[RKBITS*3-1:RKBITS*2]] 
+                                & rrdOK[cmdRank[RKBITS*4-1:RKBITS*3]][0] & rrdOK[cmdRank[RKBITS*2-1:RKBITS*1]][0] & rrdOK[cmdRank[RKBITS*3-1:RKBITS*2]][0];
 always @(posedge clk) mc_act_timer_004: if (~rst) cover property (e_mc_act_timer_004_faw);
 
 // Act requests to two different ranks blocked by tFAW
 wire   e_mc_act_timer_005_faw = ( & actReq[3:2] ) 
-                                & ~fawOK[cmdRank[7:6]] & ~fawOK[cmdRank[5:4]]
-                                & rrdOK[cmdRank[7:6]][0] & rrdOK[cmdRank[5:4]][0]
-                                & ~( cmdRank[7:6] == cmdRank[5:4] );
+                                & ~fawOK[cmdRank[RKBITS*4-1:RKBITS*3]] & ~fawOK[cmdRank[RKBITS*3-1:RKBITS*2]]
+                                & rrdOK[cmdRank[RKBITS*4-1:RKBITS*3]][0] & rrdOK[cmdRank[RKBITS*3-1:RKBITS*2]][0]
+                                & ~( cmdRank[RKBITS*4-1:RKBITS*3] == cmdRank[RKBITS*3-1:RKBITS*2] );
 always @(posedge clk) mc_act_timer_005: if (~rst) cover property (e_mc_act_timer_005_faw);
 
 
@@ -251,6 +266,7 @@ always @(posedge clk) mc_act_timer_005: if (~rst) cover property (e_mc_act_timer
 // ---------------------------------------------------------------------------------------------
 
 integer group_index;
+integer rank_index;
 
 // One-hot cold checks
 reg [2:0]  a_winport_hot;
@@ -260,7 +276,9 @@ always @(*) begin
   a_act_rank_update_hot = 2'b0;
   for (group_index = 0; group_index < 4; group_index = group_index + 1) begin
     a_winport_hot         += winPort[group_index];
-    a_act_rank_update_hot += act_rank_update[group_index];
+  end
+  for (rank_index = 0; rank_index < RANK_SLAB; rank_index = rank_index + 1) begin
+    a_act_rank_update_hot += act_rank_update[rank_index];
   end
 end
 wire       a_mc_act_timer_000_hot = ( a_winport_hot > 3'd1 );

@@ -87,6 +87,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       DEDICATE_PERST               = "TRUE",
         parameter       SYS_RESET_POLARITY           = 0,
         parameter       MCAP_ENABLEMENT              = "NONE",
+        parameter       MCAP_FPGA_BITSTREAM_VERSION = 32'h00000000,
         parameter       EXT_STARTUP_PRIMITIVE        = "FALSE",
         parameter       PF0_VENDOR_ID                = 16'h10EE,
         parameter       PF0_DEVICE_ID                = 16'h9011,
@@ -194,6 +195,10 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       FUNC_MODE                    = 1,
         parameter       INTERRUPT_OUT_WIDTH          = 1,
         parameter       C_MSI_RX_PIN_EN              = 0,
+        parameter       C_MSIX_RX_PIN_EN             = 1,
+        parameter       C_INTX_RX_PIN_EN             = 1,
+        parameter       MSIX_RX_DECODE_EN            = "FALSE",
+        parameter       MSIX_VEC_NUM                 = 1024,
         parameter       PF1_ENABLED                  = 0,
         parameter       PF2_ENABLED                  = 0,
         parameter       PF3_ENABLED                  = 0,
@@ -240,6 +245,8 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       PF0_BAR4_CONTROL             = 3'b100,
         parameter       PF0_BAR5_APERTURE_SIZE       = 5'b00011,
         parameter       PF0_BAR5_CONTROL             = 3'b000,
+        parameter       PF0_EXPANSION_ROM_ENABLE     = "FALSE",
+        parameter [4:0] PF0_EXPANSION_ROM_APERTURE_SIZE = 5'b00011,
         parameter       PF1_BAR0_APERTURE_SIZE       = 5'b00011,
         parameter       PF1_BAR0_CONTROL             = 3'b100,
         parameter       PF1_BAR1_APERTURE_SIZE       = 5'b00000,
@@ -252,16 +259,20 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       PF1_BAR4_CONTROL             = 3'b100,
         parameter       PF1_BAR5_APERTURE_SIZE       = 5'b00011,
         parameter       PF1_BAR5_CONTROL             = 3'b000,
+        parameter       PF1_EXPANSION_ROM_ENABLE     = "FALSE",
+        parameter [4:0] PF1_EXPANSION_ROM_APERTURE_SIZE = 5'b00011,
         parameter [63:0]PF1_PCIEBAR2AXIBAR_0         = 64'h0000000000000000,
         parameter [63:0]PF1_PCIEBAR2AXIBAR_1         = 64'h0000000000000000,
         parameter [63:0]PF1_PCIEBAR2AXIBAR_2         = 64'h0000000000000000,
         parameter [63:0]PF1_PCIEBAR2AXIBAR_3         = 64'h0000000000000000,
         parameter [63:0]PF1_PCIEBAR2AXIBAR_4         = 64'h0000000000000000,
         parameter [63:0]PF1_PCIEBAR2AXIBAR_5         = 64'h0000000000000000,
+        parameter [63:0]PF1_PCIEBAR2AXIBAR_6         = 64'h0000000000000000,
         parameter       PCIEBAR_NUM                  = 6,
         parameter [63:0]C_PCIEBAR2AXIBAR_3           = 64'h00000000,
         parameter [63:0]C_PCIEBAR2AXIBAR_4           = 64'h00000000,
         parameter [63:0]C_PCIEBAR2AXIBAR_5           = 64'h00000000,
+        parameter [63:0]C_PCIEBAR2AXIBAR_6           = 64'h00000000,
         parameter       BARLITE1                     = 0,
         parameter       BARLITE2                     = 0,
         parameter       C_MSIX_INT_TABLE_EN          = 1,
@@ -273,7 +284,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       C_AXIBAR_AS_3                = 1,
         parameter       C_AXIBAR_AS_4                = 1,
         parameter       C_AXIBAR_AS_5                = 1,
-        parameter       C_MSI_ENABLED                = (MSI_ENABLED == "true")? "TRUE" : "FALSE",
+        parameter       C_MSI_ENABLED                = MSI_ENABLED,
         parameter       C_NUM_DSC_PCIE_RID           = 32,
         parameter       C_NUM_PCIE_DSC_CPL_DID       = 256,
         parameter       C_NUM_AXI_DSC_CPL_DID        = 64,
@@ -309,9 +320,9 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       C_USER_PTR                   = 16'h00D8,    // Address pointer to User Space
         parameter       C_S_AXI_SUPPORTS_NARROW_BURST= 0,
         parameter       C_S_AXI_ID_WIDTH             = 4,
-        parameter       C_S_AXI_ADDR_WIDTH           = AXI_ADDR_WIDTH,
+        parameter       C_S_AXI_ADDR_WIDTH           = 64,
         parameter       C_S_AXI_DATA_WIDTH           = AXI_DATA_WIDTH,
-        parameter       C_M_AXI_ADDR_WIDTH           = AXI_ADDR_WIDTH,
+        parameter       C_M_AXI_ADDR_WIDTH           = 64,
         parameter       C_S_AXIS_DATA_WIDTH          = AXI_DATA_WIDTH,
         parameter       C_M_AXIS_DATA_WIDTH          = AXI_DATA_WIDTH,
         parameter       C_M_AXIS_RQ_USER_WIDTH       = 137,
@@ -332,8 +343,9 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       C_ECC_ENABLE                 = 0,
         parameter       C_DSC_MAGIC_EN               = 1,
         parameter       C_NUMQ_PER_CHNL              = 256,
-        parameter       C_RD_BUFFER_ADDR_SIZE        = 9,
-        parameter       C_RD_BUFFER_SIZE_BITS        = 5,
+        parameter       C_SLAVE_READ_64OS_EN         = 0,
+        parameter       C_RD_BUFFER_ADDR_SIZE        = C_SLAVE_READ_64OS_EN ? 10 : 9,
+        parameter       C_RD_BUFFER_SIZE_BITS        = C_SLAVE_READ_64OS_EN ?  6 : 5, 
         parameter       C_PCIEBAR_NUM                = PCIEBAR_NUM,
         parameter       C_PCIEBAR_AS                 = 1,
         parameter       C_NUM_MSIX_VECTORS           = 32,
@@ -349,6 +361,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter       PMON_EN                      = 1,
         parameter       MULT_PF_DES                  = "FALSE",
         parameter       SPLIT_DMA                    = "FALSE",
+        parameter       SPLIT_DMA_SINGLE_PF          = "FALSE",
         parameter       PIPE_LINE_STAGE              = 2,
         parameter       AXIS_PIPE_LINE_STAGE         = 2,
         parameter       VU9P_TUL_EX                  = "FALSE",
@@ -426,7 +439,13 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
         parameter [1:0] TL_PF_ENABLE_REG             = 2'h0,
         parameter       PCIE_ID_IF                   = "FALSE",
         parameter[31:0] C_OST_PR_CAP                 = 32'h0,
-		parameter       RUNBIT_FIX                   = "FALSE"
+        parameter       AXSIZE_BYTE_ACCESS_EN        = "FALSE",
+        parameter       PF_SWAP                      = "FALSE",
+        parameter       RUNBIT_FIX                   = "FALSE",
+        parameter       RBAR_ENABLE                  = "FALSE",
+        parameter       C_SMMU_EN                    = 0,
+	parameter       C_M_AXI_NUM_READQ            = 2,
+        parameter       USE_STANDARD_INTERFACES      ="FALSE"
 )
 (
   sys_clk,
@@ -575,6 +594,10 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   interrupt_out,
   interrupt_out_msi_vec0to31,
   interrupt_out_msi_vec32to63,
+  interrupt_out_msix_0,
+  interrupt_out_msix_1,
+  interrupt_out_msix_2,
+  interrupt_out_msix_3,
   s_axis_c2h_tdata_0,
   s_axis_c2h_tlast_0,
   s_axis_c2h_tuser_0,
@@ -1564,9 +1587,18 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   s_axis_cc_tvalid_sd,
   s_axis_cc_tready_sd,
                                                                                    
+  rbar_bar_size_sd,
+  rbar_function_number_sd,
+  rbar_write_enable_bar0_sd,
+  rbar_write_enable_bar1_sd,
+  rbar_write_enable_bar2_sd,
+  rbar_write_enable_bar3_sd,
+  rbar_write_enable_bar4_sd,
+  rbar_write_enable_bar5_sd,
   user_clk_sd,
   user_reset_sd,
   pcie_cq_np_req_sd,
+  pcie_cq_np_req_count_sd,
   pcie_tfc_nph_av_sd,
   pcie_tfc_npd_av_sd,
   pcie_rq_seq_num_vld0_sd,
@@ -1607,6 +1639,16 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   cfg_msg_transmit_type_sd,
   cfg_msg_transmit_data_sd,
   cfg_msg_transmit_done_sd,
+
+  cfg_mgmt_addr_sd,                 
+  cfg_mgmt_write_sd,                
+  cfg_mgmt_write_data_sd,
+  cfg_mgmt_byte_enable_sd,          
+  cfg_mgmt_read_sd,          
+  cfg_mgmt_type1_cfg_reg_access_sd,
+  cfg_mgmt_read_data_sd, 
+  cfg_mgmt_read_write_done_sd,
+  cfg_mgmt_function_number_sd,
 
   cfg_interrupt_int_sd,
   cfg_interrupt_sent_sd,
@@ -1669,6 +1711,36 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   cxs0_crdrtn_chk_rx,
   cxs0_cntl_chk_rx,
   cxs0_data_chk_rx,
+
+  // CXS interface
+  pcie4_cxs0_active_req_tx_sd, 
+  pcie4_cxs0_active_ack_tx_sd, 
+  pcie4_cxs0_deact_hint_tx_sd, 
+  pcie4_cxs0_valid_tx_sd,
+  pcie4_cxs0_crdgnt_tx_sd,
+  pcie4_cxs0_crdrtn_tx_sd,     
+  pcie4_cxs0_cntl_tx_sd,
+  pcie4_cxs0_data_tx_sd,
+  pcie4_cxs0_valid_chk_tx_sd,  
+  pcie4_cxs0_crdgnt_chk_tx_sd,
+  pcie4_cxs0_crdrtn_chk_tx_sd, 
+  pcie4_cxs0_cntl_chk_tx_sd,   
+  pcie4_cxs0_data_chk_tx_sd, 
+  pcie4_cxs0_active_req_rx_sd, 
+  pcie4_cxs0_active_ack_rx_sd, 
+  pcie4_cxs0_deact_hint_rx_sd, 
+  pcie4_cxs0_valid_rx_sd, 
+  pcie4_cxs0_crdgnt_rx_sd,
+  pcie4_cxs0_crdrtn_rx_sd,
+  pcie4_cxs0_cntl_rx_sd,
+  pcie4_cxs0_data_rx_sd,
+  pcie4_cxs0_valid_chk_rx_sd, 
+  pcie4_cxs0_crdgnt_chk_rx_sd, 
+  pcie4_cxs0_crdrtn_chk_rx_sd,
+  pcie4_cxs0_cntl_chk_rx_sd,
+  pcie4_cxs0_data_chk_rx_sd,
+
+  ccix_optimized_tlp_tx_and_rx_enable_in,
 
   //s_axil_awaddr_ats,
   //s_axil_awvalid_ats,
@@ -2324,7 +2396,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    output [2:0]                    msi_vector_width;
 
    output  [C_M_AXI_ID_WIDTH-1 : 0]     m_axi_awid;
-   output  [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axi_awaddr;
+   output  [AXI_ADDR_WIDTH-1 : 0]       m_axi_awaddr;
    output  [7 : 0]                      m_axi_awlen;
    output  [2 : 0]                      m_axi_awsize;
    output  [1 : 0]                      m_axi_awburst;
@@ -2344,7 +2416,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    input                                m_axi_bvalid;
    output                               m_axi_bready;
    output  [C_M_AXI_ID_WIDTH-1 : 0]     m_axi_arid;
-   output  [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axi_araddr;
+   output  [AXI_ADDR_WIDTH-1 : 0]       m_axi_araddr;
    output  [7 : 0]                      m_axi_arlen;
    output  [2 : 0]                      m_axi_arsize;
    output  [1 : 0]                      m_axi_arburst;
@@ -2362,7 +2434,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    output                               m_axi_rready;
    // Axi bypass
    output  [C_M_AXI_ID_WIDTH-1 : 0]     m_axib_awid;
-   output  [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axib_awaddr;
+   output  [AXI_ADDR_WIDTH-1 : 0]       m_axib_awaddr;
    output  [C_M_AXI_AWUSER_WIDTH-1 : 0] m_axib_awuser;
    output  [7 : 0]                      m_axib_awlen;
    output  [2 : 0]                      m_axib_awsize;
@@ -2383,7 +2455,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    input                                m_axib_bvalid ;
    output                               m_axib_bready ;
    output  [C_M_AXI_ID_WIDTH-1 : 0]     m_axib_arid ;
-   output  [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axib_araddr ;
+   output  [AXI_ADDR_WIDTH-1 : 0]       m_axib_araddr ;
    output  [C_M_AXI_ARUSER_WIDTH-1 : 0] m_axib_aruser ;
    output  [7 : 0]                      m_axib_arlen ;
    output  [2 : 0]                      m_axib_arsize ;
@@ -2501,7 +2573,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    input                                s_axil_rready;
    //-- AXI Slave Write Address Channel
    input [C_S_AXI_ID_WIDTH-1:0]         s_axib_awid;
-   input [C_S_AXI_ADDR_WIDTH-1:0]       s_axib_awaddr;
+   input [AXI_ADDR_WIDTH-1:0]           s_axib_awaddr;
    input [3:0]                          s_axib_awregion;
    input [7:0]                          s_axib_awlen;
    input [2:0]                          s_axib_awsize;
@@ -2522,7 +2594,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    input                                s_axib_bready;
    //-- AXI Slave Read Address Channel
    input  [C_S_AXI_ID_WIDTH-1:0]        s_axib_arid;
-   input  [C_S_AXI_ADDR_WIDTH-1:0]      s_axib_araddr;
+   input  [AXI_ADDR_WIDTH-1:0]          s_axib_araddr;
    input  [3:0]                         s_axib_arregion;
    input  [7:0]                         s_axib_arlen;
    input  [2:0]                         s_axib_arsize;
@@ -2693,7 +2765,37 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    output          cxs0_cntl_chk_rx;
    output [AXIS_CCIX_RX_TDATA_WIDTH/8-1:0]   cxs0_data_chk_rx;
 
-   //input [C_M_AXI_ADDR_WIDTH-1:0]         s_axil_awaddr_ats;
+   input           ccix_optimized_tlp_tx_and_rx_enable_in;                          
+
+   // CXS interface
+   output          pcie4_cxs0_active_req_tx_sd; 
+   input           pcie4_cxs0_active_ack_tx_sd; 
+   input           pcie4_cxs0_deact_hint_tx_sd; 
+   output          pcie4_cxs0_valid_tx_sd;
+   input           pcie4_cxs0_crdgnt_tx_sd;
+   output          pcie4_cxs0_crdrtn_tx_sd;     
+   output [AXIS_CCIX_TX_TUSER_WIDTH-(AXIS_CCIX_TX_TDATA_WIDTH/8)-2:0]   pcie4_cxs0_cntl_tx_sd;
+   output [AXIS_CCIX_TX_TDATA_WIDTH-1:0]  pcie4_cxs0_data_tx_sd;
+   output          pcie4_cxs0_valid_chk_tx_sd;  
+   input           pcie4_cxs0_crdgnt_chk_tx_sd;
+   output          pcie4_cxs0_crdrtn_chk_tx_sd; 
+   output          pcie4_cxs0_cntl_chk_tx_sd;   
+   output [AXIS_CCIX_TX_TDATA_WIDTH/8-1:0]   pcie4_cxs0_data_chk_tx_sd; 
+   input           pcie4_cxs0_active_req_rx_sd; 
+   output          pcie4_cxs0_active_ack_rx_sd; 
+   output          pcie4_cxs0_deact_hint_rx_sd; 
+   input           pcie4_cxs0_valid_rx_sd; 
+   output          pcie4_cxs0_crdgnt_rx_sd;
+   input           pcie4_cxs0_crdrtn_rx_sd;
+   input  [AXIS_CCIX_RX_TUSER_WIDTH-(AXIS_CCIX_RX_TDATA_WIDTH/8)-2:0]   pcie4_cxs0_cntl_rx_sd;
+   input  [AXIS_CCIX_RX_TDATA_WIDTH-1:0]  pcie4_cxs0_data_rx_sd;
+   input           pcie4_cxs0_valid_chk_rx_sd; 
+   output          pcie4_cxs0_crdgnt_chk_rx_sd; 
+   input           pcie4_cxs0_crdrtn_chk_rx_sd;
+   input           pcie4_cxs0_cntl_chk_rx_sd;
+   input  [AXIS_CCIX_RX_TDATA_WIDTH/8-1:0]   pcie4_cxs0_data_chk_rx_sd;
+ 
+   //input [AXI_ADDR_WIDTH-1:0]         s_axil_awaddr_ats;
    //input                                  s_axil_awvalid_ats;
    //output                                 s_axil_awready_ats;
    //input [C_S_AXI_DATA_WIDTH-1:0]         s_axil_wdata_ats;
@@ -2703,7 +2805,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
    //output [1:0]                           s_axil_bresp_ats;
    //output                                 s_axil_bvalid_ats;
    //input                                  s_axil_bready_ats;
-   //input  [C_M_AXI_ADDR_WIDTH-1:0]        s_axil_araddr_ats;
+   //input  [AXI_ADDR_WIDTH-1:0]        s_axil_araddr_ats;
    //input                                  s_axil_arvalid_ats;
    //output                                 s_axil_arready_ats;
    //output [C_S_AXI_DATA_WIDTH-1:0]        s_axil_rdata_ats;
@@ -2814,6 +2916,10 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   output  wire    interrupt_out;
   output  wire    interrupt_out_msi_vec0to31;
   output  wire    interrupt_out_msi_vec32to63;
+  output  wire    interrupt_out_msix_0;
+  output  wire    interrupt_out_msix_1;
+  output  wire    interrupt_out_msix_2;
+  output  wire    interrupt_out_msix_3;
 
   output                                            ext_ch_gt_drpclk ;
   input   [((PL_LINK_CAP_MAX_LINK_WIDTH * 10)-1):0] ext_ch_gt_drpaddr ;
@@ -3109,9 +3215,18 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   output                               s_axis_cc_tvalid_sd;
   input  [3:0]                         s_axis_cc_tready_sd;
 
+  input [5:0]                          rbar_bar_size_sd;
+  input [7:0]                          rbar_function_number_sd;
+  input                                rbar_write_enable_bar0_sd;
+  input                                rbar_write_enable_bar1_sd;
+  input                                rbar_write_enable_bar2_sd;
+  input                                rbar_write_enable_bar3_sd;
+  input                                rbar_write_enable_bar4_sd;
+  input                                rbar_write_enable_bar5_sd;
   input                                user_clk_sd;
   input                                user_reset_sd;
   output [1:0]                         pcie_cq_np_req_sd;
+  input  [5:0]                         pcie_cq_np_req_count_sd;
   input  [3:0]                         pcie_tfc_nph_av_sd;
   input  [3:0]                         pcie_tfc_npd_av_sd;
   input                                pcie_rq_seq_num_vld0_sd;
@@ -3157,7 +3272,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   output                               cfg_interrupt_msi_tph_present_sd;                
   output [1:0]                         cfg_interrupt_msi_tph_type_sd;                   
   output [8:0]                         cfg_interrupt_msi_tph_st_tag_sd;                 
-  output [3:0]                         cfg_interrupt_msi_function_number_sd;            
+  output [7:0]                         cfg_interrupt_msi_function_number_sd;            
 
   input                                cfg_interrupt_msi_sent_sd;
   input                                cfg_interrupt_msi_fail_sd;
@@ -3184,6 +3299,16 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   output   [2:0]                       cfg_msg_transmit_type_sd;
   output   [31:0]                      cfg_msg_transmit_data_sd;
   input                                cfg_msg_transmit_done_sd;
+
+  output  [9:0]  cfg_mgmt_addr_sd;                 
+  output         cfg_mgmt_write_sd;                
+  output  [31:0] cfg_mgmt_write_data_sd;
+  output  [3:0]  cfg_mgmt_byte_enable_sd;          
+  output         cfg_mgmt_read_sd;          
+  output  [7:0]  cfg_mgmt_function_number_sd;          
+  output         cfg_mgmt_type1_cfg_reg_access_sd;
+  input  [31:0]  cfg_mgmt_read_data_sd; 
+  input          cfg_mgmt_read_write_done_sd;
 
   //-- AXIS RQ Request Inbound Channel for ATS/PRI messages
   input [C_M_AXIS_DATA_WIDTH-1:0]     atspri_s_axis_rq_tdata;
@@ -3247,7 +3372,8 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   (* keep = "true" *) wire [2 : 0]                  msi_vector_width;
 
   (* keep = "true" *) wire [C_M_AXI_ID_WIDTH-1 : 0]     m_axi_awid;
-  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axi_awaddr;
+  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axi_awaddr_temp;
+  (* keep = "true" *) wire [AXI_ADDR_WIDTH-1 : 0]       m_axi_awaddr;
   (* keep = "true" *) wire [7 : 0]                      m_axi_awlen;
   (* keep = "true" *) wire [2 : 0]                      m_axi_awsize;
   (* keep = "true" *) wire [1 : 0]                      m_axi_awburst;
@@ -3267,7 +3393,8 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   (* keep = "true" *) wire                              m_axi_bvalid ;
   (* keep = "true" *) wire                              m_axi_bready ;
   (* keep = "true" *) wire [C_M_AXI_ID_WIDTH-1 : 0]     m_axi_arid ;
-  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axi_araddr ;
+  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axi_araddr_temp;
+  (* keep = "true" *) wire [AXI_ADDR_WIDTH-1 : 0]       m_axi_araddr;
   (* keep = "true" *) wire [7 : 0]                      m_axi_arlen ;
   (* keep = "true" *) wire [2 : 0]                      m_axi_arsize ;
   (* keep = "true" *) wire [1 : 0]                      m_axi_arburst ;
@@ -3285,7 +3412,8 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   (* keep = "true" *) wire                              m_axi_rready ;
   // Axi bypass
   (* keep = "true" *) wire [C_M_AXI_ID_WIDTH-1 : 0]     m_axib_awid ;
-  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axib_awaddr ;
+  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axib_awaddr_temp;
+  (* keep = "true" *) wire [AXI_ADDR_WIDTH-1 : 0]       m_axib_awaddr;
   (* keep = "true" *) wire [C_M_AXI_AWUSER_WIDTH-1 : 0] m_axib_awuser ;
   (* keep = "true" *) wire [7 : 0]                      m_axib_awlen ;
   (* keep = "true" *) wire [2 : 0]                      m_axib_awsize ;
@@ -3306,7 +3434,8 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   (* keep = "true" *) wire                              m_axib_bvalid ;
   (* keep = "true" *) wire                              m_axib_bready ;
   (* keep = "true" *) wire [C_M_AXI_ID_WIDTH-1 : 0]     m_axib_arid ;
-  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axib_araddr ;
+  (* keep = "true" *) wire [C_M_AXI_ADDR_WIDTH-1 : 0]   m_axib_araddr_temp;
+  (* keep = "true" *) wire [AXI_ADDR_WIDTH-1 : 0]       m_axib_araddr;
   (* keep = "true" *) wire [C_M_AXI_ARUSER_WIDTH-1: 0]  m_axib_aruser ;
   (* keep = "true" *) wire [7 : 0]                      m_axib_arlen ;
   (* keep = "true" *) wire [2 : 0]                      m_axib_arsize ;
@@ -3366,15 +3495,16 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   (* keep = "true" *) wire              s_axil_rvalid ;
   (* keep = "true" *) wire              s_axil_rready ;
 
-  wire [C_S_AXI_ID_WIDTH-1 : 0] s_axib_awid ;
-  wire [AXI_ADDR_WIDTH-1 : 0]   s_axib_awaddr ;
-  wire [3 : 0]                  s_axib_awregion ;
-  wire [7 : 0]                  s_axib_awlen ;
-  wire [2 : 0]                  s_axib_awsize ;
-  wire [1 : 0]                  s_axib_awburst ;
-  wire                          s_axib_awvalid ;
-  wire                          s_axib_awready ;
-  wire [AXI_DATA_WIDTH-1 : 0]   s_axib_wdata ;
+  wire [C_S_AXI_ID_WIDTH-1 : 0]   s_axib_awid ;
+  wire [AXI_ADDR_WIDTH-1 : 0]     s_axib_awaddr ;
+  wire [C_S_AXI_ADDR_WIDTH-1 : 0] s_axib_awaddr_temp ;
+  wire [3 : 0]                    s_axib_awregion ;
+  wire [7 : 0]                    s_axib_awlen ;
+  wire [2 : 0]                    s_axib_awsize ;
+  wire [1 : 0]                    s_axib_awburst ;
+  wire                            s_axib_awvalid ;
+  wire                            s_axib_awready ;
+  wire [AXI_DATA_WIDTH-1 : 0]     s_axib_wdata ;
   wire [(AXI_DATA_WIDTH/8)-1 : 0] s_axib_wuser ;
   wire [AXI_DATA_WIDTH/8-1 : 0]   s_axib_wstrb ;
   wire                            s_axib_wlast ;
@@ -3386,6 +3516,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   wire                            s_axib_bready;
   wire [C_S_AXI_ID_WIDTH-1 : 0]   s_axib_arid;
   wire [AXI_ADDR_WIDTH-1 : 0]     s_axib_araddr;
+  wire [C_S_AXI_ADDR_WIDTH-1 : 0] s_axib_araddr_temp;
   wire [3 : 0]                    s_axib_arregion;
   wire [7 : 0]                    s_axib_arlen;
   wire [2 : 0]                    s_axib_arsize;
@@ -3473,6 +3604,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
 
   localparam AXI4MM_ULTRA = (C_FAMILY=="kintexu" || C_FAMILY=="virtexu" || C_FAMILY=="virtexuplus" || C_FAMILY=="kintexuplus" || C_FAMILY=="zyncuplus" || C_FAMILY=="zyncuplusrfsoc") ? 1 : 0;
   localparam DAT_WIDTH = C_M_AXIS_DATA_WIDTH;
+  localparam DIFF_AXI_ADDR_WIDTH = 64 - AXI_ADDR_WIDTH;
   //localparam C_H2C_NUM_CHNL = XDMA_RNUM_CHNL;
   //localparam C_C2H_NUM_CHNL = XDMA_WNUM_CHNL;
   localparam C_H2C_NUM_RIDS = XDMA_RNUM_RIDS;
@@ -3485,7 +3617,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
   
   attr_dma_t                    attr_dma;
   attr_dma_pf_t        [3:0]        attr_dma_pf;
-  attr_dma_pciebar2axibar_pf_t    [3:0][5:0]    attr_dma_pciebar2axibar_pf;
+  attr_dma_pciebar2axibar_pf_t    [3:0][6:0]    attr_dma_pciebar2axibar_pf;
   attr_dma_axibar2pciebar_t    [5:0]        attr_dma_axibar2pciebar;
   
     dma_pcie_axis_rq_if  #(.DATA_WIDTH(C_M_AXIS_DATA_WIDTH), .USER_WIDTH(C_M_AXIS_RQ_USER_WIDTH))    axis_rq();
@@ -3534,7 +3666,8 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_core_top
     dma_pcie_mi_64Bx512_32Bwe_ram_if     mi_h2c_rd_brg_dat();
     dma_pcie_mi_64Bx512_32Bwe_ram_if     mi_h2c_wr_brg_dat();
 
-    dma_pcie_mi_64Bx512_32Bwe_ram_if     mi_c2h_rd_brg_dat();
+    dma_pcie_mi_64Bx1024_32Bwe_ram_if    mi_c2h_rd_brg_dat();
+    //dma_pcie_mi_64Bx512_32Bwe_ram_if     mi_c2h_rd_brg_dat();
     dma_pcie_mi_64Bx256_32Bwe_ram_if     mi_c2h_wr_brg_dat();
 
   localparam MULT_PF_DESIGN = 0;
@@ -3793,7 +3926,7 @@ assign m_axib_rdataeccparity = {C_M_AXI_DATA_WIDTH/8{1'b0}};
                                64 : (PF0_BAR4_APERTURE_SIZE + 12 - 5);
 
   localparam C_PCIEBAR_LEN_5 = (DMA_EN == 1) ? 64 : (PF0_BAR5_APERTURE_SIZE + 12 - 5); // BAR hit on this bar is not used
-  localparam C_PCIEBAR_LEN_6 = 64; // BAR hit on this bar is not used
+  localparam C_PCIEBAR_LEN_6 = PF0_EXPANSION_ROM_ENABLE ? (PF0_EXPANSION_ROM_APERTURE_SIZE + 12 - 5) : 64; // BAR hit on EROM
 
   localparam BARLITE0        = (DMA_EN == 0) ? 7 : (XDMA_AXILITE_MASTER == "TRUE" ) ? 0 : 7;                            // BAR number for AXILite; Always at 0 when enabled
   localparam C_INCLUDE_RC    = (PL_UPSTREAM_FACING == "true") ? 0 : 1;
@@ -3824,12 +3957,26 @@ assign m_axib_rdataeccparity = {C_M_AXI_DATA_WIDTH/8{1'b0}};
                                64'h00 : {64'h0 | C_PCIEBAR2AXIBAR_4};
 
   localparam [63:0]C_PCIEBAR2AXIBAR_5_TMP = {64'h0 | C_PCIEBAR2AXIBAR_5};
+  localparam [63:0]C_PCIEBAR2AXIBAR_6_TMP = {64'h0 | C_PCIEBAR2AXIBAR_6};
 
   //----------------------------------------------------------------------------------------------------------------//
   wire                          axi_ctl_aclk_sig;
   wire                          mmcm_lock;
   reg                           sys_rst_lock_reg;
-  
+
+  assign m_axi_awaddr = m_axi_awaddr_temp[AXI_ADDR_WIDTH-1:0];
+  assign m_axi_araddr = m_axi_araddr_temp[AXI_ADDR_WIDTH-1:0];
+  assign m_axib_awaddr = m_axib_awaddr_temp[AXI_ADDR_WIDTH-1:0];
+  assign m_axib_araddr = m_axib_araddr_temp[AXI_ADDR_WIDTH-1:0];
+generate
+  if (DIFF_AXI_ADDR_WIDTH == 0) begin
+    assign s_axib_awaddr_temp = s_axib_awaddr;
+    assign s_axib_araddr_temp = s_axib_araddr;
+  end else begin
+    assign s_axib_awaddr_temp = {{DIFF_AXI_ADDR_WIDTH{1'b0}},s_axib_awaddr};
+    assign s_axib_araddr_temp = {{DIFF_AXI_ADDR_WIDTH{1'b0}},s_axib_araddr};
+  end
+endgenerate
 generate
   if (AXI_ACLK_LOOPBACK == "TRUE") begin
     assign axi_ctl_aclk_sig = axi_ctl_aclk;
@@ -3870,10 +4017,24 @@ endgenerate
   assign m_axis_rc_tready_rst = axis_rc.tready[0] | ~dma_bridge_resetn; // Assert rc_tready when soft reset is asserted to allow pending RX completions to be flused out from HB
 
 
+  wire [5:0] rbar_bar_size;
+  wire [7:0] rbar_function_number;
+  wire rbar_write_enable_bar0;
+  wire rbar_write_enable_bar1;
+  wire rbar_write_enable_bar2;
+  wire rbar_write_enable_bar3;
+  wire rbar_write_enable_bar4;
+  wire rbar_write_enable_bar5;
+
   wire [3:0] attr_dma_ch_stream;
   assign interrupt_out = pcie_dma_gic.interrupt[0];
   assign interrupt_out_msi_vec0to31 = pcie_dma_gic.interrupt[1];
   assign interrupt_out_msi_vec32to63 = pcie_dma_gic.interrupt[2];
+  assign interrupt_out_msix_0 = pcie_dma_gic.interrupt[3];
+  assign interrupt_out_msix_1 = pcie_dma_gic.interrupt[4];
+  assign interrupt_out_msix_2 = pcie_dma_gic.interrupt[5];
+  assign interrupt_out_msix_3 = pcie_dma_gic.interrupt[6];
+
   assign dsc_in.dsc           = dsc_out.dsc;
   assign attr_dma.msi_rx_decode_en = (C_MSI_ENABLED == "TRUE") ? 1'b1 : 'h0;
   assign attr_dma.axi_slv_brdg_base_addr = 'h0;
@@ -3908,60 +4069,69 @@ endgenerate
   assign attr_dma.ch_multq_ll  = 'h0;
   assign attr_dma.ch_multq_max = 'h0;
   assign attr_dma.ch_multq     = 'h0;
+  assign attr_dma.cq_rcfg_en   = 1'b1;
   
   // PCIE to AXI BAR information. assign bar length for PF0.
   
-  assign attr_dma_pciebar2axibar_pf[0][0].len = C_PCIEBAR_LEN_0;
-  assign attr_dma_pciebar2axibar_pf[0][1].len = C_PCIEBAR_LEN_1;
-  assign attr_dma_pciebar2axibar_pf[0][2].len = C_PCIEBAR_LEN_2;
-  assign attr_dma_pciebar2axibar_pf[0][3].len = C_PCIEBAR_LEN_3;
-  assign attr_dma_pciebar2axibar_pf[0][4].len = C_PCIEBAR_LEN_4;
-  assign attr_dma_pciebar2axibar_pf[0][5].len = C_PCIEBAR_LEN_5;
+  assign attr_dma_pciebar2axibar_pf[0][0].len = (PF_SWAP == "TRUE") ?  (PF0_BAR0_APERTURE_SIZE + 7) :  C_PCIEBAR_LEN_0;
+  assign attr_dma_pciebar2axibar_pf[0][1].len = (PF_SWAP == "TRUE") ?  (PF0_BAR1_APERTURE_SIZE + 7) :  C_PCIEBAR_LEN_1;
+  assign attr_dma_pciebar2axibar_pf[0][2].len = (PF_SWAP == "TRUE") ?  (PF0_BAR2_APERTURE_SIZE + 7) :  C_PCIEBAR_LEN_2;
+  assign attr_dma_pciebar2axibar_pf[0][3].len = (PF_SWAP == "TRUE") ?  (PF0_BAR3_APERTURE_SIZE + 7) :  C_PCIEBAR_LEN_3;
+  assign attr_dma_pciebar2axibar_pf[0][4].len = (PF_SWAP == "TRUE") ?  (PF0_BAR4_APERTURE_SIZE + 7) :  C_PCIEBAR_LEN_4;
+  assign attr_dma_pciebar2axibar_pf[0][5].len = (PF_SWAP == "TRUE") ?  (PF0_BAR5_APERTURE_SIZE + 7) :  C_PCIEBAR_LEN_5;
+  assign attr_dma_pciebar2axibar_pf[0][6].len = (PF_SWAP == "TRUE") ?  (PF0_EXPANSION_ROM_APERTURE_SIZE + 7) :  C_PCIEBAR_LEN_6;
   
-  assign attr_dma_pciebar2axibar_pf[0][0].bar = C_PCIEBAR2AXIBAR_0_TMP[63:12];
-  assign attr_dma_pciebar2axibar_pf[0][1].bar = C_PCIEBAR2AXIBAR_1_TMP[63:12];
-  assign attr_dma_pciebar2axibar_pf[0][2].bar = C_PCIEBAR2AXIBAR_2_TMP[63:12];
-  assign attr_dma_pciebar2axibar_pf[0][3].bar = C_PCIEBAR2AXIBAR_3_TMP[63:12];
-  assign attr_dma_pciebar2axibar_pf[0][4].bar = C_PCIEBAR2AXIBAR_4_TMP[63:12];
-  assign attr_dma_pciebar2axibar_pf[0][5].bar = C_PCIEBAR2AXIBAR_5_TMP[63:12];
+  assign attr_dma_pciebar2axibar_pf[0][0].bar = (PF_SWAP == "TRUE") ?  52'b0 /*PF0_PCIEBAR2AXIBAR_0[63:12]*/ :  C_PCIEBAR2AXIBAR_0_TMP[63:12];
+  assign attr_dma_pciebar2axibar_pf[0][1].bar = (PF_SWAP == "TRUE") ?  52'b0 /*PF0_PCIEBAR2AXIBAR_1[63:12]*/ :  C_PCIEBAR2AXIBAR_1_TMP[63:12];
+  assign attr_dma_pciebar2axibar_pf[0][2].bar = (PF_SWAP == "TRUE") ?  52'b0 /*PF0_PCIEBAR2AXIBAR_2[63:12]*/ :  C_PCIEBAR2AXIBAR_2_TMP[63:12];
+  assign attr_dma_pciebar2axibar_pf[0][3].bar = (PF_SWAP == "TRUE") ?  52'b0 /*PF0_PCIEBAR2AXIBAR_3[63:12]*/ :  C_PCIEBAR2AXIBAR_3_TMP[63:12];
+  assign attr_dma_pciebar2axibar_pf[0][4].bar = (PF_SWAP == "TRUE") ?  52'b0 /*PF0_PCIEBAR2AXIBAR_4[63:12]*/ :  C_PCIEBAR2AXIBAR_4_TMP[63:12];
+  assign attr_dma_pciebar2axibar_pf[0][5].bar = (PF_SWAP == "TRUE") ?  52'b0 /*PF0_PCIEBAR2AXIBAR_5[63:12]*/ :  C_PCIEBAR2AXIBAR_5_TMP[63:12];
+  assign attr_dma_pciebar2axibar_pf[0][6].bar = (PF_SWAP == "TRUE") ?  52'b0 /*PF0_PCIEBAR2AXIBAR_6[63:12]*/ :  C_PCIEBAR2AXIBAR_6_TMP[63:12];
   assign attr_dma_pciebar2axibar_pf[0][0].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][1].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][2].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][3].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][4].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][5].sec = 'h0;
+  assign attr_dma_pciebar2axibar_pf[0][6].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][0].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][1].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][2].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][3].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][4].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[0][5].cache = 'h0;
+  assign attr_dma_pciebar2axibar_pf[0][6].cache = 'h0;
 
-  assign attr_dma_pciebar2axibar_pf[1][0].len = PF1_BAR0_APERTURE_SIZE + 7;
-  assign attr_dma_pciebar2axibar_pf[1][1].len = PF1_BAR1_APERTURE_SIZE + 7;
-  assign attr_dma_pciebar2axibar_pf[1][2].len = PF1_BAR2_APERTURE_SIZE + 7;
-  assign attr_dma_pciebar2axibar_pf[1][3].len = PF1_BAR3_APERTURE_SIZE + 7;
-  assign attr_dma_pciebar2axibar_pf[1][4].len = PF1_BAR4_APERTURE_SIZE + 7;
-  assign attr_dma_pciebar2axibar_pf[1][5].len = PF1_BAR5_APERTURE_SIZE + 7;
+  assign attr_dma_pciebar2axibar_pf[1][0].len = (PF_SWAP == "TRUE") ?  C_PCIEBAR_LEN_0 :  (PF1_BAR0_APERTURE_SIZE + 7);
+  assign attr_dma_pciebar2axibar_pf[1][1].len = (PF_SWAP == "TRUE") ?  C_PCIEBAR_LEN_1 :  (PF1_BAR1_APERTURE_SIZE + 7);
+  assign attr_dma_pciebar2axibar_pf[1][2].len = (PF_SWAP == "TRUE") ?  C_PCIEBAR_LEN_2 :  (PF1_BAR2_APERTURE_SIZE + 7);
+  assign attr_dma_pciebar2axibar_pf[1][3].len = (PF_SWAP == "TRUE") ?  C_PCIEBAR_LEN_3 :  (PF1_BAR3_APERTURE_SIZE + 7);
+  assign attr_dma_pciebar2axibar_pf[1][4].len = (PF_SWAP == "TRUE") ?  C_PCIEBAR_LEN_4 :  (PF1_BAR4_APERTURE_SIZE + 7);
+  assign attr_dma_pciebar2axibar_pf[1][5].len = (PF_SWAP == "TRUE") ?  C_PCIEBAR_LEN_5 :  (PF1_BAR5_APERTURE_SIZE + 7);
+  assign attr_dma_pciebar2axibar_pf[1][6].len = (PF_SWAP == "TRUE") ?  C_PCIEBAR_LEN_6 :  (PF1_EXPANSION_ROM_APERTURE_SIZE + 7);
   
-  assign attr_dma_pciebar2axibar_pf[1][0].bar = PF1_PCIEBAR2AXIBAR_0[63:12];
-  assign attr_dma_pciebar2axibar_pf[1][1].bar = PF1_PCIEBAR2AXIBAR_1[63:12];
-  assign attr_dma_pciebar2axibar_pf[1][2].bar = PF1_PCIEBAR2AXIBAR_2[63:12];
-  assign attr_dma_pciebar2axibar_pf[1][3].bar = PF1_PCIEBAR2AXIBAR_3[63:12];
-  assign attr_dma_pciebar2axibar_pf[1][4].bar = PF1_PCIEBAR2AXIBAR_4[63:12];
-  assign attr_dma_pciebar2axibar_pf[1][5].bar = PF1_PCIEBAR2AXIBAR_5[63:12];
+  assign attr_dma_pciebar2axibar_pf[1][0].bar = (PF_SWAP == "TRUE") ?  C_PCIEBAR2AXIBAR_0_TMP[63:12] :  PF1_PCIEBAR2AXIBAR_0[63:12];
+  assign attr_dma_pciebar2axibar_pf[1][1].bar = (PF_SWAP == "TRUE") ?  C_PCIEBAR2AXIBAR_1_TMP[63:12] :  PF1_PCIEBAR2AXIBAR_1[63:12];
+  assign attr_dma_pciebar2axibar_pf[1][2].bar = (PF_SWAP == "TRUE") ?  C_PCIEBAR2AXIBAR_2_TMP[63:12] :  PF1_PCIEBAR2AXIBAR_2[63:12];
+  assign attr_dma_pciebar2axibar_pf[1][3].bar = (PF_SWAP == "TRUE") ?  C_PCIEBAR2AXIBAR_3_TMP[63:12] :  PF1_PCIEBAR2AXIBAR_3[63:12];
+  assign attr_dma_pciebar2axibar_pf[1][4].bar = (PF_SWAP == "TRUE") ?  C_PCIEBAR2AXIBAR_4_TMP[63:12] :  PF1_PCIEBAR2AXIBAR_4[63:12];
+  assign attr_dma_pciebar2axibar_pf[1][5].bar = (PF_SWAP == "TRUE") ?  C_PCIEBAR2AXIBAR_5_TMP[63:12] :  PF1_PCIEBAR2AXIBAR_5[63:12];
+  assign attr_dma_pciebar2axibar_pf[1][6].bar = (PF_SWAP == "TRUE") ?  C_PCIEBAR2AXIBAR_6_TMP[63:12] :  PF1_PCIEBAR2AXIBAR_6[63:12];
   assign attr_dma_pciebar2axibar_pf[1][0].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][1].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][2].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][3].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][4].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][5].sec = 'h0;
+  assign attr_dma_pciebar2axibar_pf[1][6].sec = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][0].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][1].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][2].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][3].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][4].cache = 'h0;
   assign attr_dma_pciebar2axibar_pf[1][5].cache = 'h0;
+  assign attr_dma_pciebar2axibar_pf[1][6].cache = 'h0;
 
   assign m_axis_rq_tdata_out   = axis_rq.tdata ;
   assign m_axis_rq_tlast_out   = axis_rq.tlast;
@@ -4006,11 +4176,13 @@ assign msix_enable = cfg_interrupt_msix_enable_int[0];
 assign axis_rq.tready = axis_rq_tready[0];
 assign axis_cc.tready = s_axis_cc_tready[0];
 
+assign pcie_dma_in.pcie_cq_np_req_count           = pcie_cq_np_req_count; 
 assign pcie_dma_in.cfg_interrupt_msi_mask_update  = cfg_interrupt_msi_mask_update;
 assign pcie_dma_in.cfg_err_cor_out                = cfg_err_cor_out;
 assign pcie_dma_in.cfg_err_fatal_out              = cfg_err_fatal_out;
 assign pcie_dma_in.cfg_err_nonfatal_out           = cfg_err_nonfatal_out;
 assign pcie_dma_in.cfg_hot_reset_out              = cfg_hot_reset_out;
+
 assign pcie_dma_in.cfg_interrupt_msi_enable       = cfg_interrupt_msi_enable_int[0];
 assign pcie_dma_in.cfg_interrupt_msi_fail         = cfg_interrupt_msi_fail;
 assign pcie_dma_in.cfg_interrupt_msi_sent         = cfg_interrupt_msi_sent;
@@ -4109,12 +4281,16 @@ assign cfg_interrupt_msi_function_number                 = pcie_dma_out.cfg_inte
 assign cfg_interrupt_int                                 = pcie_dma_out.cfg_interrupt_int;
 assign cfg_interrupt_pending                             = pcie_dma_out.cfg_interrupt_pending;
 
-    xdma_v4_1_0_udma_wrapper #(
+    xdma_v4_1_3_udma_wrapper #(
       .C_PARITY_CHECK              (C_PARITY_CHECK),
       .C_PARITY_GEN                (C_PARITY_GEN),
       .C_PARITY_PROP               (C_PARITY_PROP),
       .RQ_SEQ_NUM_IGNORE           (RQ_SEQ_NUM_IGNORE),
       .C_MSI_RX_PIN_EN             (C_MSI_RX_PIN_EN),
+      .C_MSIX_RX_PIN_EN            (C_MSIX_RX_PIN_EN),
+      .C_INTX_RX_PIN_EN            (C_INTX_RX_PIN_EN),
+      .MSIX_RX_DECODE_EN           (MSIX_RX_DECODE_EN),
+      .MSIX_VEC_NUM                (MSIX_VEC_NUM),
       .VERSION                     (VERSION),
       .TCQ                         (TCQ),
       .USE_ATTR                    (USE_ATTR),
@@ -4176,6 +4352,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
       .C_NUM_PCIE_TAGS             (XDMA_NUM_PCIE_TAG),
 //    .C_METERING_ON               (C_METERING_ON),
       .C_ECC_ENABLE                (C_ECC_ENABLE),
+      .C_SLAVE_READ_64OS_EN        (C_SLAVE_READ_64OS_EN),
       .C_RD_BUFFER_ADDR_SIZE       (C_RD_BUFFER_ADDR_SIZE),
       .C_RD_BUFFER_SIZE_BITS       (C_RD_BUFFER_SIZE_BITS),
       .C_PCIEBAR_NUM               (C_PCIEBAR_NUM),
@@ -4189,6 +4366,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
       .BARLITE2                    (BARLITE2),
       .MM_SLAVE_EN                 (MM_SLAVE_EN),
       .C_M_NUM_CQ_AXI_READ         (C_M_AXI_NUM_READ),
+      .C_M_NUM_CQ_AXI_READQ        (C_M_AXI_NUM_READQ),
       .C_M_NUM_CQ_AXI_WRITE        (C_M_AXI_NUM_WRITE),
       .C_S_NUM_AXI_READ            (C_S_AXI_NUM_READ),
       .C_S_NUM_AXI_WRITE           (C_S_AXI_NUM_WRITE),
@@ -4275,7 +4453,12 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
       .C_PR_CAP_NEXTPTR(C_PR_CAP_NEXTPTR),
       .C_INV_QUEUE_DEPTH(C_INV_QUEUE_DEPTH),
       .C_OST_PR_CAP(C_OST_PR_CAP),
-	  .RUN_BIT_FIX(RUN_BIT_FIX)
+      .C_M_INT_W_ORDER_EN(C_INCLUDE_RC ? 1 : 0),
+      .AXSIZE_BYTE_ACCESS_EN(AXSIZE_BYTE_ACCESS_EN),
+      .PF_SWAP(PF_SWAP),
+      .RBAR_ENABLE    (RBAR_ENABLE),
+      .RUN_BIT_FIX(RUN_BIT_FIX),
+      .C_SMMU_EN(C_SMMU_EN)
     )
    udma_wrapper (
      //-- AXI Global
@@ -4283,6 +4466,15 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
      .sys_reset (dma_soft_reset),
      .link_up   ( user_lnk_up ),
      .axi_aresetn(),
+
+    .rbar_bar_size                                  ( 6'h0 ),
+    .rbar_function_number                           ( 8'h0 ),
+    .rbar_write_enable_bar0                         ( 1'b0 ),
+    .rbar_write_enable_bar1                         ( 1'b0 ),
+    .rbar_write_enable_bar2                         ( 1'b0 ),
+    .rbar_write_enable_bar3                         ( 1'b0 ),
+    .rbar_write_enable_bar4                         ( 1'b0 ),
+    .rbar_write_enable_bar5                         ( 1'b0 ),
 
      .pf1_lite_ext    (pf1_lite_ext),
      // Attribute
@@ -4393,7 +4585,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
 
     //--AXI Master Read Address Channel
     .m_axi_arid             (m_axi_arid),
-    .m_axi_araddr           (m_axi_araddr),
+    .m_axi_araddr           (m_axi_araddr_temp),
     .m_axi_arlen            (m_axi_arlen),
     .m_axi_arsize           (m_axi_arsize),
     .m_axi_arburst          (m_axi_arburst),
@@ -4412,7 +4604,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
     .m_axi_rready           (m_axi_rready),
 
         //--AXI master Write Address Channel
-    .m_axi_awaddr           (m_axi_awaddr),
+    .m_axi_awaddr           (m_axi_awaddr_temp),
     .m_axi_awid             (m_axi_awid),
     .m_axi_awlen            (m_axi_awlen),
     .m_axi_awsize           (m_axi_awsize),
@@ -4441,7 +4633,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
 
     //--AXI Master Read Address Channel
     .m_axib_arid            (m_axib_arid),
-    .m_axib_araddr          (m_axib_araddr),
+    .m_axib_araddr          (m_axib_araddr_temp),
     .m_axib_aruser          (m_axib_aruser),
     .m_axib_arlen           (m_axib_arlen),
     .m_axib_arsize          (m_axib_arsize),
@@ -4460,7 +4652,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
     .m_axib_rvalid          (m_axib_rvalid),
     .m_axib_rready          (m_axib_rready),
         //--AXI master Write Address Channel
-    .m_axib_awaddr          (m_axib_awaddr),
+    .m_axib_awaddr          (m_axib_awaddr_temp),
     .m_axib_awuser          (m_axib_awuser),
     .m_axib_awid            (m_axib_awid),
     .m_axib_awlen           (m_axib_awlen),
@@ -4488,7 +4680,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
 
    //-- AXI Slave Write Address Channel
    .s_axi_awid(s_axib_awid),
-   .s_axi_awaddr(s_axib_awaddr),
+   .s_axi_awaddr(s_axib_awaddr_temp),
    .s_axi_awregion(s_axib_awregion),
    .s_axi_awlen(s_axib_awlen),
    .s_axi_awsize(s_axib_awsize),
@@ -4512,7 +4704,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
 
    //-- AXI Slave Read Address Channel
    .s_axi_arid(s_axib_arid),
-   .s_axi_araddr(s_axib_araddr),
+   .s_axi_araddr(s_axib_araddr_temp),
    .s_axi_arregion(s_axib_arregion),
    .s_axi_arlen(s_axib_arlen),
    .s_axi_arsize(s_axib_arsize),
@@ -4535,7 +4727,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
      .s_axis_c2h_tready        (s_axis_c2h_tready_0),
      .s_axis_c2h_tkeep         (s_axis_c2h_tkeep_0),
      .s_axis_c2h_tparity       (s_axis_c2h_tuser_0),
-    .s_axis_c2h_tuser   ('h0),
+    .s_axis_c2h_tuser   (64'h0),
      .m_axis_h2c_tdata         (m_axis_h2c_tdata_0),
      .m_axis_h2c_tlast         (m_axis_h2c_tlast_0),
      .m_axis_h2c_tvalid        (m_axis_h2c_tvalid_0),
@@ -4574,8 +4766,8 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
     // H2C Descriptor Input Interface
     .h2c_desc_cmd_in_rdy               (),
     .h2c_desc_cmd_in_vld               (1'b0),
-    .h2c_desc_cmd_in_qid               ('h0),
-    .h2c_desc_cmd_in_data              ('h0),
+    .h2c_desc_cmd_in_qid               (5'h0),
+    .h2c_desc_cmd_in_data              (128'h0),
 
       .c2h_pktin_accept                  (),
       .c2h_pktin_drop                    (),
@@ -4635,7 +4827,7 @@ assign cfg_interrupt_pending                             = pcie_dma_out.cfg_inte
     .blk_cfg_ext_read_data_valid_o                 ( blk_cfg_ext_read_data_valid )
 	
    );
-xdma_v4_1_0_udma_ram_top
+xdma_v4_1_3_udma_ram_top
    #(
     .TCQ                (TCQ),
     .IMPL_TARGET        (IMPL_TARGET),
@@ -4645,6 +4837,7 @@ xdma_v4_1_0_udma_ram_top
     .C_H2C_NUM_CHNL     (C_H2C_NUM_CHNL),
     .C_C2H_NUM_CHNL     (C_C2H_NUM_CHNL),
     .C_NUMQ_PER_CHNL    (C_NUMQ_PER_CHNL),
+    .C_SLAVE_READ_64OS_EN      (C_SLAVE_READ_64OS_EN),
     .C_NUM_PCIE_DSC_CPL_DID    (C_NUM_PCIE_DSC_CPL_DID),
     .C_NUM_AXI_DSC_CPL_DID     (C_NUM_AXI_DSC_CPL_DID)
 ) ram_top (
@@ -4728,7 +4921,6 @@ xdma_v4_1_0_udma_ram_top
     //---------------------------------------------------------------------------------------//
     //  AXI Interface                                                                        //
     //---------------------------------------------------------------------------------------//
-
 
     .user_clk                                       ( user_clk),
     .user_reset                                     ( user_reset ),

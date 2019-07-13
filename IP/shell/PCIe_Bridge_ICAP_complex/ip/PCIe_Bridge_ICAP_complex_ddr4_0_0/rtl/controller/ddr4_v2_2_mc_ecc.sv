@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_mc_ecc.sv
+//  /   /         Filename              : ddr4_v2_2_7_mc_ecc.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          : Tue May 13 2014
 //  \___\/\___\
@@ -59,14 +59,14 @@
 //Device            : UltraScale
 //Design Name       : DDR4 SDRAM & DDR3 SDRAM
 //Purpose           :
-//                   ddr4_v2_2_4_mc_ecc module
+//                   ddr4_v2_2_7_mc_ecc module
 //Reference         :
 //Revision History  :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_ecc # (parameter
+module ddr4_v2_2_7_mc_ecc # (parameter
     TCQ = 100
    ,PAYLOAD_WIDTH         = 64
    ,PAYLOAD_DM_WIDTH      = 8
@@ -82,6 +82,7 @@ module ddr4_v2_2_4_mc_ecc # (parameter
    ,MEM                   = "DDR4"
    ,COLBITS               = 10
    ,ABITS                 = 18
+   ,RKBITS                = 2
    ,nCK_PER_CLK           = 4
    )
    (
@@ -93,7 +94,7 @@ module ddr4_v2_2_4_mc_ecc # (parameter
    ,input      [4*ABITS-1:0]                cmdRow
    ,input      [4*COLBITS-1:0]              cmdCol
    ,input      [3:0]                        cmdRmw
-   ,input      [7:0]                        cmdRank
+   ,input      [RKBITS*4-1:0]               cmdRank
    ,input      [4*LR_WIDTH-1:0]             cmdLRank
    ,input      [7:0]                        cmdBank
    ,input      [7:0]                        cmdGroup
@@ -284,7 +285,7 @@ assign  rd_data_en_mc2ni    = rd_data_en_dly;
 assign  rd_data_end_mc2ni   = rd_data_end_phy2mc;
 
 
-ddr4_v2_2_4_mc_ecc_dec_fix #(
+ddr4_v2_2_7_mc_ecc_dec_fix #(
     .PAYLOAD_WIDTH       (PAYLOAD_WIDTH)
    ,.DATA_WIDTH          (DATA_WIDTH)
    ,.CODE_WIDTH          (DQ_WIDTH)
@@ -297,6 +298,7 @@ ddr4_v2_2_4_mc_ecc_dec_fix #(
    ,.MEM                 (MEM)
    ,.ABITS               (ABITS)
    ,.COLBITS             (COLBITS)
+   ,.RKBITS              (RKBITS)
    ,.TCQ                 (TCQ)
 )u_ddr_mc_ecc_dec_fix(
     .clk                  (clk)
@@ -322,7 +324,7 @@ ddr4_v2_2_4_mc_ecc_dec_fix #(
 );
 
 
-ddr4_v2_2_4_mc_ecc_buf #(
+ddr4_v2_2_7_mc_ecc_buf #(
     .PAYLOAD_WIDTH         (PAYLOAD_WIDTH)
    ,.DATA_WIDTH            (DATA_WIDTH)
    ,.DATA_BUF_ADDR_WIDTH   (DATA_BUF_ADDR_WIDTH)
@@ -341,7 +343,7 @@ ddr4_v2_2_4_mc_ecc_buf #(
    ,.rd_data_offset        (1'b0)
 );
 
-ddr4_v2_2_4_mc_ecc_merge_enc #(
+ddr4_v2_2_7_mc_ecc_merge_enc #(
     .PAYLOAD_WIDTH       (PAYLOAD_WIDTH)
    ,.DATA_WIDTH          (DATA_WIDTH)
    ,.CODE_WIDTH          (DQ_WIDTH)
@@ -364,7 +366,7 @@ ddr4_v2_2_4_mc_ecc_merge_enc #(
    ,.raw_not_ecc         (raw_not_ecc)
 );
 
-ddr4_v2_2_4_mc_ecc_fi_xor #(
+ddr4_v2_2_7_mc_ecc_fi_xor #(
     .DQ_WIDTH            (DQ_WIDTH)
    ,.DQS_WIDTH           (DQS_WIDTH)
    ,.DATA_WIDTH          (DATA_WIDTH)
@@ -381,7 +383,7 @@ ddr4_v2_2_4_mc_ecc_fi_xor #(
    ,.fi_xor_wrdata       (fi_xor_wrdata)
 );
 
-ddr4_v2_2_4_mc_ecc_gen #(
+ddr4_v2_2_7_mc_ecc_gen #(
     .DATA_WIDTH          (DATA_WIDTH)
    ,.CODE_WIDTH          (DQ_WIDTH)
    ,.ECC_WIDTH           (ECC_WIDTH)

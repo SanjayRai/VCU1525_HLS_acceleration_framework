@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_wr_bit.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_wr_bit.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/23 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_wr_bit module
+//                   ddr4_v2_2_7_cal_wr_bit module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_cal_wr_bit #
+module ddr4_v2_2_7_cal_wr_bit #
   (
    parameter TCQ = 0.1
    )

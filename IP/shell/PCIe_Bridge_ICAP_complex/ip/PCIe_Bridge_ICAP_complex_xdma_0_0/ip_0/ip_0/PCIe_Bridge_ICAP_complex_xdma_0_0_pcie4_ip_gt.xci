@@ -105,11 +105,11 @@
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.Component_Name">PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.DISABLE_LOC_XDC">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_COMMON_USRCLK">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_OPTIONAL_PORTS">rcalenb_in txpisopd_in rxratemode_in dmonfiforeset_in dmonitorclk_in dmonitorout_out txdlysresetdone_out rxdlysresetdone_out rxphaligndone_out rxsyncdone_out eyescanreset_in txdiffctrl_in rxtermination_in cpllpd_in drpaddr_common_in drpclk_common_in drpdi_common_in drpen_common_in drpwe_common_in loopback_in pcieeqrxeqadaptdone_in pcierstidle_in pciersttxsyncstart_in pcieuserratedone_in qpll0pd_in qpll1pd_in rxcdrreset_in rxdfelpmreset_in rxlpmen_in rxpcsreset_in rxpd_in rxpmareset_in rxpolarity
-_in rxprbscntreset_in rxprbssel_in rxrate_in txdeemph_in txdetectrx_in txelecidle_in txmaincursor_in txmargin_in txpcsreset_in txpd_in txpmareset_in txpostcursor_in txprbsforceerr_in txprbssel_in txprecursor_in txrate_in txswing_in bufgtce_out bufgtcemask_out bufgtdiv_out bufgtreset_out bufgtrstmask_out drpdo_common_out drprdy_common_out gtpowergood_out pcierategen3_out pcierateidle_out pcierateqpllpd_out pcierateqpllreset_out pciesynctxsyncdone_out pcieusergen3rdy_out pcieuserphystatusrst_out p
-cieuserratestart_out phystatus_out rxelecidle_out rxoutclkfabric_out rxoutclkpcs_out rxprbserr_out rxprbslocked_out rxrecclkout_out rxstatus_out rxvalid_out txoutclkfabric_out txoutclkpcs_out qpll1freqlock_in qpll0freqlock_in cpllfreqlock_in qpll0lock_out qpll1lock_out drpclk_in cpllreset_in qpll1outclk_out qpll1outrefclk_out qpll0outclk_out qpll0outrefclk_out pcierateqpll0_in pcierateqpll1_in gtrefclk00_in gtrefclk01_in qpll0reset_in qpll1reset_in drpwe_in drpaddr_in drpen_in drprst_in drprdy_o
-ut drpdi_in drpdo_out rxcdrhold_in rxdfeagchold_in rxdfecfokhold_in rxdfelfhold_in rxdfekhhold_in rxdfetap2hold_in rxdfetap3hold_in rxdfetap4hold_in rxdfetap5hold_in rxdfetap6hold_in rxdfetap7hold_in rxdfetap8hold_in rxdfetap9hold_in rxdfetap10hold_in rxdfetap11hold_in rxdfetap12hold_in rxdfetap13hold_in rxdfetap14hold_in rxdfetap15hold_in rxdfeuthold_in rxdfevphold_in rxoshold_in rxlpmgchold_in rxlpmhfhold_in rxlpmlfhold_in rxlpmoshold_in rxratedone_out rxcdrfreqreset_in resetovrd_in txoutclkse
-l_in cplllock_out gtrefclk0_in</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_OPTIONAL_PORTS">txprgdivresetdone_out rcalenb_in txpisopd_in rxratemode_in dmonfiforeset_in dmonitorclk_in dmonitorout_out txdlysresetdone_out rxdlysresetdone_out rxphaligndone_out rxsyncdone_out eyescanreset_in txdiffctrl_in rxtermination_in cpllpd_in drpaddr_common_in drpclk_common_in drpdi_common_in drpen_common_in drpwe_common_in loopback_in pcieeqrxeqadaptdone_in pcierstidle_in pciersttxsyncstart_in pcieuserratedone_in qpll0pd_in qpll1pd_in rxcdrreset_in rxdfelpmreset_in rxlpmen_in rxpcsreset_in rxpd_in rx
+pmareset_in rxpolarity_in rxprbscntreset_in rxprbssel_in rxrate_in txdeemph_in txdetectrx_in txelecidle_in txmaincursor_in txmargin_in txpcsreset_in txpd_in txpmareset_in txpostcursor_in txprbsforceerr_in txprbssel_in txprecursor_in txrate_in txswing_in bufgtce_out bufgtcemask_out bufgtdiv_out bufgtreset_out bufgtrstmask_out drpdo_common_out drprdy_common_out gtpowergood_out pcierategen3_out pcierateidle_out pcierateqpllpd_out pcierateqpllreset_out pciesynctxsyncdone_out pcieusergen3rdy_out pcie
+userphystatusrst_out pcieuserratestart_out phystatus_out rxelecidle_out rxoutclkfabric_out rxoutclkpcs_out rxprbserr_out rxprbslocked_out rxrecclkout_out rxstatus_out rxvalid_out txoutclkfabric_out txoutclkpcs_out qpll1freqlock_in qpll0freqlock_in cpllfreqlock_in qpll0lock_out qpll1lock_out drpclk_in cpllreset_in qpll1outclk_out qpll1outrefclk_out qpll0outclk_out qpll0outrefclk_out pcierateqpll0_in pcierateqpll1_in gtrefclk00_in gtrefclk01_in qpll0reset_in qpll1reset_in drpwe_in drpaddr_in drpen
+_in drprst_in drprdy_out drpdi_in drpdo_out rxcdrhold_in rxdfeagchold_in rxdfecfokhold_in rxdfelfhold_in rxdfekhhold_in rxdfetap2hold_in rxdfetap3hold_in rxdfetap4hold_in rxdfetap5hold_in rxdfetap6hold_in rxdfetap7hold_in rxdfetap8hold_in rxdfetap9hold_in rxdfetap10hold_in rxdfetap11hold_in rxdfetap12hold_in rxdfetap13hold_in rxdfetap14hold_in rxdfetap15hold_in rxdfeuthold_in rxdfevphold_in rxoshold_in rxlpmgchold_in rxlpmhfhold_in rxlpmlfhold_in rxlpmoshold_in rxratedone_out rxcdrfreqreset_in r
+esetovrd_in txoutclksel_in cplllock_out gtrefclk0_in</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.FREERUN_FREQUENCY">100</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.GT_DIRECTION">BOTH</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.GT_REV">0</spirit:configurableElementValue>
@@ -1358,29 +1358,32 @@ l_in cplllock_out gtrefclk0_in</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PORT_ENABLEMENT.ubrsvdout_out">false</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PORT_ENABLEMENT.ubtxuart_out">false</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.ARCHITECTURE">virtexuplus</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.BOARD"/>
+        <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.BASE_BOARD_PART"/>
+        <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.BOARD_CONNECTIONS"/>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.DEVICE">xcvu9p</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.PACKAGE">fsgd2104</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.PREFHDL">VERILOG</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.SILICON_REVISION"/>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.SIMULATOR_LANGUAGE">MIXED</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.SPEEDGRADE">-2</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.STATIC_POWER"/>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.TEMPERATURE_GRADE">I</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.USE_RDI_CUSTOMIZATION">TRUE</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.USE_RDI_GENERATION">TRUE</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.IPCONTEXT">IP_Flow</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.IPREVISION">3</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.IPREVISION">6</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.MANAGED">TRUE</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.OUTPUTDIR">.</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SELECTEDSIMMODEL"/>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SHAREDDIR">../../../../ipshared</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SWVERSION">2018.1</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SWVERSION">2019.1</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SYNTHESISFLOW">GLOBAL</spirit:configurableElementValue>
       </spirit:configurableElementValues>
       <spirit:vendorExtensions>
         <xilinx:componentInstanceExtensions>
           <xilinx:configElementInfos>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.CHANNEL_ENABLE" xilinx:valueSource="propagated"/>
+            <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.DISABLE_LOC_XDC" xilinx:valueSource="propagated"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.ENABLE_OPTIONAL_PORTS" xilinx:valueSource="propagated"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.FREERUN_FREQUENCY" xilinx:valueSource="propagated"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.GT_TYPE" xilinx:valueSource="propagated"/>

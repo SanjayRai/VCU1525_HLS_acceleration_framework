@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 2.0
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_xsdb_bram.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_xsdb_bram.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/23 $
 // \   \  /  \    Date Created       : Tue May 13 2014
 //  \___\/\___\
@@ -58,7 +58,7 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_xsdb_bram module
+//                   ddr4_v2_2_7_cal_xsdb_bram module
 // Reference        :
 // Revision History :
 //*****************************************************************************
@@ -66,7 +66,7 @@
 
 (* bram_map="yes" *)
 
-module ddr4_v2_2_4_cal_xsdb_bram
+module ddr4_v2_2_7_cal_xsdb_bram
     #(	
     
 		parameter       	  MEM                        	  =  "DDR4"
@@ -206,7 +206,7 @@ localparam [8:0] mem0_init_1 = 9'b0;
 localparam [8:0] mem0_init_2 = 9'b0;
 localparam [8:0] mem0_init_3 = {5'b0,SPREAD_SHEET_VERSION[3:0]};
 localparam [8:0] mem0_init_4 = {6'b0,MEMORY_TYPE[2:0]};
-localparam [8:0] mem0_init_5 = {7'b0,RANKS[1:0]};
+localparam [8:0] mem0_init_5 = RANKS;
 localparam [8:0] mem0_init_6 = DBYTES[8:0]; // MAN - repeats DBYTES parameter (may hardwire to BYTES for initial SW compatability)
 localparam [8:0] mem0_init_7 = NIBBLE[8:0];
 localparam [8:0] mem0_init_8 = BITS_PER_BYTE[8:0];
@@ -463,7 +463,7 @@ localparam [256*9-1:0] INIT_BRAM0 = {mem0_init_255,mem0_init_254,mem0_init_253,m
 // Populate INIT's for rest of BlockRAMs if required
 localparam [256*9*NUM_BRAMS-1:0] INIT = ( NUM_BRAMS == 1 ) ? INIT_BRAM0 : ( NUM_BRAMS == 2 ) ? {2304'b0 ,INIT_BRAM0} : {{2{2304'b0}} ,INIT_BRAM0};
 
-ddr4_v2_2_4_cfg_mem_mod # (
+ddr4_v2_2_7_cfg_mem_mod # (
                .SIZE(SIZE),
                .INIT(INIT),
                .ADDR_WIDTH(ADDR_WIDTH),

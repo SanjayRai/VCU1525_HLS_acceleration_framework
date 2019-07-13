@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_ui_rd_data.sv
+//  /   /         Filename              : ddr4_v2_2_7_ui_rd_data.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          :Thu Apr 18 2013
 //  \___\/\___\
@@ -137,7 +137,7 @@
 
 // User interface read data.
 
-module ddr4_v2_2_4_ui_rd_data #
+module ddr4_v2_2_7_ui_rd_data #
   (
    parameter TCQ = 100,
    parameter APP_DATA_WIDTH       = 256,
@@ -661,7 +661,7 @@ reg [5:0]         rd_buf_indx_r [0:19];
     end // block: not_strict_mode
   endgenerate
 
-endmodule // ddr4_v2_2_4_ui_rd_data
+endmodule // ddr4_v2_2_7_ui_rd_data
 
 // Local Variables:
 // verilog-library-directories:(".")

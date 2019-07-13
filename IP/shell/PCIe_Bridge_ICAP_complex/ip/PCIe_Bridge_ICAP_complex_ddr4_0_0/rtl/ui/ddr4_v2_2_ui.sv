@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_ui.sv
+//  /   /         Filename              : ddr4_v2_2_7_ui.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          : Thu Apr 18 2013
 //  \___\/\___\
@@ -68,7 +68,7 @@
 
 `timescale 1 ps / 1 ps
 
-module ddr4_v2_2_4_ui #
+module ddr4_v2_2_7_ui #
   (
    parameter MEM                  = "DDR4",
    parameter TCQ                  = 100,
@@ -212,7 +212,7 @@ module ddr4_v2_2_4_ui #
     end
   endgenerate
 
-  ddr4_v2_2_4_ui_cmd #
+  ddr4_v2_2_7_ui_cmd #
     (/*AUTOINSTPARAM*/
      // Parameters
      .MEM                               (MEM),
@@ -265,7 +265,7 @@ module ddr4_v2_2_4_ui #
        .mc_block_req                    (mc_block_req)
        );
 
-  ddr4_v2_2_4_ui_wr_data #
+  ddr4_v2_2_7_ui_wr_data #
     (/*AUTOINSTPARAM*/
      // Parameters
      .TCQ                               (TCQ),
@@ -299,7 +299,7 @@ module ddr4_v2_2_4_ui #
        .ram_init_done_r                 (ram_init_done_r),
        .ram_init_addr                   (ram_init_addr));
 
-  ddr4_v2_2_4_ui_rd_data #
+  ddr4_v2_2_7_ui_rd_data #
     (/*AUTOINSTPARAM*/
      // Parameters
      .TCQ                               (TCQ),
@@ -331,7 +331,7 @@ module ddr4_v2_2_4_ui #
        .rd_accepted                     (rd_accepted));
 
 
-endmodule // ddr4_v2_2_4_ui
+endmodule // ddr4_v2_2_7_ui
 
 // Local Variables:
 // verilog-library-directories:("." "../mc")

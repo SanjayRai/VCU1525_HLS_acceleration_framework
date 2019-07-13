@@ -68,15 +68,14 @@
 //*****************************************************************************
 
 `timescale 1ns/1ps
-(* CORE_GENERATION_INFO = "DDR4_SDRAM, DDR4_SDRAM,{x_ipProduct=Vivado 2017.2.0,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=DDR4_SDRAM,x_ipVersion=2.2, Controller_Type = DDR4_SDRAM, Time_Period = 833, Input_Clock_Period = 3332, Memory_Type = RDIMMs, Memory_Part = MTA18ASF2G72PZ-2G3, Ecc = true, Cas_Latency = 17, Cas_Write_Latency = 12, DQ_Width = 72, Chip_Select = true, Data_Mask = NONE, MEM_ADDR_ORDER = ROW_COLUMN_BANK,  Is_AXI_Enabled = true , Slot_cofiguration =  Single , Clamshell_cofiguration =  false ,IS_FASTER_SPEED_RAM = No, Is_custom_part = false, Memory_Voltage = 1.2V, Phy_Only = Complete_Memory_Controller, Debug_Port = Disable, Burst_Length = 8, System_Clock = Differential, AXI_Selection = true, AXI_Data_Width = 512,  AXI_ArbitrationScheme = RD_PRI_REG, AXI_Narrow_Burst = true, Simulation_Mode = BFM, Debug_Mode = Disable, Example_TG = SIMPLE_TG, Self_Refresh = false, Save_Restore = false, MicroBlaze_ECC = false,  Specify_MandD = false, CLKBOUT_MULT = 5, DIVCLK_DIVIDE = 1, CLKOUT0_DIVIDE = 5}" *) 
-(* X_CORE_INFO = "ddr4_v2_2_4,Vivado 2018.1" *)
+(* CORE_GENERATION_INFO = "DDR4_SDRAM, DDR4_SDRAM,{x_ipProduct=Vivado 2017.2.0,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=DDR4_SDRAM,x_ipVersion=2.2, Controller_Type = DDR4_SDRAM, Time_Period = 833, Input_Clock_Period = 3332, Memory_Type = RDIMMs, Memory_Part = MTA18ASF2G72PZ-2G3, Ecc = true, Cas_Latency = 17, Cas_Write_Latency = 12, DQ_Width = 72, Chip_Select = true, Data_Mask = NONE, MEM_ADDR_ORDER = ROW_COLUMN_BANK,  Is_AXI_Enabled = true , Slot_cofiguration =  Single , Clamshell_cofiguration =  false ,IS_FASTER_SPEED_RAM = No, Is_custom_part = false, Memory_Voltage = 1.2V, Phy_Only = Complete_Memory_Controller, Debug_Port = Disable, Burst_Length = 8, System_Clock = Differential, AXI_Selection = true, AXI_Data_Width = 512,  AXI_ArbitrationScheme = RD_PRI_REG, AXI_Narrow_Burst = true, Simulation_Mode = BFM, Debug_Mode = Disable, Example_TG = SIMPLE_TG, Self_Refresh = false, Save_Restore = false, Enable_LVAUX = false,MicroBlaze_ECC = false,  Specify_MandD = false, CLKBOUT_MULT = 5, DIVCLK_DIVIDE = 1, CLKOUT0_DIVIDE = 5}" *) 
+(* X_CORE_INFO = "ddr4_v2_2_7,Vivado 2019.1" *)
 module PCIe_Bridge_ICAP_complex_ddr4_0_0
    (
    input  sys_rst,
 
    input                 c0_sys_clk_p,
    input                 c0_sys_clk_n,
-
 
    output                c0_ddr4_act_n,
    output [16:0]          c0_ddr4_adr,

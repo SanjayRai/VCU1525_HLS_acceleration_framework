@@ -63,6 +63,7 @@
 `define PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__EXCLUDE 0
 `define PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__INCLUDE 1
 `define PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__DEPENDENT 2
+`define PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__PCIEQMODE 3
 `define PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_LOCATE_RESET_CONTROLLER__CORE 0
 `define PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_LOCATE_RESET_CONTROLLER__EXAMPLE_DESIGN 1
 `define PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_LOCATE_USER_DATA_WIDTH_SIZING__CORE 0
@@ -2383,7 +2384,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
     // within this inactive generate block for proper HDL fileset hierarchy elaboration
     if (0) begin : gen_cpll_cal
 
-      gtwizard_ultrascale_v1_7_3_gthe3_cpll_cal gtwizard_ultrascale_v1_7_3_gthe3_cpll_cal_inst (
+      gtwizard_ultrascale_v1_7_6_gthe3_cpll_cal gtwizard_ultrascale_v1_7_6_gthe3_cpll_cal_inst (
         .TXOUTCLK_PERIOD_IN         (18'b0),
         .WAIT_DEASSERT_CPLLPD_IN    (16'b0),
         .CNT_TOL_IN                 (18'b0),
@@ -2423,7 +2424,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
     end
     if (0) begin : gen_cpll_cal_gthe4
 
-      gtwizard_ultrascale_v1_7_3_gthe4_cpll_cal #(
+      gtwizard_ultrascale_v1_7_6_gthe4_cpll_cal #(
           .C_SIM_CPLL_CAL_BYPASS( 
       //pragma translate_off
                   C_SIM_CPLL_CAL_BYPASS  ||
@@ -2435,7 +2436,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
         .C_RX_PLL_TYPE(C_RX_PLL_TYPE),
         .C_TX_PLL_TYPE(C_TX_PLL_TYPE),
         .C_PCIE_CORECLK_FREQ (C_PCIE_CORECLK_FREQ)
-      ) gtwizard_ultrascale_v1_7_3_gthe4_cpll_cal_inst (
+      ) gtwizard_ultrascale_v1_7_6_gthe4_cpll_cal_inst (
         .TXOUTCLK_PERIOD_IN         (18'b0),
         .WAIT_DEASSERT_CPLLPD_IN    (16'b0),
         .CNT_TOL_IN                 (18'b0),
@@ -2497,6 +2498,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
     end
 
     if ((C_INCLUDE_CPLL_CAL         == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__INCLUDE) ||
+        (C_INCLUDE_CPLL_CAL         == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__PCIEQMODE) ||
         ((C_INCLUDE_CPLL_CAL       == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__DEPENDENT) &&
          ((C_GT_REV  == 61) || (C_GT_REV == 64) || (C_GT_REV == 67)) &&
          (((C_TX_ENABLE             == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_TX_ENABLE__ENABLED) &&
@@ -2538,12 +2540,14 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
       wire [ `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH     -1:0] drpen_cpll_cal_int;
       wire [ `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH     -1:0] drpwe_cpll_cal_int;
 
-      // The TXOUTCLK_PERIOD_IN and CNT_TOL_IN ports are normally driven by an internally-calculated value. When INCLUDE_CPLL_CAL is 1,
+      // The TXOUTCLK_PERIOD_IN and CNT_TOL_IN ports are normally driven by an internally-calculated value. When INCLUDE_CPLL_CAL is 1/3,
       // they are driven as inputs for PLL-switching and rate change special cases, and the BUFG_GT CE input is provided by the user.
       wire [(`PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH* 18)-1:0] cpll_cal_txoutclk_period_int;
       wire [(`PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH* 18)-1:0] cpll_cal_cnt_tol_int;
       wire [(`PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH*  1)-1:0] cpll_cal_bufg_ce_int;
-      if (C_INCLUDE_CPLL_CAL == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__INCLUDE) begin : gen_txoutclk_pd_input
+      if ((C_INCLUDE_CPLL_CAL == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__INCLUDE) ||
+          (C_INCLUDE_CPLL_CAL == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__PCIEQMODE)
+         ) begin : gen_txoutclk_pd_input
         assign cpll_cal_txoutclk_period_int = {`PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH{gtwiz_gtye4_cpll_cal_txoutclk_period_in}};
         assign cpll_cal_cnt_tol_int         = {`PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH{gtwiz_gtye4_cpll_cal_cnt_tol_in}};
         assign cpll_cal_bufg_ce_int         = {`PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH{gtwiz_gtye4_cpll_cal_bufg_ce_in}};
@@ -2561,7 +2565,32 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
       // Instantiate one CPLL calibration block for each transceiver channel
       genvar cal;
       for (cal = 0; cal < `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH; cal = cal + 1) begin : gen_cpll_cal_inst
-        gtwizard_ultrascale_v1_7_3_gtye4_cpll_cal #(
+        // Bypass CPLL calibration block for non-master channels in PCIe use case where QPLL is used
+        if ((C_INCLUDE_CPLL_CAL == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_INCLUDE_CPLL_CAL__PCIEQMODE) && (C_PCIE_ENABLE != 0) &&
+            (cal != P_TX_MASTER_CH_PACKED_IDX) && (C_TX_PLL_TYPE != `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_TX_PLL_TYPE__CPLL)
+          ) begin : gen_byp_cpll_cal_pcie_non_mst_ch
+          assign txprgdivresetdone_cpll_cal_int[cal]        = txprgdivresetdone_int[cal];
+          assign rxprgdivresetdone_cpll_cal_int[cal]        = rxprgdivresetdone_int[cal];
+          assign rxpmaresetdone_cpll_cal_int[cal]           = rxpmaresetdone_int[cal];
+          assign cplllock_cpll_cal_int[cal]                 = cplllock_ch_int[cal];
+          assign drprdy_cpll_cal_int[cal]                   = drprdy_int[cal];
+          assign drpdo_cpll_cal_int[(16*cal)+15:16*cal]     = drpdo_int[(16*cal)+15:16*cal];
+          assign cpllreset_cpll_cal_int[cal]                = cpllreset_int[cal];
+          assign cpllpd_cpll_cal_int[cal]                   = cpllpd_int[cal];
+          assign txprogdivreset_cpll_cal_int[cal]           = txprogdivreset_int[cal];
+          assign rxprogdivreset_cpll_cal_int[cal]           = rxprogdivreset_int[cal];
+          assign txoutclksel_cpll_cal_int[(3*cal)+2:3*cal]  = txoutclksel_int[(3*cal)+2:3*cal];
+          assign rxoutclksel_cpll_cal_int[(3*cal)+2:3*cal]  = rxoutclksel_int[(3*cal)+2:3*cal];
+          assign gtrxreset_cpll_cal_int[cal]                = gtrxreset_int[cal];
+          assign rxpmareset_cpll_cal_int[cal]               = rxpmareset_int[cal];
+          assign rxcdrhold_cpll_cal_int[cal]                = rxcdrhold_int[cal];
+          assign drpaddr_cpll_cal_int[(10*cal)+9:10*cal]    = drpaddr_int[(10*cal)+9:10*cal];
+          assign drpdi_cpll_cal_int[(16*cal)+15:16*cal]     = drpdi_int[(16*cal)+15:16*cal];
+          assign drpen_cpll_cal_int[cal]                    = drpen_int[cal];
+          assign drpwe_cpll_cal_int[cal]                    = drpwe_int[cal];
+        end
+        else begin: gen_inst_cpll_cal
+        gtwizard_ultrascale_v1_7_6_gtye4_cpll_cal #(
           .C_SIM_CPLL_CAL_BYPASS( 
       //pragma translate_off
                   C_SIM_CPLL_CAL_BYPASS  ||
@@ -2573,7 +2602,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
           .C_RX_PLL_TYPE(C_RX_PLL_TYPE),
           .C_TX_PLL_TYPE(C_TX_PLL_TYPE),
           .C_PCIE_CORECLK_FREQ (C_PCIE_CORECLK_FREQ) 
-        ) gtwizard_ultrascale_v1_7_3_gtye4_cpll_cal_inst (
+        ) gtwizard_ultrascale_v1_7_6_gtye4_cpll_cal_inst (
           .TXOUTCLK_PERIOD_IN         (cpll_cal_txoutclk_period_int[(18*cal)+17:18*cal]),
           .WAIT_DEASSERT_CPLLPD_IN    (p_cpll_cal_wait_deassert_cpllpd_int),
           .CNT_TOL_IN                 (cpll_cal_cnt_tol_int[(18*cal)+17:18*cal]),
@@ -2631,6 +2660,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
           .GTYE4_RXPRGDIVRESETDONE_IN (rxprgdivresetdone_int[cal]),
           .GTYE4_RXPMARESETDONE_IN    (rxpmaresetdone_int[cal])
         );
+        end
       end
 
       // Assign signals as appropriate to connect to the CPLL calibration block when it is instantiated
@@ -2680,7 +2710,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
 
     genvar pwrgood_delay;
     for (pwrgood_delay = 0; pwrgood_delay < `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH; pwrgood_delay = pwrgood_delay + 1) begin : gen_pwrgood_delay_inst
-        gtwizard_ultrascale_v1_7_3_gtye4_delay_powergood #(
+        gtwizard_ultrascale_v1_7_6_gtye4_delay_powergood #(
           .C_USER_GTPOWERGOOD_DELAY_EN (C_USER_GTPOWERGOOD_DELAY_EN ),
           .C_PCIE_ENABLE               (C_PCIE_ENABLE               )
         ) delay_powergood_inst (
@@ -2772,7 +2802,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
         end
 
         // Instantiate a single instance of the transmitter user clocking network helper block
-        gtwizard_ultrascale_v1_7_3_gtwiz_userclk_tx #(
+        gtwizard_ultrascale_v1_7_6_gtwiz_userclk_tx #(
           .P_CONTENTS                     (C_TX_USER_CLOCKING_CONTENTS),
           .P_FREQ_RATIO_SOURCE_TO_USRCLK  (C_TX_OUTCLK_BUFG_GT_DIV),
           .P_FREQ_RATIO_USRCLK_TO_USRCLK2 (C_TX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2)
@@ -2824,7 +2854,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
             assign gtwiz_userclk_tx_reset_int[gi_hb_txclk] = gtwiz_userclk_rx_reset_in[gi_hb_txclk];
           end
 
-          gtwizard_ultrascale_v1_7_3_gtwiz_userclk_tx #(
+          gtwizard_ultrascale_v1_7_6_gtwiz_userclk_tx #(
             .P_CONTENTS                     (C_TX_USER_CLOCKING_CONTENTS),
             .P_FREQ_RATIO_SOURCE_TO_USRCLK  (C_TX_OUTCLK_BUFG_GT_DIV),
             .P_FREQ_RATIO_USRCLK_TO_USRCLK2 (C_TX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2)
@@ -2908,7 +2938,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
         end
 
         // Instantiate a single instance of the receiver user clocking network helper block
-        gtwizard_ultrascale_v1_7_3_gtwiz_userclk_rx #(
+        gtwizard_ultrascale_v1_7_6_gtwiz_userclk_rx #(
           .P_CONTENTS                     (C_RX_USER_CLOCKING_CONTENTS),
           .P_FREQ_RATIO_SOURCE_TO_USRCLK  (C_RX_OUTCLK_BUFG_GT_DIV),
           .P_FREQ_RATIO_USRCLK_TO_USRCLK2 (C_RX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2)
@@ -2962,7 +2992,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
             assign gtwiz_userclk_rx_reset_int[gi_hb_rxclk] = gtwiz_userclk_tx_reset_in;
           end
 
-          gtwizard_ultrascale_v1_7_3_gtwiz_userclk_rx #(
+          gtwizard_ultrascale_v1_7_6_gtwiz_userclk_rx #(
             .P_CONTENTS                     (C_RX_USER_CLOCKING_CONTENTS),
             .P_FREQ_RATIO_SOURCE_TO_USRCLK  (C_RX_OUTCLK_BUFG_GT_DIV),
             .P_FREQ_RATIO_USRCLK_TO_USRCLK2 (C_RX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2)
@@ -3032,7 +3062,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
           assign gtwiz_buffbypass_tx_resetdone_int = &gtwiz_reset_tx_done_out;
         end
 
-        gtwizard_ultrascale_v1_7_3_gtwiz_buffbypass_tx #(
+        gtwizard_ultrascale_v1_7_6_gtwiz_buffbypass_tx #(
           .P_BUFFER_BYPASS_MODE       (C_TX_BUFFBYPASS_MODE),
           .P_TOTAL_NUMBER_OF_CHANNELS (C_TOTAL_NUM_CHANNELS),
           .P_MASTER_CHANNEL_POINTER   (P_TX_MASTER_CH_PACKED_IDX)
@@ -3087,7 +3117,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
 
         genvar gi_hb_txbb;
         for (gi_hb_txbb = 0; gi_hb_txbb < `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH; gi_hb_txbb = gi_hb_txbb + 1) begin : gen_gtwiz_buffbypass_tx
-          gtwizard_ultrascale_v1_7_3_gtwiz_buffbypass_tx #(
+          gtwizard_ultrascale_v1_7_6_gtwiz_buffbypass_tx #(
             .P_BUFFER_BYPASS_MODE       (C_TX_BUFFBYPASS_MODE),
             .P_TOTAL_NUMBER_OF_CHANNELS (1),
             .P_MASTER_CHANNEL_POINTER   (0)
@@ -3186,7 +3216,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
           assign gtwiz_buffbypass_rx_resetdone_int = &gtwiz_reset_rx_done_out;
         end
 
-        gtwizard_ultrascale_v1_7_3_gtwiz_buffbypass_rx #(
+        gtwizard_ultrascale_v1_7_6_gtwiz_buffbypass_rx #(
           .P_BUFFER_BYPASS_MODE       (C_RX_BUFFBYPASS_MODE),
           .P_TOTAL_NUMBER_OF_CHANNELS (C_TOTAL_NUM_CHANNELS),
           .P_MASTER_CHANNEL_POINTER   (P_RX_MASTER_CH_PACKED_IDX)
@@ -3236,7 +3266,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
 
         genvar gi_hb_rxbb;
         for (gi_hb_rxbb = 0; gi_hb_rxbb < `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH; gi_hb_rxbb = gi_hb_rxbb + 1) begin : gen_gtwiz_buffbypass_rx
-          gtwizard_ultrascale_v1_7_3_gtwiz_buffbypass_rx #(
+          gtwizard_ultrascale_v1_7_6_gtwiz_buffbypass_rx #(
             .P_BUFFER_BYPASS_MODE       (C_RX_BUFFBYPASS_MODE),
             .P_TOTAL_NUMBER_OF_CHANNELS (1),
             .P_MASTER_CHANNEL_POINTER   (0)
@@ -3334,7 +3364,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
 
           genvar gi_ch_rxclk;
           for (gi_ch_rxclk = 0; gi_ch_rxclk < `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH; gi_ch_rxclk = gi_ch_rxclk + 1) begin : gen_ch_rxclk
-            gtwizard_ultrascale_v1_7_3_bit_synchronizer bit_synchronizer_gtwiz_reset_userclk_rx_active_inst (
+            gtwizard_ultrascale_v1_7_6_bit_synchronizer bit_synchronizer_gtwiz_reset_userclk_rx_active_inst (
               .clk_in (gtwiz_reset_clk_freerun_in),
               .i_in   (gtwiz_userclk_rx_active_out[gi_ch_rxclk]),
               .o_out  (gtwiz_userclk_rx_active_sync[gi_ch_rxclk])
@@ -3379,12 +3409,12 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
         wire [`PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH-1:0] rxresetdone_sync;
         genvar gi_ch_xrd;
         for (gi_ch_xrd = 0; gi_ch_xrd < `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_N_CH; gi_ch_xrd = gi_ch_xrd + 1) begin : gen_ch_xrd
-          gtwizard_ultrascale_v1_7_3_bit_synchronizer bit_synchronizer_txresetdone_inst (
+          gtwizard_ultrascale_v1_7_6_bit_synchronizer bit_synchronizer_txresetdone_inst (
             .clk_in (gtwiz_reset_clk_freerun_in),
             .i_in   (txresetdone_int[gi_ch_xrd]),
             .o_out  (txresetdone_sync[gi_ch_xrd])
           );
-          gtwizard_ultrascale_v1_7_3_bit_synchronizer bit_synchronizer_rxresetdone_inst (
+          gtwizard_ultrascale_v1_7_6_bit_synchronizer bit_synchronizer_rxresetdone_inst (
             .clk_in (gtwiz_reset_clk_freerun_in),
             .i_in   (rxresetdone_int[gi_ch_xrd]),
             .o_out  (rxresetdone_sync[gi_ch_xrd])
@@ -3423,7 +3453,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
         end
 
         // Instantiate the single reset controller
-        gtwizard_ultrascale_v1_7_3_gtwiz_reset #(
+        gtwizard_ultrascale_v1_7_6_gtwiz_reset #(
           .P_FREERUN_FREQUENCY       (C_FREERUN_FREQUENCY),
           .P_USE_CPLL_CAL            (0),
           .P_TX_PLL_TYPE             (C_TX_PLL_TYPE),
@@ -3614,7 +3644,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
           endcase
 
           // Instantiate a reset controller per channel
-          gtwizard_ultrascale_v1_7_3_gtwiz_reset #(
+          gtwizard_ultrascale_v1_7_6_gtwiz_reset #(
             .P_FREERUN_FREQUENCY       (C_FREERUN_FREQUENCY),
             .P_USE_CPLL_CAL            (0),
             .P_TX_PLL_TYPE             (C_TX_PLL_TYPE),
@@ -3788,7 +3818,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
       wire [(C_TOTAL_NUM_CHANNELS* 16)-1:0] gtwiz_userdata_tx_txctrl0_int;
       wire [(C_TOTAL_NUM_CHANNELS* 16)-1:0] gtwiz_userdata_tx_txctrl1_int;
 
-      gtwizard_ultrascale_v1_7_3_gtwiz_userdata_tx #(
+      gtwizard_ultrascale_v1_7_6_gtwiz_userdata_tx #(
         .P_TX_USER_DATA_WIDTH       (C_TX_USER_DATA_WIDTH),
         .P_TX_DATA_ENCODING         (C_TX_DATA_ENCODING),
         .P_TOTAL_NUMBER_OF_CHANNELS (C_TOTAL_NUM_CHANNELS)
@@ -3834,7 +3864,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4 #(
         (C_LOCATE_USER_DATA_WIDTH_SIZING == `PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_gt_gtwizard_gtye4_LOCATE_USER_DATA_WIDTH_SIZING__CORE))
         begin : gen_rx_userdata_internal
 
-      gtwizard_ultrascale_v1_7_3_gtwiz_userdata_rx #(
+      gtwizard_ultrascale_v1_7_6_gtwiz_userdata_rx #(
         .P_RX_USER_DATA_WIDTH       (C_RX_USER_DATA_WIDTH),
         .P_RX_DATA_DECODING         (C_RX_DATA_DECODING),
         .P_TOTAL_NUMBER_OF_CHANNELS (C_TOTAL_NUM_CHANNELS)

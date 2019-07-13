@@ -1,8 +1,8 @@
-//Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+//Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
-//Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Mon Jun  4 17:52:37 2018
-//Host        : mc32gblnx running 64-bit CentOS Linux release 7.4.1708 (Core)
+//Tool Version: Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
+//Date        : Fri Jul 12 14:38:54 2019
+//Host        : mc32gblnx running 64-bit CentOS Linux release 7.6.1810 (Core)
 //Command     : generate_target PCIe_Bridge_ICAP_complex.bd
 //Design      : PCIe_Bridge_ICAP_complex
 //Purpose     : IP block netlist
@@ -1193,7 +1193,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
   input [3:0]S_AXI_arcache;
   input [3:0]S_AXI_arid;
   input [7:0]S_AXI_arlen;
-  input [0:0]S_AXI_arlock;
+  input S_AXI_arlock;
   input [2:0]S_AXI_arprot;
   output S_AXI_arready;
   input [2:0]S_AXI_arsize;
@@ -1203,7 +1203,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
   input [3:0]S_AXI_awcache;
   input [3:0]S_AXI_awid;
   input [7:0]S_AXI_awlen;
-  input [0:0]S_AXI_awlock;
+  input S_AXI_awlock;
   input [2:0]S_AXI_awprot;
   output S_AXI_awready;
   input [2:0]S_AXI_awsize;
@@ -1232,7 +1232,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
   wire [3:0]axi_interconnect_0_M01_AXI_ARCACHE;
   wire [3:0]axi_interconnect_0_M01_AXI_ARID;
   wire [7:0]axi_interconnect_0_M01_AXI_ARLEN;
-  wire [0:0]axi_interconnect_0_M01_AXI_ARLOCK;
+  wire axi_interconnect_0_M01_AXI_ARLOCK;
   wire [2:0]axi_interconnect_0_M01_AXI_ARPROT;
   wire axi_interconnect_0_M01_AXI_ARREADY;
   wire [2:0]axi_interconnect_0_M01_AXI_ARSIZE;
@@ -1242,7 +1242,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
   wire [3:0]axi_interconnect_0_M01_AXI_AWCACHE;
   wire [3:0]axi_interconnect_0_M01_AXI_AWID;
   wire [7:0]axi_interconnect_0_M01_AXI_AWLEN;
-  wire [0:0]axi_interconnect_0_M01_AXI_AWLOCK;
+  wire axi_interconnect_0_M01_AXI_AWLOCK;
   wire [2:0]axi_interconnect_0_M01_AXI_AWPROT;
   wire axi_interconnect_0_M01_AXI_AWREADY;
   wire [2:0]axi_interconnect_0_M01_AXI_AWSIZE;
@@ -1427,7 +1427,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
   assign axi_interconnect_0_M01_AXI_ARCACHE = S_AXI_arcache[3:0];
   assign axi_interconnect_0_M01_AXI_ARID = S_AXI_arid[3:0];
   assign axi_interconnect_0_M01_AXI_ARLEN = S_AXI_arlen[7:0];
-  assign axi_interconnect_0_M01_AXI_ARLOCK = S_AXI_arlock[0];
+  assign axi_interconnect_0_M01_AXI_ARLOCK = S_AXI_arlock;
   assign axi_interconnect_0_M01_AXI_ARPROT = S_AXI_arprot[2:0];
   assign axi_interconnect_0_M01_AXI_ARSIZE = S_AXI_arsize[2:0];
   assign axi_interconnect_0_M01_AXI_ARVALID = S_AXI_arvalid;
@@ -1436,7 +1436,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
   assign axi_interconnect_0_M01_AXI_AWCACHE = S_AXI_awcache[3:0];
   assign axi_interconnect_0_M01_AXI_AWID = S_AXI_awid[3:0];
   assign axi_interconnect_0_M01_AXI_AWLEN = S_AXI_awlen[7:0];
-  assign axi_interconnect_0_M01_AXI_AWLOCK = S_AXI_awlock[0];
+  assign axi_interconnect_0_M01_AXI_AWLOCK = S_AXI_awlock;
   assign axi_interconnect_0_M01_AXI_AWPROT = S_AXI_awprot[2:0];
   assign axi_interconnect_0_M01_AXI_AWSIZE = S_AXI_awsize[2:0];
   assign axi_interconnect_0_M01_AXI_AWVALID = S_AXI_awvalid;
@@ -1460,7 +1460,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
   assign axi_register_slice_2_M_AXI_RVALID = M_AXI_0_rvalid;
   assign axi_register_slice_2_M_AXI_WREADY = M_AXI_0_wready;
   assign xlslice_0_Dout = aresetn1;
-  PCIe_Bridge_ICAP_complex_axi_register_slice_0_2 axi_register_slice_0
+  PCIe_Bridge_ICAP_complex_axi_register_slice_0_6 axi_register_slice_0
        (.aclk(axi_pcie3_0_axi_aclk),
         .aresetn(axi_pcie3_0_axi_aresetn),
         .m_axi_araddr(axi_register_slice_0_M_AXI_ARADDR),
@@ -1541,7 +1541,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
         .s_axi_wready(axi_interconnect_0_M01_AXI_WREADY),
         .s_axi_wstrb(axi_interconnect_0_M01_AXI_WSTRB),
         .s_axi_wvalid(axi_interconnect_0_M01_AXI_WVALID));
-  PCIe_Bridge_ICAP_complex_axi_register_slice_0_3 axi_register_slice_1
+  PCIe_Bridge_ICAP_complex_axi_register_slice_1_3 axi_register_slice_1
        (.aclk(axi_pcie3_0_axi_aclk),
         .aresetn(axi_pcie3_0_axi_aresetn),
         .m_axi_araddr(axi_register_slice_1_M_AXI_ARADDR),
@@ -1622,7 +1622,7 @@ module FROM_SH_AXI_MM_NORTH_imp_D7APPA
         .s_axi_wready(axi_register_slice_0_M_AXI_WREADY),
         .s_axi_wstrb(axi_register_slice_0_M_AXI_WSTRB),
         .s_axi_wvalid(axi_register_slice_0_M_AXI_WVALID));
-  PCIe_Bridge_ICAP_complex_axi_register_slice_1_1 axi_register_slice_2
+  PCIe_Bridge_ICAP_complex_axi_register_slice_2_0 axi_register_slice_2
        (.aclk(axi_pcie3_0_axi_aclk),
         .aresetn(xlslice_0_Dout),
         .m_axi_araddr(axi_register_slice_2_M_AXI_ARADDR),
@@ -1834,8 +1834,8 @@ module PCIe_Bridge_ICAP_complex
     sys_rst_n);
   (* X_INTERFACE_INFO = "xilinx.com:interface:diff_clock:1.0 C1_SYS_CLK CLK_N" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME C1_SYS_CLK, CAN_DEBUG false, FREQ_HZ 300000000" *) input C1_SYS_CLK_clk_n;
   (* X_INTERFACE_INFO = "xilinx.com:interface:diff_clock:1.0 C1_SYS_CLK CLK_P" *) input C1_SYS_CLK_clk_p;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.DDR4_SYS_RST RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.DDR4_SYS_RST, POLARITY ACTIVE_HIGH" *) input DDR4_sys_rst;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXI_LITE_TO_HLS_PR_NORTH, ADDR_WIDTH 32, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, DATA_WIDTH 32, FREQ_HZ 125000000, HAS_BRESP 1, HAS_BURST 0, HAS_CACHE 1, HAS_LOCK 1, HAS_PROT 1, HAS_QOS 0, HAS_REGION 0, HAS_RRESP 1, HAS_WSTRB 1, ID_WIDTH 0, MAX_BURST_LENGTH 1, NUM_READ_OUTSTANDING 2, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 2, NUM_WRITE_THREADS 1, PHASE 0.0, PROTOCOL AXI4LITE, READ_WRITE_MODE READ_WRITE, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 0, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) output [31:0]M_AXI_LITE_TO_HLS_PR_NORTH_araddr;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.DDR4_SYS_RST RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.DDR4_SYS_RST, INSERT_VIP 0, POLARITY ACTIVE_HIGH" *) input DDR4_sys_rst;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXI_LITE_TO_HLS_PR_NORTH, ADDR_WIDTH 32, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, DATA_WIDTH 32, FREQ_HZ 125000000, HAS_BRESP 1, HAS_BURST 0, HAS_CACHE 1, HAS_LOCK 1, HAS_PROT 1, HAS_QOS 0, HAS_REGION 0, HAS_RRESP 1, HAS_WSTRB 1, ID_WIDTH 0, INSERT_VIP 0, MAX_BURST_LENGTH 1, NUM_READ_OUTSTANDING 2, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 2, NUM_WRITE_THREADS 1, PHASE 0.0, PROTOCOL AXI4LITE, READ_WRITE_MODE READ_WRITE, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 0, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) output [31:0]M_AXI_LITE_TO_HLS_PR_NORTH_araddr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH ARPROT" *) output [2:0]M_AXI_LITE_TO_HLS_PR_NORTH_arprot;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH ARREADY" *) input M_AXI_LITE_TO_HLS_PR_NORTH_arready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH ARVALID" *) output M_AXI_LITE_TO_HLS_PR_NORTH_arvalid;
@@ -1854,7 +1854,7 @@ module PCIe_Bridge_ICAP_complex
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH WREADY" *) input M_AXI_LITE_TO_HLS_PR_NORTH_wready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH WSTRB" *) output [3:0]M_AXI_LITE_TO_HLS_PR_NORTH_wstrb;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_LITE_TO_HLS_PR_NORTH WVALID" *) output M_AXI_LITE_TO_HLS_PR_NORTH_wvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXI_MM_TO_HLS_PR_NORTH, ADDR_WIDTH 64, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, DATA_WIDTH 512, FREQ_HZ 250000000, HAS_BRESP 1, HAS_BURST 0, HAS_CACHE 1, HAS_LOCK 1, HAS_PROT 1, HAS_QOS 0, HAS_REGION 0, HAS_RRESP 1, HAS_WSTRB 1, ID_WIDTH 4, MAX_BURST_LENGTH 256, NUM_READ_OUTSTANDING 32, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 32, NUM_WRITE_THREADS 1, PHASE 0.000, PROTOCOL AXI4, READ_WRITE_MODE READ_WRITE, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 0, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) output [63:0]M_AXI_MM_TO_HLS_PR_NORTH_araddr;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXI_MM_TO_HLS_PR_NORTH, ADDR_WIDTH 64, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, DATA_WIDTH 512, FREQ_HZ 250000000, HAS_BRESP 1, HAS_BURST 0, HAS_CACHE 1, HAS_LOCK 1, HAS_PROT 1, HAS_QOS 0, HAS_REGION 0, HAS_RRESP 1, HAS_WSTRB 1, ID_WIDTH 4, INSERT_VIP 0, MAX_BURST_LENGTH 256, NUM_READ_OUTSTANDING 32, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 32, NUM_WRITE_THREADS 1, PHASE 0.000, PROTOCOL AXI4, READ_WRITE_MODE READ_WRITE, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 0, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) output [63:0]M_AXI_MM_TO_HLS_PR_NORTH_araddr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH ARBURST" *) output [1:0]M_AXI_MM_TO_HLS_PR_NORTH_arburst;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH ARCACHE" *) output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arcache;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH ARID" *) output [3:0]M_AXI_MM_TO_HLS_PR_NORTH_arid;
@@ -1893,7 +1893,7 @@ module PCIe_Bridge_ICAP_complex
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH WREADY" *) input M_AXI_MM_TO_HLS_PR_NORTH_wready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH WSTRB" *) output [63:0]M_AXI_MM_TO_HLS_PR_NORTH_wstrb;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI_MM_TO_HLS_PR_NORTH WVALID" *) output M_AXI_MM_TO_HLS_PR_NORTH_wvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXI_MM_FROM_HLS_PR_NORTH, ADDR_WIDTH 64, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, DATA_WIDTH 512, FREQ_HZ 250000000, HAS_BRESP 1, HAS_BURST 1, HAS_CACHE 1, HAS_LOCK 1, HAS_PROT 1, HAS_QOS 1, HAS_REGION 1, HAS_RRESP 1, HAS_WSTRB 1, ID_WIDTH 5, MAX_BURST_LENGTH 256, NUM_READ_OUTSTANDING 32, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 32, NUM_WRITE_THREADS 1, PHASE 0.000, PROTOCOL AXI4, READ_WRITE_MODE READ_WRITE, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 1, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) input [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_araddr;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH ARADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXI_MM_FROM_HLS_PR_NORTH, ADDR_WIDTH 64, ARUSER_WIDTH 0, AWUSER_WIDTH 0, BUSER_WIDTH 0, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, DATA_WIDTH 512, FREQ_HZ 250000000, HAS_BRESP 1, HAS_BURST 1, HAS_CACHE 1, HAS_LOCK 1, HAS_PROT 1, HAS_QOS 1, HAS_REGION 1, HAS_RRESP 1, HAS_WSTRB 1, ID_WIDTH 5, INSERT_VIP 0, MAX_BURST_LENGTH 256, NUM_READ_OUTSTANDING 32, NUM_READ_THREADS 1, NUM_WRITE_OUTSTANDING 32, NUM_WRITE_THREADS 1, PHASE 0.000, PROTOCOL AXI4, READ_WRITE_MODE READ_WRITE, RUSER_BITS_PER_BYTE 0, RUSER_WIDTH 0, SUPPORTS_NARROW_BURST 1, WUSER_BITS_PER_BYTE 0, WUSER_WIDTH 0" *) input [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_araddr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH ARBURST" *) input [1:0]S_AXI_MM_FROM_HLS_PR_NORTH_arburst;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH ARCACHE" *) input [3:0]S_AXI_MM_FROM_HLS_PR_NORTH_arcache;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH ARID" *) input [4:0]S_AXI_MM_FROM_HLS_PR_NORTH_arid;
@@ -1932,7 +1932,7 @@ module PCIe_Bridge_ICAP_complex
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH WREADY" *) output S_AXI_MM_FROM_HLS_PR_NORTH_wready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH WSTRB" *) input [63:0]S_AXI_MM_FROM_HLS_PR_NORTH_wstrb;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI_MM_FROM_HLS_PR_NORTH WVALID" *) input S_AXI_MM_FROM_HLS_PR_NORTH_wvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.AXI_RESET_N_OUT RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.AXI_RESET_N_OUT, POLARITY ACTIVE_LOW" *) output [0:0]axi_reset_n_out;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.AXI_RESET_N_OUT RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.AXI_RESET_N_OUT, INSERT_VIP 0, POLARITY ACTIVE_LOW" *) output [0:0]axi_reset_n_out;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddr4:1.0 c1_ddr4 ACT_N" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME c1_ddr4, AXI_ARBITRATION_SCHEME RD_PRI_REG, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 17, CAS_WRITE_LATENCY 12, CS_ENABLED true, CUSTOM_PARTS no_file_loaded, DATA_MASK_ENABLED NONE, DATA_WIDTH 72, MEMORY_PART MTA18ASF2G72PZ-2G3, MEMORY_TYPE RDIMMs, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 833" *) output c1_ddr4_act_n;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddr4:1.0 c1_ddr4 ADR" *) output [16:0]c1_ddr4_adr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddr4:1.0 c1_ddr4 BA" *) output [1:0]c1_ddr4_ba;
@@ -1947,16 +1947,16 @@ module PCIe_Bridge_ICAP_complex
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddr4:1.0 c1_ddr4 ODT" *) output [0:0]c1_ddr4_odt;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddr4:1.0 c1_ddr4 PAR" *) output c1_ddr4_par;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddr4:1.0 c1_ddr4 RESET_N" *) output c1_ddr4_reset_n;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK_OUT_125M CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK_OUT_125M, ASSOCIATED_BUSIF M_AXI_LITE_TO_HLS_PR_NORTH, ASSOCIATED_RESET axi_reset_n_out, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, FREQ_HZ 125000000, PHASE 0.0" *) output clk_out_125M;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK_OUT_250M CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK_OUT_250M, ASSOCIATED_BUSIF S_AXI_MM_FROM_HLS_PR_NORTH:M_AXI_MM_TO_HLS_PR_NORTH, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, FREQ_HZ 250000000, PHASE 0.000" *) output clk_out_250M;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK_OUT_PROG CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK_OUT_PROG, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_1_0_clk_out1, FREQ_HZ 400000000, PHASE 0.0" *) output clk_out_PROG;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK_OUT_125M CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK_OUT_125M, ASSOCIATED_BUSIF M_AXI_LITE_TO_HLS_PR_NORTH, ASSOCIATED_RESET axi_reset_n_out, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_0_0_clk_out_125M, FREQ_HZ 125000000, INSERT_VIP 0, PHASE 0.0" *) output clk_out_125M;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK_OUT_250M CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK_OUT_250M, ASSOCIATED_BUSIF S_AXI_MM_FROM_HLS_PR_NORTH:M_AXI_MM_TO_HLS_PR_NORTH, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, FREQ_HZ 250000000, INSERT_VIP 0, PHASE 0.000" *) output clk_out_250M;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CLK_OUT_PROG CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CLK_OUT_PROG, CLK_DOMAIN PCIe_Bridge_ICAP_complex_clk_wiz_1_0_clk_out1, FREQ_HZ 400000000, INSERT_VIP 0, PHASE 0.0" *) output clk_out_PROG;
   (* X_INTERFACE_INFO = "xilinx.com:interface:pcie_7x_mgt:1.0 pcie_mgt rxn" *) input [15:0]pcie_mgt_rxn;
   (* X_INTERFACE_INFO = "xilinx.com:interface:pcie_7x_mgt:1.0 pcie_mgt rxp" *) input [15:0]pcie_mgt_rxp;
   (* X_INTERFACE_INFO = "xilinx.com:interface:pcie_7x_mgt:1.0 pcie_mgt txn" *) output [15:0]pcie_mgt_txn;
   (* X_INTERFACE_INFO = "xilinx.com:interface:pcie_7x_mgt:1.0 pcie_mgt txp" *) output [15:0]pcie_mgt_txp;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.SYS_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.SYS_CLK, CLK_DOMAIN PCIe_Bridge_ICAP_complex_sys_clk, FREQ_HZ 100000000, PHASE 0.000" *) input sys_clk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.SYS_CLK_GT CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.SYS_CLK_GT, CLK_DOMAIN PCIe_Bridge_ICAP_complex_sys_clk_gt, FREQ_HZ 100000000, PHASE 0.000" *) input sys_clk_gt;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.SYS_RST_N RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.SYS_RST_N, POLARITY ACTIVE_LOW" *) input sys_rst_n;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.SYS_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.SYS_CLK, CLK_DOMAIN PCIe_Bridge_ICAP_complex_sys_clk, FREQ_HZ 100000000, INSERT_VIP 0, PHASE 0.000" *) input sys_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.SYS_CLK_GT CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.SYS_CLK_GT, CLK_DOMAIN PCIe_Bridge_ICAP_complex_sys_clk_gt, FREQ_HZ 100000000, INSERT_VIP 0, PHASE 0.000" *) input sys_clk_gt;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.SYS_RST_N RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.SYS_RST_N, INSERT_VIP 0, POLARITY ACTIVE_LOW" *) input sys_rst_n;
 
   wire C0_SYS_CLK_1_CLK_N;
   wire C0_SYS_CLK_1_CLK_P;
@@ -2248,21 +2248,21 @@ module PCIe_Bridge_ICAP_complex
   wire axi_pcie3_0_axi_periph_M05_AXI_WVALID;
   wire [31:0]axi_pcie3_0_axi_periph_M06_AXI_ARADDR;
   wire axi_pcie3_0_axi_periph_M06_AXI_ARREADY;
-  wire axi_pcie3_0_axi_periph_M06_AXI_ARVALID;
+  wire [0:0]axi_pcie3_0_axi_periph_M06_AXI_ARVALID;
   wire [31:0]axi_pcie3_0_axi_periph_M06_AXI_AWADDR;
   wire axi_pcie3_0_axi_periph_M06_AXI_AWREADY;
-  wire axi_pcie3_0_axi_periph_M06_AXI_AWVALID;
-  wire axi_pcie3_0_axi_periph_M06_AXI_BREADY;
+  wire [0:0]axi_pcie3_0_axi_periph_M06_AXI_AWVALID;
+  wire [0:0]axi_pcie3_0_axi_periph_M06_AXI_BREADY;
   wire [1:0]axi_pcie3_0_axi_periph_M06_AXI_BRESP;
   wire axi_pcie3_0_axi_periph_M06_AXI_BVALID;
   wire [31:0]axi_pcie3_0_axi_periph_M06_AXI_RDATA;
-  wire axi_pcie3_0_axi_periph_M06_AXI_RREADY;
+  wire [0:0]axi_pcie3_0_axi_periph_M06_AXI_RREADY;
   wire [1:0]axi_pcie3_0_axi_periph_M06_AXI_RRESP;
   wire axi_pcie3_0_axi_periph_M06_AXI_RVALID;
   wire [31:0]axi_pcie3_0_axi_periph_M06_AXI_WDATA;
   wire axi_pcie3_0_axi_periph_M06_AXI_WREADY;
   wire [3:0]axi_pcie3_0_axi_periph_M06_AXI_WSTRB;
-  wire axi_pcie3_0_axi_periph_M06_AXI_WVALID;
+  wire [0:0]axi_pcie3_0_axi_periph_M06_AXI_WVALID;
   wire [63:0]axi_register_slice_2_M_AXI_ARADDR;
   wire [1:0]axi_register_slice_2_M_AXI_ARBURST;
   wire [3:0]axi_register_slice_2_M_AXI_ARCACHE;
@@ -3253,7 +3253,9 @@ module PCIe_Bridge_ICAP_complex
         .s_axi_wdata(axi_pcie3_0_axi_periph_M06_AXI_WDATA),
         .s_axi_wready(axi_pcie3_0_axi_periph_M06_AXI_WREADY),
         .s_axi_wstrb(axi_pcie3_0_axi_periph_M06_AXI_WSTRB),
-        .s_axi_wvalid(axi_pcie3_0_axi_periph_M06_AXI_WVALID));
+        .s_axi_wvalid(axi_pcie3_0_axi_periph_M06_AXI_WVALID),
+        .vn(1'b0),
+        .vp(1'b0));
   PCIe_Bridge_ICAP_complex_xdma_0_0 xdma_0
        (.axi_aclk(axi_pcie3_0_axi_aclk),
         .axi_aresetn(axi_pcie3_0_axi_aresetn),
@@ -4040,22 +4042,22 @@ module PCIe_Bridge_ICAP_complex_axi_pcie3_0_axi_periph_0
   input M06_ACLK;
   input M06_ARESETN;
   output [31:0]M06_AXI_araddr;
-  input M06_AXI_arready;
-  output M06_AXI_arvalid;
+  input [0:0]M06_AXI_arready;
+  output [0:0]M06_AXI_arvalid;
   output [31:0]M06_AXI_awaddr;
-  input M06_AXI_awready;
-  output M06_AXI_awvalid;
-  output M06_AXI_bready;
+  input [0:0]M06_AXI_awready;
+  output [0:0]M06_AXI_awvalid;
+  output [0:0]M06_AXI_bready;
   input [1:0]M06_AXI_bresp;
-  input M06_AXI_bvalid;
+  input [0:0]M06_AXI_bvalid;
   input [31:0]M06_AXI_rdata;
-  output M06_AXI_rready;
+  output [0:0]M06_AXI_rready;
   input [1:0]M06_AXI_rresp;
-  input M06_AXI_rvalid;
+  input [0:0]M06_AXI_rvalid;
   output [31:0]M06_AXI_wdata;
-  input M06_AXI_wready;
+  input [0:0]M06_AXI_wready;
   output [3:0]M06_AXI_wstrb;
-  output M06_AXI_wvalid;
+  output [0:0]M06_AXI_wvalid;
   input S00_ACLK;
   input S00_ARESETN;
   input [31:0]S00_AXI_araddr;
@@ -4233,22 +4235,22 @@ module PCIe_Bridge_ICAP_complex_axi_pcie3_0_axi_periph_0
   wire [3:0]m05_couplers_to_axi_pcie3_0_axi_periph_WSTRB;
   wire m05_couplers_to_axi_pcie3_0_axi_periph_WVALID;
   wire [31:0]m06_couplers_to_axi_pcie3_0_axi_periph_ARADDR;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_ARREADY;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_ARVALID;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_ARREADY;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_ARVALID;
   wire [31:0]m06_couplers_to_axi_pcie3_0_axi_periph_AWADDR;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_AWREADY;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_AWVALID;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_BREADY;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_AWREADY;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_AWVALID;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_BREADY;
   wire [1:0]m06_couplers_to_axi_pcie3_0_axi_periph_BRESP;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_BVALID;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_BVALID;
   wire [31:0]m06_couplers_to_axi_pcie3_0_axi_periph_RDATA;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_RREADY;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_RREADY;
   wire [1:0]m06_couplers_to_axi_pcie3_0_axi_periph_RRESP;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_RVALID;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_RVALID;
   wire [31:0]m06_couplers_to_axi_pcie3_0_axi_periph_WDATA;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_WREADY;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_WREADY;
   wire [3:0]m06_couplers_to_axi_pcie3_0_axi_periph_WSTRB;
-  wire m06_couplers_to_axi_pcie3_0_axi_periph_WVALID;
+  wire [0:0]m06_couplers_to_axi_pcie3_0_axi_periph_WVALID;
   wire [31:0]s00_couplers_to_xbar_ARADDR;
   wire [2:0]s00_couplers_to_xbar_ARPROT;
   wire [0:0]s00_couplers_to_xbar_ARREADY;
@@ -4383,20 +4385,20 @@ module PCIe_Bridge_ICAP_complex_axi_pcie3_0_axi_periph_0
   wire [23:20]xbar_to_m05_couplers_WSTRB;
   wire [5:5]xbar_to_m05_couplers_WVALID;
   wire [223:192]xbar_to_m06_couplers_ARADDR;
-  wire xbar_to_m06_couplers_ARREADY;
+  wire [0:0]xbar_to_m06_couplers_ARREADY;
   wire [6:6]xbar_to_m06_couplers_ARVALID;
   wire [223:192]xbar_to_m06_couplers_AWADDR;
-  wire xbar_to_m06_couplers_AWREADY;
+  wire [0:0]xbar_to_m06_couplers_AWREADY;
   wire [6:6]xbar_to_m06_couplers_AWVALID;
   wire [6:6]xbar_to_m06_couplers_BREADY;
   wire [1:0]xbar_to_m06_couplers_BRESP;
-  wire xbar_to_m06_couplers_BVALID;
+  wire [0:0]xbar_to_m06_couplers_BVALID;
   wire [31:0]xbar_to_m06_couplers_RDATA;
   wire [6:6]xbar_to_m06_couplers_RREADY;
   wire [1:0]xbar_to_m06_couplers_RRESP;
-  wire xbar_to_m06_couplers_RVALID;
+  wire [0:0]xbar_to_m06_couplers_RVALID;
   wire [223:192]xbar_to_m06_couplers_WDATA;
-  wire xbar_to_m06_couplers_WREADY;
+  wire [0:0]xbar_to_m06_couplers_WREADY;
   wire [27:24]xbar_to_m06_couplers_WSTRB;
   wire [6:6]xbar_to_m06_couplers_WVALID;
 
@@ -4483,14 +4485,14 @@ module PCIe_Bridge_ICAP_complex_axi_pcie3_0_axi_periph_0
   assign M06_ACLK_1 = M06_ACLK;
   assign M06_ARESETN_1 = M06_ARESETN;
   assign M06_AXI_araddr[31:0] = m06_couplers_to_axi_pcie3_0_axi_periph_ARADDR;
-  assign M06_AXI_arvalid = m06_couplers_to_axi_pcie3_0_axi_periph_ARVALID;
+  assign M06_AXI_arvalid[0] = m06_couplers_to_axi_pcie3_0_axi_periph_ARVALID;
   assign M06_AXI_awaddr[31:0] = m06_couplers_to_axi_pcie3_0_axi_periph_AWADDR;
-  assign M06_AXI_awvalid = m06_couplers_to_axi_pcie3_0_axi_periph_AWVALID;
-  assign M06_AXI_bready = m06_couplers_to_axi_pcie3_0_axi_periph_BREADY;
-  assign M06_AXI_rready = m06_couplers_to_axi_pcie3_0_axi_periph_RREADY;
+  assign M06_AXI_awvalid[0] = m06_couplers_to_axi_pcie3_0_axi_periph_AWVALID;
+  assign M06_AXI_bready[0] = m06_couplers_to_axi_pcie3_0_axi_periph_BREADY;
+  assign M06_AXI_rready[0] = m06_couplers_to_axi_pcie3_0_axi_periph_RREADY;
   assign M06_AXI_wdata[31:0] = m06_couplers_to_axi_pcie3_0_axi_periph_WDATA;
   assign M06_AXI_wstrb[3:0] = m06_couplers_to_axi_pcie3_0_axi_periph_WSTRB;
-  assign M06_AXI_wvalid = m06_couplers_to_axi_pcie3_0_axi_periph_WVALID;
+  assign M06_AXI_wvalid[0] = m06_couplers_to_axi_pcie3_0_axi_periph_WVALID;
   assign S00_ACLK_1 = S00_ACLK;
   assign S00_ARESETN_1 = S00_ARESETN;
   assign S00_AXI_arready = axi_pcie3_0_axi_periph_to_s00_couplers_ARREADY;
@@ -4563,14 +4565,14 @@ module PCIe_Bridge_ICAP_complex_axi_pcie3_0_axi_periph_0
   assign m05_couplers_to_axi_pcie3_0_axi_periph_RRESP = M05_AXI_rresp[1:0];
   assign m05_couplers_to_axi_pcie3_0_axi_periph_RVALID = M05_AXI_rvalid;
   assign m05_couplers_to_axi_pcie3_0_axi_periph_WREADY = M05_AXI_wready;
-  assign m06_couplers_to_axi_pcie3_0_axi_periph_ARREADY = M06_AXI_arready;
-  assign m06_couplers_to_axi_pcie3_0_axi_periph_AWREADY = M06_AXI_awready;
+  assign m06_couplers_to_axi_pcie3_0_axi_periph_ARREADY = M06_AXI_arready[0];
+  assign m06_couplers_to_axi_pcie3_0_axi_periph_AWREADY = M06_AXI_awready[0];
   assign m06_couplers_to_axi_pcie3_0_axi_periph_BRESP = M06_AXI_bresp[1:0];
-  assign m06_couplers_to_axi_pcie3_0_axi_periph_BVALID = M06_AXI_bvalid;
+  assign m06_couplers_to_axi_pcie3_0_axi_periph_BVALID = M06_AXI_bvalid[0];
   assign m06_couplers_to_axi_pcie3_0_axi_periph_RDATA = M06_AXI_rdata[31:0];
   assign m06_couplers_to_axi_pcie3_0_axi_periph_RRESP = M06_AXI_rresp[1:0];
-  assign m06_couplers_to_axi_pcie3_0_axi_periph_RVALID = M06_AXI_rvalid;
-  assign m06_couplers_to_axi_pcie3_0_axi_periph_WREADY = M06_AXI_wready;
+  assign m06_couplers_to_axi_pcie3_0_axi_periph_RVALID = M06_AXI_rvalid[0];
+  assign m06_couplers_to_axi_pcie3_0_axi_periph_WREADY = M06_AXI_wready[0];
   m00_couplers_imp_38Q45U m00_couplers
        (.M_ACLK(M00_ACLK_1),
         .M_ARESETN(M00_ARESETN_1),
@@ -6982,94 +6984,94 @@ module m06_couplers_imp_1LVZP5Y
   input M_ACLK;
   input M_ARESETN;
   output [31:0]M_AXI_araddr;
-  input M_AXI_arready;
-  output M_AXI_arvalid;
+  input [0:0]M_AXI_arready;
+  output [0:0]M_AXI_arvalid;
   output [31:0]M_AXI_awaddr;
-  input M_AXI_awready;
-  output M_AXI_awvalid;
-  output M_AXI_bready;
+  input [0:0]M_AXI_awready;
+  output [0:0]M_AXI_awvalid;
+  output [0:0]M_AXI_bready;
   input [1:0]M_AXI_bresp;
-  input M_AXI_bvalid;
+  input [0:0]M_AXI_bvalid;
   input [31:0]M_AXI_rdata;
-  output M_AXI_rready;
+  output [0:0]M_AXI_rready;
   input [1:0]M_AXI_rresp;
-  input M_AXI_rvalid;
+  input [0:0]M_AXI_rvalid;
   output [31:0]M_AXI_wdata;
-  input M_AXI_wready;
+  input [0:0]M_AXI_wready;
   output [3:0]M_AXI_wstrb;
-  output M_AXI_wvalid;
+  output [0:0]M_AXI_wvalid;
   input S_ACLK;
   input S_ARESETN;
   input [31:0]S_AXI_araddr;
-  output S_AXI_arready;
-  input S_AXI_arvalid;
+  output [0:0]S_AXI_arready;
+  input [0:0]S_AXI_arvalid;
   input [31:0]S_AXI_awaddr;
-  output S_AXI_awready;
-  input S_AXI_awvalid;
-  input S_AXI_bready;
+  output [0:0]S_AXI_awready;
+  input [0:0]S_AXI_awvalid;
+  input [0:0]S_AXI_bready;
   output [1:0]S_AXI_bresp;
-  output S_AXI_bvalid;
+  output [0:0]S_AXI_bvalid;
   output [31:0]S_AXI_rdata;
-  input S_AXI_rready;
+  input [0:0]S_AXI_rready;
   output [1:0]S_AXI_rresp;
-  output S_AXI_rvalid;
+  output [0:0]S_AXI_rvalid;
   input [31:0]S_AXI_wdata;
-  output S_AXI_wready;
+  output [0:0]S_AXI_wready;
   input [3:0]S_AXI_wstrb;
-  input S_AXI_wvalid;
+  input [0:0]S_AXI_wvalid;
 
   wire [31:0]m06_couplers_to_m06_couplers_ARADDR;
-  wire m06_couplers_to_m06_couplers_ARREADY;
-  wire m06_couplers_to_m06_couplers_ARVALID;
+  wire [0:0]m06_couplers_to_m06_couplers_ARREADY;
+  wire [0:0]m06_couplers_to_m06_couplers_ARVALID;
   wire [31:0]m06_couplers_to_m06_couplers_AWADDR;
-  wire m06_couplers_to_m06_couplers_AWREADY;
-  wire m06_couplers_to_m06_couplers_AWVALID;
-  wire m06_couplers_to_m06_couplers_BREADY;
+  wire [0:0]m06_couplers_to_m06_couplers_AWREADY;
+  wire [0:0]m06_couplers_to_m06_couplers_AWVALID;
+  wire [0:0]m06_couplers_to_m06_couplers_BREADY;
   wire [1:0]m06_couplers_to_m06_couplers_BRESP;
-  wire m06_couplers_to_m06_couplers_BVALID;
+  wire [0:0]m06_couplers_to_m06_couplers_BVALID;
   wire [31:0]m06_couplers_to_m06_couplers_RDATA;
-  wire m06_couplers_to_m06_couplers_RREADY;
+  wire [0:0]m06_couplers_to_m06_couplers_RREADY;
   wire [1:0]m06_couplers_to_m06_couplers_RRESP;
-  wire m06_couplers_to_m06_couplers_RVALID;
+  wire [0:0]m06_couplers_to_m06_couplers_RVALID;
   wire [31:0]m06_couplers_to_m06_couplers_WDATA;
-  wire m06_couplers_to_m06_couplers_WREADY;
+  wire [0:0]m06_couplers_to_m06_couplers_WREADY;
   wire [3:0]m06_couplers_to_m06_couplers_WSTRB;
-  wire m06_couplers_to_m06_couplers_WVALID;
+  wire [0:0]m06_couplers_to_m06_couplers_WVALID;
 
   assign M_AXI_araddr[31:0] = m06_couplers_to_m06_couplers_ARADDR;
-  assign M_AXI_arvalid = m06_couplers_to_m06_couplers_ARVALID;
+  assign M_AXI_arvalid[0] = m06_couplers_to_m06_couplers_ARVALID;
   assign M_AXI_awaddr[31:0] = m06_couplers_to_m06_couplers_AWADDR;
-  assign M_AXI_awvalid = m06_couplers_to_m06_couplers_AWVALID;
-  assign M_AXI_bready = m06_couplers_to_m06_couplers_BREADY;
-  assign M_AXI_rready = m06_couplers_to_m06_couplers_RREADY;
+  assign M_AXI_awvalid[0] = m06_couplers_to_m06_couplers_AWVALID;
+  assign M_AXI_bready[0] = m06_couplers_to_m06_couplers_BREADY;
+  assign M_AXI_rready[0] = m06_couplers_to_m06_couplers_RREADY;
   assign M_AXI_wdata[31:0] = m06_couplers_to_m06_couplers_WDATA;
   assign M_AXI_wstrb[3:0] = m06_couplers_to_m06_couplers_WSTRB;
-  assign M_AXI_wvalid = m06_couplers_to_m06_couplers_WVALID;
-  assign S_AXI_arready = m06_couplers_to_m06_couplers_ARREADY;
-  assign S_AXI_awready = m06_couplers_to_m06_couplers_AWREADY;
+  assign M_AXI_wvalid[0] = m06_couplers_to_m06_couplers_WVALID;
+  assign S_AXI_arready[0] = m06_couplers_to_m06_couplers_ARREADY;
+  assign S_AXI_awready[0] = m06_couplers_to_m06_couplers_AWREADY;
   assign S_AXI_bresp[1:0] = m06_couplers_to_m06_couplers_BRESP;
-  assign S_AXI_bvalid = m06_couplers_to_m06_couplers_BVALID;
+  assign S_AXI_bvalid[0] = m06_couplers_to_m06_couplers_BVALID;
   assign S_AXI_rdata[31:0] = m06_couplers_to_m06_couplers_RDATA;
   assign S_AXI_rresp[1:0] = m06_couplers_to_m06_couplers_RRESP;
-  assign S_AXI_rvalid = m06_couplers_to_m06_couplers_RVALID;
-  assign S_AXI_wready = m06_couplers_to_m06_couplers_WREADY;
+  assign S_AXI_rvalid[0] = m06_couplers_to_m06_couplers_RVALID;
+  assign S_AXI_wready[0] = m06_couplers_to_m06_couplers_WREADY;
   assign m06_couplers_to_m06_couplers_ARADDR = S_AXI_araddr[31:0];
-  assign m06_couplers_to_m06_couplers_ARREADY = M_AXI_arready;
-  assign m06_couplers_to_m06_couplers_ARVALID = S_AXI_arvalid;
+  assign m06_couplers_to_m06_couplers_ARREADY = M_AXI_arready[0];
+  assign m06_couplers_to_m06_couplers_ARVALID = S_AXI_arvalid[0];
   assign m06_couplers_to_m06_couplers_AWADDR = S_AXI_awaddr[31:0];
-  assign m06_couplers_to_m06_couplers_AWREADY = M_AXI_awready;
-  assign m06_couplers_to_m06_couplers_AWVALID = S_AXI_awvalid;
-  assign m06_couplers_to_m06_couplers_BREADY = S_AXI_bready;
+  assign m06_couplers_to_m06_couplers_AWREADY = M_AXI_awready[0];
+  assign m06_couplers_to_m06_couplers_AWVALID = S_AXI_awvalid[0];
+  assign m06_couplers_to_m06_couplers_BREADY = S_AXI_bready[0];
   assign m06_couplers_to_m06_couplers_BRESP = M_AXI_bresp[1:0];
-  assign m06_couplers_to_m06_couplers_BVALID = M_AXI_bvalid;
+  assign m06_couplers_to_m06_couplers_BVALID = M_AXI_bvalid[0];
   assign m06_couplers_to_m06_couplers_RDATA = M_AXI_rdata[31:0];
-  assign m06_couplers_to_m06_couplers_RREADY = S_AXI_rready;
+  assign m06_couplers_to_m06_couplers_RREADY = S_AXI_rready[0];
   assign m06_couplers_to_m06_couplers_RRESP = M_AXI_rresp[1:0];
-  assign m06_couplers_to_m06_couplers_RVALID = M_AXI_rvalid;
+  assign m06_couplers_to_m06_couplers_RVALID = M_AXI_rvalid[0];
   assign m06_couplers_to_m06_couplers_WDATA = S_AXI_wdata[31:0];
-  assign m06_couplers_to_m06_couplers_WREADY = M_AXI_wready;
+  assign m06_couplers_to_m06_couplers_WREADY = M_AXI_wready[0];
   assign m06_couplers_to_m06_couplers_WSTRB = S_AXI_wstrb[3:0];
-  assign m06_couplers_to_m06_couplers_WVALID = S_AXI_wvalid;
+  assign m06_couplers_to_m06_couplers_WVALID = S_AXI_wvalid[0];
 endmodule
 
 module s00_couplers_imp_C7QUHR
@@ -7515,7 +7517,7 @@ module s00_couplers_imp_C7QUHR
         .s_axi_wready(s00_regslice_to_auto_cc_WREADY),
         .s_axi_wstrb(s00_regslice_to_auto_cc_WSTRB),
         .s_axi_wvalid(s00_regslice_to_auto_cc_WVALID));
-  PCIe_Bridge_ICAP_complex_s00_regslice_1 s00_regslice
+  PCIe_Bridge_ICAP_complex_s00_regslice_3 s00_regslice
        (.aclk(S_ACLK_1),
         .aresetn(S_ARESETN_1),
         .m_axi_araddr(s00_regslice_to_auto_cc_ARADDR),
@@ -7831,7 +7833,7 @@ module s00_couplers_imp_N6MPZW
         .s_axi_wready(s00_regslice_to_auto_cc_WREADY),
         .s_axi_wstrb(s00_regslice_to_auto_cc_WSTRB),
         .s_axi_wvalid(s00_regslice_to_auto_cc_WVALID));
-  PCIe_Bridge_ICAP_complex_s00_regslice_0 s00_regslice
+  PCIe_Bridge_ICAP_complex_s00_regslice_4 s00_regslice
        (.aclk(S_ACLK_1),
         .aresetn(S_ARESETN_1),
         .m_axi_araddr(s00_regslice_to_auto_cc_ARADDR),

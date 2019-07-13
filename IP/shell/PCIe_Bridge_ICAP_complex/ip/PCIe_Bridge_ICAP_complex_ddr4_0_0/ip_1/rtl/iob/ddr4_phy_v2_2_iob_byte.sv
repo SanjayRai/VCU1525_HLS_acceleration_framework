@@ -94,6 +94,7 @@ module ddr4_phy_v2_2_0_iob_byte # (parameter
     IOBTYPE = 39'b0 // default is pins are not used
    ,DQS_BIAS = "TRUE"
    ,DRAM_TYPE  = "DDR3"
+   ,EN_LVAUX = "FALSE"
    ,BANK_TYPE  = "HP_IO"
    ,USE_DYNAMIC_DCI= 1
 )(
@@ -109,7 +110,7 @@ module ddr4_phy_v2_2_0_iob_byte # (parameter
 
     wire Vref;
     generate
-     if (DRAM_TYPE  == "DDR4") begin 
+     if (DRAM_TYPE  == "DDR4" && EN_LVAUX == "FALSE") begin 
             if (IOBTYPE[20:18] == 3'b111) begin: genVref
                HPIO_VREF #(.VREF_CNTR("FABRIC_RANGE1")) u_hpio_vref
          	(
@@ -137,7 +138,20 @@ generate
             );
          end
          3'b011: begin
-           if (DRAM_TYPE  == "DDR4") begin 
+           if (DRAM_TYPE  == "DDR4") begin
+            if (EN_LVAUX == "TRUE") begin 
+              IOBUFE3 IOBUF(
+                  .I(phy2iob_q_out_byte[bitNum])
+                 ,.T(phy2iob_t[bitNum])
+                 ,.O(iob2phy_d_in_byte[bitNum])
+                 ,.IO(iob_pin[bitNum])
+                 ,.OSC_EN (1'b0)
+                 ,.OSC (4'b0000)
+                 ,.DCITERMDISABLE ((USE_DYNAMIC_DCI == 1) ? phy2iob_odt_out_byte[bitNum] : 1'b0)
+                 ,.IBUFDISABLE (1'b0)
+              );
+            end
+            else begin 
               IOBUFE3 IOBUF(
                   .I(phy2iob_q_out_byte[bitNum])
                  ,.T(phy2iob_t[bitNum])
@@ -149,6 +163,7 @@ generate
                  ,.DCITERMDISABLE ((USE_DYNAMIC_DCI == 1) ? phy2iob_odt_out_byte[bitNum] : 1'b0)
                  ,.IBUFDISABLE (1'b0)
               );
+            end
            end
            else begin
               if (BANK_TYPE == "HP_IO") begin

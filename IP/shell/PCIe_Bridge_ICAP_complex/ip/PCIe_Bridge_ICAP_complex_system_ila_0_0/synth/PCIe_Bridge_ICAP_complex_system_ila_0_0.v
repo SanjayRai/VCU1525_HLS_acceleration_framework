@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2018 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2019 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -48,11 +48,11 @@
 
 
 // IP VLNV: xilinx.com:ip:system_ila:1.1
-// IP Revision: 2
+// IP Revision: 5
 
-(* X_CORE_INFO = "bd_2022,Vivado 2018.1" *)
+(* X_CORE_INFO = "bd_2022,Vivado 2019.1" *)
 (* CHECK_LICENSE_TYPE = "PCIe_Bridge_ICAP_complex_system_ila_0_0,bd_2022,{}" *)
-(* CORE_GENERATION_INFO = "PCIe_Bridge_ICAP_complex_system_ila_0_0,bd_2022,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=system_ila,x_ipVersion=1.1,x_ipCoreRevision=2,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_EN_TIME_TAG=0,C_TIME_TAG_WIDTH=32,C_SLOT=0,C_SLOT_15_TYPE=0,C_SLOT_14_TYPE=0,C_SLOT_13_TYPE=0,C_SLOT_12_TYPE=0,C_SLOT_11_TYPE=0,C_SLOT_10_TYPE=0,C_SLOT_9_TYPE=0,C_SLOT_8_TYPE=0,C_SLOT_7_TYPE=0,C_SLOT_6_TYPE=0,C_SLOT_5_TYPE=0,C_SLOT_4_TYPE=0,C_SLOT_3_TYPE=0,C_SLOT_2_TYPE=0,C_SLOT_1_TYPE=0\
+(* CORE_GENERATION_INFO = "PCIe_Bridge_ICAP_complex_system_ila_0_0,bd_2022,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=system_ila,x_ipVersion=1.1,x_ipCoreRevision=5,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_EN_TIME_TAG=0,C_TIME_TAG_WIDTH=32,C_SLOT=0,C_SLOT_15_TYPE=0,C_SLOT_14_TYPE=0,C_SLOT_13_TYPE=0,C_SLOT_12_TYPE=0,C_SLOT_11_TYPE=0,C_SLOT_10_TYPE=0,C_SLOT_9_TYPE=0,C_SLOT_8_TYPE=0,C_SLOT_7_TYPE=0,C_SLOT_6_TYPE=0,C_SLOT_5_TYPE=0,C_SLOT_4_TYPE=0,C_SLOT_3_TYPE=0,C_SLOT_2_TYPE=0,C_SLOT_1_TYPE=0\
 ,C_SLOT_0_TYPE=0,C_SLOT_0_MAX_RD_BURSTS=32,C_SLOT_0_MAX_WR_BURSTS=32,C_SLOT_1_MAX_RD_BURSTS=2,C_SLOT_1_MAX_WR_BURSTS=2,C_SLOT_2_MAX_RD_BURSTS=2,C_SLOT_2_MAX_WR_BURSTS=2,C_SLOT_3_MAX_RD_BURSTS=2,C_SLOT_3_MAX_WR_BURSTS=2,C_SLOT_4_MAX_RD_BURSTS=2,C_SLOT_4_MAX_WR_BURSTS=2,C_SLOT_5_MAX_RD_BURSTS=2,C_SLOT_5_MAX_WR_BURSTS=2,C_SLOT_6_MAX_RD_BURSTS=2,C_SLOT_6_MAX_WR_BURSTS=2,C_SLOT_7_MAX_RD_BURSTS=2,C_SLOT_7_MAX_WR_BURSTS=2,C_SLOT_8_MAX_RD_BURSTS=2,C_SLOT_8_MAX_WR_BURSTS=2,C_SLOT_9_MAX_RD_BURSTS=2,C_SLOT\
 _9_MAX_WR_BURSTS=2,C_SLOT_10_MAX_RD_BURSTS=2,C_SLOT_10_MAX_WR_BURSTS=2,C_SLOT_11_MAX_RD_BURSTS=2,C_SLOT_11_MAX_WR_BURSTS=2,C_SLOT_12_MAX_RD_BURSTS=2,C_SLOT_12_MAX_WR_BURSTS=2,C_SLOT_13_MAX_RD_BURSTS=2,C_SLOT_13_MAX_WR_BURSTS=2,C_SLOT_14_MAX_RD_BURSTS=2,C_SLOT_14_MAX_WR_BURSTS=2,C_SLOT_15_MAX_RD_BURSTS=2,C_SLOT_15_MAX_WR_BURSTS=2,C_SLOT_0_TXN_CNTR_EN=0,C_SLOT_1_TXN_CNTR_EN=1,C_SLOT_2_TXN_CNTR_EN=1,C_SLOT_3_TXN_CNTR_EN=1,C_SLOT_4_TXN_CNTR_EN=1,C_SLOT_5_TXN_CNTR_EN=1,C_SLOT_6_TXN_CNTR_EN=1,C_SLOT_7\
 _TXN_CNTR_EN=1,C_SLOT_8_TXN_CNTR_EN=1,C_SLOT_9_TXN_CNTR_EN=1,C_SLOT_10_TXN_CNTR_EN=1,C_SLOT_11_TXN_CNTR_EN=1,C_SLOT_12_TXN_CNTR_EN=1,C_SLOT_13_TXN_CNTR_EN=1,C_SLOT_14_TXN_CNTR_EN=1,C_SLOT_15_TXN_CNTR_EN=1,C_SLOT_0_APC_STS_EN=0,C_SLOT_1_APC_STS_EN=0,C_SLOT_2_APC_STS_EN=0,C_SLOT_3_APC_STS_EN=0,C_SLOT_4_APC_STS_EN=0,C_SLOT_5_APC_STS_EN=0,C_SLOT_6_APC_STS_EN=0,C_SLOT_7_APC_STS_EN=0,C_SLOT_8_APC_STS_EN=0,C_SLOT_9_APC_STS_EN=0,C_SLOT_10_APC_STS_EN=0,C_SLOT_11_APC_STS_EN=0,C_SLOT_12_APC_STS_EN=0,C_SLOT\
@@ -215,6 +215,7 @@ DATA_WIDTH=AUTO,C_SLOT_15_AXIS_TID_WIDTH=AUTO,C_SLOT_15_AXIS_TUSER_WIDTH=AUTO,C_
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module PCIe_Bridge_ICAP_complex_system_ila_0_0 (
   clk,
+  SLOT_0_AXI_awid,
   SLOT_0_AXI_awaddr,
   SLOT_0_AXI_awlen,
   SLOT_0_AXI_awsize,
@@ -230,9 +231,11 @@ module PCIe_Bridge_ICAP_complex_system_ila_0_0 (
   SLOT_0_AXI_wlast,
   SLOT_0_AXI_wvalid,
   SLOT_0_AXI_wready,
+  SLOT_0_AXI_bid,
   SLOT_0_AXI_bresp,
   SLOT_0_AXI_bvalid,
   SLOT_0_AXI_bready,
+  SLOT_0_AXI_arid,
   SLOT_0_AXI_araddr,
   SLOT_0_AXI_arlen,
   SLOT_0_AXI_arsize,
@@ -243,21 +246,20 @@ module PCIe_Bridge_ICAP_complex_system_ila_0_0 (
   SLOT_0_AXI_arqos,
   SLOT_0_AXI_arvalid,
   SLOT_0_AXI_arready,
+  SLOT_0_AXI_rid,
   SLOT_0_AXI_rdata,
   SLOT_0_AXI_rresp,
   SLOT_0_AXI_rlast,
   SLOT_0_AXI_rvalid,
   SLOT_0_AXI_rready,
-  resetn,
-  SLOT_0_AXI_arid,
-  SLOT_0_AXI_awid,
-  SLOT_0_AXI_bid,
-  SLOT_0_AXI_rid
+  resetn
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 300000000, PHASE 0.00, CLK_DOMAIN PCIe_Bridge_ICAP_complex_ddr4_0_0_c0_ddr4_ui_clk, ASSOCIATED_BUSIF SLOT_0_AXI, ASSOCIATED_RESET resetn" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.clk, FREQ_HZ 300000000, PHASE 0.00, CLK_DOMAIN PCIe_Bridge_ICAP_complex_ddr4_0_0_c0_ddr4_ui_clk, ASSOCIATED_BUSIF SLOT_0_AXI, ASSOCIATED_RESET resetn, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.clk CLK" *)
 input wire clk;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWID" *)
+input wire [4 : 0] SLOT_0_AXI_awid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWADDR" *)
 input wire [33 : 0] SLOT_0_AXI_awaddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWLEN" *)
@@ -288,12 +290,16 @@ input wire SLOT_0_AXI_wlast;
 input wire SLOT_0_AXI_wvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI WREADY" *)
 input wire SLOT_0_AXI_wready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BID" *)
+input wire [4 : 0] SLOT_0_AXI_bid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BRESP" *)
 input wire [1 : 0] SLOT_0_AXI_bresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BVALID" *)
 input wire SLOT_0_AXI_bvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BREADY" *)
 input wire SLOT_0_AXI_bready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARID" *)
+input wire [4 : 0] SLOT_0_AXI_arid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARADDR" *)
 input wire [33 : 0] SLOT_0_AXI_araddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARLEN" *)
@@ -314,6 +320,8 @@ input wire [3 : 0] SLOT_0_AXI_arqos;
 input wire SLOT_0_AXI_arvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARREADY" *)
 input wire SLOT_0_AXI_arready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RID" *)
+input wire [4 : 0] SLOT_0_AXI_rid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RDATA" *)
 input wire [511 : 0] SLOT_0_AXI_rdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RRESP" *)
@@ -322,24 +330,17 @@ input wire [1 : 0] SLOT_0_AXI_rresp;
 input wire SLOT_0_AXI_rlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RVALID" *)
 input wire SLOT_0_AXI_rvalid;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXI, DATA_WIDTH 512, PROTOCOL AXI4, FREQ_HZ 300000000, ID_WIDTH 5, ADDR_WIDTH 34, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 32, NUM_WRITE_OUTSTANDING 32, MAX_BURST_LENGTH 256, PHASE 0.00, CLK_DOMAIN PCIe_Bridge_ICAP_complex_ddr4_0_0_c0_ddr4_ui_clk, NUM\
+_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RREADY" *)
 input wire SLOT_0_AXI_rready;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.resetn, POLARITY ACTIVE_LOW" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.resetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.resetn RST" *)
 input wire resetn;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI ARID" *)
-input wire [4 : 0] SLOT_0_AXI_arid;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI AWID" *)
-input wire [4 : 0] SLOT_0_AXI_awid;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI BID" *)
-input wire [4 : 0] SLOT_0_AXI_bid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SLOT_0_AXI, DATA_WIDTH 512, PROTOCOL AXI4, FREQ_HZ 300000000, ID_WIDTH 5, ADDR_WIDTH 34, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 32, NUM_WRITE_OUTSTANDING 32, MAX_BURST_LENGTH 256, PHASE 0.00, CLK_DOMAIN PCIe_Bridge_ICAP_complex_ddr4_0_0_c0_ddr4_ui_clk, NUM\
-_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 SLOT_0_AXI RID" *)
-input wire [4 : 0] SLOT_0_AXI_rid;
 
   bd_2022 inst (
     .clk(clk),
+    .SLOT_0_AXI_awid(SLOT_0_AXI_awid),
     .SLOT_0_AXI_awaddr(SLOT_0_AXI_awaddr),
     .SLOT_0_AXI_awlen(SLOT_0_AXI_awlen),
     .SLOT_0_AXI_awsize(SLOT_0_AXI_awsize),
@@ -355,9 +356,11 @@ input wire [4 : 0] SLOT_0_AXI_rid;
     .SLOT_0_AXI_wlast(SLOT_0_AXI_wlast),
     .SLOT_0_AXI_wvalid(SLOT_0_AXI_wvalid),
     .SLOT_0_AXI_wready(SLOT_0_AXI_wready),
+    .SLOT_0_AXI_bid(SLOT_0_AXI_bid),
     .SLOT_0_AXI_bresp(SLOT_0_AXI_bresp),
     .SLOT_0_AXI_bvalid(SLOT_0_AXI_bvalid),
     .SLOT_0_AXI_bready(SLOT_0_AXI_bready),
+    .SLOT_0_AXI_arid(SLOT_0_AXI_arid),
     .SLOT_0_AXI_araddr(SLOT_0_AXI_araddr),
     .SLOT_0_AXI_arlen(SLOT_0_AXI_arlen),
     .SLOT_0_AXI_arsize(SLOT_0_AXI_arsize),
@@ -368,15 +371,12 @@ input wire [4 : 0] SLOT_0_AXI_rid;
     .SLOT_0_AXI_arqos(SLOT_0_AXI_arqos),
     .SLOT_0_AXI_arvalid(SLOT_0_AXI_arvalid),
     .SLOT_0_AXI_arready(SLOT_0_AXI_arready),
+    .SLOT_0_AXI_rid(SLOT_0_AXI_rid),
     .SLOT_0_AXI_rdata(SLOT_0_AXI_rdata),
     .SLOT_0_AXI_rresp(SLOT_0_AXI_rresp),
     .SLOT_0_AXI_rlast(SLOT_0_AXI_rlast),
     .SLOT_0_AXI_rvalid(SLOT_0_AXI_rvalid),
     .SLOT_0_AXI_rready(SLOT_0_AXI_rready),
-    .resetn(resetn),
-    .SLOT_0_AXI_arid(SLOT_0_AXI_arid),
-    .SLOT_0_AXI_awid(SLOT_0_AXI_awid),
-    .SLOT_0_AXI_bid(SLOT_0_AXI_bid),
-    .SLOT_0_AXI_rid(SLOT_0_AXI_rid)
+    .resetn(resetn)
   );
 endmodule

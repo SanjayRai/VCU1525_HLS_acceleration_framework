@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2018 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2019 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -48,7 +48,7 @@
 
 
 // IP VLNV: xilinx.com:ip:pcie4_uscale_plus:1.3
-// IP Revision: 2
+// IP Revision: 5
 
 `timescale 1ns/1ps
 
@@ -211,10 +211,10 @@ input wire [15 : 0] pci_exp_rxn;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pcie4_mgt, BOARD.ASSOCIATED_PARAM PCIE_BOARD_INTERFACE" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:pcie_7x_mgt:1.0 pcie4_mgt rxp" *)
 input wire [15 : 0] pci_exp_rxp;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.user_clk, ASSOCIATED_BUSIF m_axis_cq:s_axis_cc:s_axis_rq:m_axis_rc, FREQ_HZ 125000000, ASSOCIATED_RESET user_reset, PHASE 0.000" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.user_clk, ASSOCIATED_BUSIF m_axis_cq:s_axis_cc:s_axis_rq:m_axis_rc, FREQ_HZ 125000000, ASSOCIATED_RESET user_reset, PHASE 0.000, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.user_clk CLK" *)
 output wire user_clk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.user_reset, POLARITY ACTIVE_HIGH" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.user_reset, POLARITY ACTIVE_HIGH, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.user_reset RST" *)
 output wire user_reset;
 output wire user_lnk_up;
@@ -228,7 +228,7 @@ input wire s_axis_rq_tlast;
 output wire [3 : 0] s_axis_rq_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_rq TUSER" *)
 input wire [136 : 0] s_axis_rq_tuser;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axis_rq, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 137, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axis_rq, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 137, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_rq TVALID" *)
 input wire s_axis_rq_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_rc TDATA" *)
@@ -241,7 +241,7 @@ output wire m_axis_rc_tlast;
 input wire m_axis_rc_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_rc TUSER" *)
 output wire [160 : 0] m_axis_rc_tuser;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_axis_rc, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 161, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_axis_rc, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 161, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_rc TVALID" *)
 output wire m_axis_rc_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_cq TDATA" *)
@@ -254,7 +254,7 @@ output wire m_axis_cq_tlast;
 input wire m_axis_cq_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_cq TUSER" *)
 output wire [182 : 0] m_axis_cq_tuser;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_axis_cq, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 183, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_axis_cq, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 183, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_cq TVALID" *)
 output wire m_axis_cq_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_cc TDATA" *)
@@ -267,7 +267,7 @@ input wire s_axis_cc_tlast;
 output wire [3 : 0] s_axis_cc_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_cc TUSER" *)
 input wire [80 : 0] s_axis_cc_tuser;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axis_cc, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 81, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axis_cc, TDATA_NUM_BYTES 64, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 81, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 1, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_cc TVALID" *)
 input wire s_axis_cc_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:display_pcie4:pcie4_cfg_status:1.0 pcie4_cfg_status rq_seq_num0" *)
@@ -492,13 +492,13 @@ input wire [7 : 0] cfg_ds_port_number;
 input wire [7 : 0] cfg_ds_bus_number;
 (* X_INTERFACE_INFO = "xilinx.com:display_pcie4:pcie4_cfg_control:1.0 pcie4_cfg_control ds_device_number" *)
 input wire [4 : 0] cfg_ds_device_number;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.sys_clk, FREQ_HZ 100000000, PHASE 0.000" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.sys_clk, FREQ_HZ 100000000, PHASE 0.000, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.sys_clk CLK" *)
 input wire sys_clk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.sys_clk_gt, FREQ_HZ 100000000, PHASE 0.000" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.sys_clk_gt, FREQ_HZ 100000000, PHASE 0.000, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.sys_clk_gt CLK" *)
 input wire sys_clk_gt;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.sys_rst, BOARD.ASSOCIATED_PARAM SYS_RST_N_BOARD_INTERFACE, TYPE PCIE_PERST, POLARITY ACTIVE_LOW" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.sys_rst, BOARD.ASSOCIATED_PARAM SYS_RST_N_BOARD_INTERFACE, TYPE PCIE_PERST, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.sys_rst RST" *)
 input wire sys_reset;
 output wire phy_rdy_out;
@@ -519,6 +519,9 @@ output wire phy_rdy_out;
     .AXI4_CC_TUSER_WIDTH(81),
     .ARI_CAP_ENABLE("FALSE"),
     .PF0_ARI_CAP_NEXT_FUNC('H00),
+    .PF1_ARI_CAP_NEXT_FUNC('H00),
+    .PF2_ARI_CAP_NEXT_FUNC('H00),
+    .PF3_ARI_CAP_NEXT_FUNC('H00),
     .AXISTEN_IF_CC_ALIGNMENT_MODE('H2),
     .AXISTEN_IF_CQ_ALIGNMENT_MODE('H2),
     .AXISTEN_IF_RC_ALIGNMENT_MODE('H0),
@@ -683,7 +686,7 @@ output wire phy_rdy_out;
     .PF2_BAR5_CONTROL('H0),
     .PF2_CAPABILITY_POINTER('H40),
     .PF2_CLASS_CODE('H058000),
-    .PF2_DEVICE_ID('H903F),
+    .PF2_DEVICE_ID('H943F),
     .PF2_DEV_CAP_MAX_PAYLOAD_SIZE('H3),
     .PF2_DSN_CAP_NEXTPTR('H000),
     .PF2_EXPANSION_ROM_APERTURE_SIZE('H000),
@@ -737,7 +740,7 @@ output wire phy_rdy_out;
     .PF3_BAR5_CONTROL('H0),
     .PF3_CAPABILITY_POINTER('H40),
     .PF3_CLASS_CODE('H058000),
-    .PF3_DEVICE_ID('H903F),
+    .PF3_DEVICE_ID('H963F),
     .PF3_DEV_CAP_MAX_PAYLOAD_SIZE('H3),
     .PF3_DSN_CAP_NEXTPTR('H000),
     .PF3_EXPANSION_ROM_APERTURE_SIZE('H000),
@@ -781,7 +784,7 @@ output wire phy_rdy_out;
     .PF1_MSI_CAP_PERVECMASKCAP("FALSE"),
     .PF2_MSI_CAP_PERVECMASKCAP("FALSE"),
     .PF3_MSI_CAP_PERVECMASKCAP("FALSE"),
-    .SRIOV_CAP_ENABLE('H1),
+    .SRIOV_CAP_ENABLE('H0),
     .TL_CREDITS_CD('H000),
     .TL_CREDITS_CH('H00),
     .TL_CREDITS_NPD('H004),
@@ -809,7 +812,7 @@ output wire phy_rdy_out;
     .gen_x1y3_xdc(0),
     .gen_x1y4_xdc(0),
     .gen_x1y5_xdc(0),
-    .xlnx_ref_board(0),
+    .xlnx_ref_board("0"),
     .pcie_blk_locn(8),
     .PIPE_SIM("FALSE"),
     .AXISTEN_IF_ENABLE_CLIENT_TAG("TRUE"),
@@ -818,6 +821,7 @@ output wire phy_rdy_out;
     .PL_INTERFACE("FALSE"),
     .PCIE_CONFIGURATION("FALSE"),
     .CFG_STATUS_IF("TRUE"),
+    .DMA_2RP("FALSE"),
     .TX_FC_IF("TRUE"),
     .CFG_EXT_IF("FALSE"),
     .CFG_FC_IF("TRUE"),
@@ -901,7 +905,65 @@ output wire phy_rdy_out;
     .ENABLE_MORE("FALSE"),
     .DISABLE_BRAM_PIPELINE("FALSE"),
     .DISABLE_EQ_SYNCHRONIZER("FALSE"),
-    .ENABLE_AUTO_RXEQ("FALSE")
+    .ENABLE_AUTO_RXEQ("FALSE"),
+    .THREE_PORT_SWITCH("FALSE"),
+    .ENABLE_MULTIPF_AER("FALSE"),
+    .ENABLE_CLKMUX("FALSE"),
+    .RBAR_ENABLE("FALSE"),
+    .PF0_RBAR_CAP_BAR0('Hffffffffffff),
+    .PF0_RBAR_CAP_BAR1('H000000000000),
+    .PF0_RBAR_CAP_BAR2('H000000000000),
+    .PF0_RBAR_CAP_BAR3('H000000000000),
+    .PF0_RBAR_CAP_BAR4('H000000000000),
+    .PF0_RBAR_CAP_BAR5('H000000000000),
+    .PF1_RBAR_CAP_BAR0('Hffffffffffff),
+    .PF1_RBAR_CAP_BAR1('H000000000000),
+    .PF1_RBAR_CAP_BAR2('H000000000000),
+    .PF1_RBAR_CAP_BAR3('H000000000000),
+    .PF1_RBAR_CAP_BAR4('H000000000000),
+    .PF1_RBAR_CAP_BAR5('H000000000000),
+    .PF2_RBAR_CAP_BAR0('Hffffffffffff),
+    .PF2_RBAR_CAP_BAR1('H000000000000),
+    .PF2_RBAR_CAP_BAR2('H000000000000),
+    .PF2_RBAR_CAP_BAR3('H000000000000),
+    .PF2_RBAR_CAP_BAR4('H000000000000),
+    .PF2_RBAR_CAP_BAR5('H000000000000),
+    .PF3_RBAR_CAP_BAR0('Hffffffffffff),
+    .PF3_RBAR_CAP_BAR1('H000000000000),
+    .PF3_RBAR_CAP_BAR2('H000000000000),
+    .PF3_RBAR_CAP_BAR3('H000000000000),
+    .PF3_RBAR_CAP_BAR4('H000000000000),
+    .PF3_RBAR_CAP_BAR5('H000000000000),
+    .RBAR_CAP_NEXTPTR('H000),
+    .PF0_RBAR_NUM_BAR('H1),
+    .PF1_RBAR_NUM_BAR('H1),
+    .PF2_RBAR_NUM_BAR('H1),
+    .PF3_RBAR_NUM_BAR('H1),
+    .PF0_RBAR_BAR_INDEX_0('H0),
+    .PF0_RBAR_BAR_INDEX_1('H7),
+    .PF0_RBAR_BAR_INDEX_2('H7),
+    .PF0_RBAR_BAR_INDEX_3('H7),
+    .PF0_RBAR_BAR_INDEX_4('H7),
+    .PF0_RBAR_BAR_INDEX_5('H7),
+    .PF1_RBAR_BAR_INDEX_0('H0),
+    .PF1_RBAR_BAR_INDEX_1('H7),
+    .PF1_RBAR_BAR_INDEX_2('H7),
+    .PF1_RBAR_BAR_INDEX_3('H7),
+    .PF1_RBAR_BAR_INDEX_4('H7),
+    .PF1_RBAR_BAR_INDEX_5('H7),
+    .PF2_RBAR_BAR_INDEX_0('H0),
+    .PF2_RBAR_BAR_INDEX_1('H7),
+    .PF2_RBAR_BAR_INDEX_2('H7),
+    .PF2_RBAR_BAR_INDEX_3('H7),
+    .PF2_RBAR_BAR_INDEX_4('H7),
+    .PF2_RBAR_BAR_INDEX_5('H7),
+    .PF3_RBAR_BAR_INDEX_0('H0),
+    .PF3_RBAR_BAR_INDEX_1('H7),
+    .PF3_RBAR_BAR_INDEX_2('H7),
+    .PF3_RBAR_BAR_INDEX_3('H7),
+    .PF3_RBAR_BAR_INDEX_4('H7),
+    .PF3_RBAR_BAR_INDEX_5('H7),
+    .USE_STANDARD_INTERFACES("FALSE")
   ) inst (
     .pci_exp_txn(pci_exp_txn),
     .pci_exp_txp(pci_exp_txp),
@@ -1018,6 +1080,14 @@ output wire phy_rdy_out;
     .cfg_ext_write_byte_enable(),
     .cfg_ext_read_data(32'B0),
     .cfg_ext_read_data_valid(1'B0),
+    .rbar_bar_size(),
+    .rbar_function_number(),
+    .rbar_write_enable_bar0(),
+    .rbar_write_enable_bar1(),
+    .rbar_write_enable_bar2(),
+    .rbar_write_enable_bar3(),
+    .rbar_write_enable_bar4(),
+    .rbar_write_enable_bar5(),
     .cfg_interrupt_int(cfg_interrupt_int),
     .cfg_interrupt_pending(cfg_interrupt_pending),
     .cfg_interrupt_sent(cfg_interrupt_sent),
@@ -1055,11 +1125,12 @@ output wire phy_rdy_out;
     .cfg_ds_port_number(cfg_ds_port_number),
     .cfg_ds_bus_number(cfg_ds_bus_number),
     .cfg_ds_device_number(cfg_ds_device_number),
+    .cfg_ds_function_number(3'B0),
     .cfg_subsys_vend_id(16'H10EE),
     .cfg_dev_id_pf0(16'H903F),
     .cfg_dev_id_pf1(16'H9011),
-    .cfg_dev_id_pf2(16'H903F),
-    .cfg_dev_id_pf3(16'H903F),
+    .cfg_dev_id_pf2(16'H943F),
+    .cfg_dev_id_pf3(16'H963F),
     .cfg_vend_id(16'H10EE),
     .cfg_rev_id_pf0(8'H00),
     .cfg_rev_id_pf1(8'H00),
@@ -1088,8 +1159,8 @@ output wire phy_rdy_out;
     .pl_redo_eq_pending(),
     .pl_eq_phase(),
     .ext_qpllxrefclk(),
-    .ext_qpllxrate(),
     .ext_qpllxrcalenb(),
+    .ext_qpllxrate(),
     .ext_qpll0pd(),
     .ext_qpll0reset(),
     .ext_qpll0lock_out(4'B0),
@@ -1424,6 +1495,7 @@ output wire phy_rdy_out;
     .cap_rel(1'B0),
     .mcap_design_switch(),
     .free_run_clock(1'B0),
-    .phy_rdy_out(phy_rdy_out)
+    .phy_rdy_out(phy_rdy_out),
+    .prst_clk(1'B0)
   );
 endmodule

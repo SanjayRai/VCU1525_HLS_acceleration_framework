@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_fifo.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_fifo.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -79,7 +79,7 @@
 `timescale 1ns / 100ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_fifo #
+module ddr4_v2_2_7_axi_fifo #
 (
   parameter C_WIDTH  = 8,
   parameter C_AWIDTH = 4,

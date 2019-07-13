@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_write.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_write.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/23 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_write module
+//                   ddr4_v2_2_7_cal_write module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_cal_write # (parameter
+module ddr4_v2_2_7_cal_write # (parameter
    DBAW = 5
    ,DBYTES = 4
    ,MEM = "DDR4"
@@ -248,7 +248,7 @@ end
 genvar bNum;
 generate
    for (bNum = 0; bNum < DBYTES; bNum++) begin:genByte
-      ddr4_v2_2_4_cal_wr_byte # (
+      ddr4_v2_2_7_cal_wr_byte # (
         .TCQ   (TCQ)
         )
         u_ddr_mc_wr_byte (

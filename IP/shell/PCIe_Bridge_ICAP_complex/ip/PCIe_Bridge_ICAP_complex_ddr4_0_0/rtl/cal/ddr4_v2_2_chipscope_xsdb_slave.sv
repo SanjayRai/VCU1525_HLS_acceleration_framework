@@ -22,11 +22,11 @@
  *----------------------------------------------------------------------------*/
 `timescale 1ps / 1ps
 
-`include "ddr4_v2_2_4_cs_ver_inc.vh"
-`include "ddr4_v2_2_4_chipscope_icon2xsdb_mstrbr_ver_inc.vh"
+`include "ddr4_v2_2_7_cs_ver_inc.vh"
+`include "ddr4_v2_2_7_chipscope_icon2xsdb_mstrbr_ver_inc.vh"
 
 (* dont_touch = "true" *)
-module ddr4_v2_2_4_chipscope_xsdb_slave
+module ddr4_v2_2_7_chipscope_xsdb_slave
   #(
     parameter C_XDEVICEFAMILY        = `FAMILY_KINTEXU,
     parameter [15:0]                        C_MAJOR_VERSION        = 11,  // ise major version

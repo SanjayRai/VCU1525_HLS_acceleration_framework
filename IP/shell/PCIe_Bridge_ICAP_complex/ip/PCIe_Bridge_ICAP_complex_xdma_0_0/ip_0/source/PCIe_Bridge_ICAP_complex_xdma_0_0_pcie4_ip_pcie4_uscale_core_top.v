@@ -237,6 +237,60 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
    , parameter           EXT_XVC_VSEC_ENABLE="FALSE"
    , parameter           ACS_EXT_CAP_ENABLE="FALSE"
    , parameter           ACS_CAP_NEXTPTR=12'h000
+   , parameter [11:0]    RBAR_CAP_NEXTPTR=12'h000
+   , parameter [2:0]     PF0_RBAR_NUM_BAR =3'h1
+   , parameter [2:0]     PF1_RBAR_NUM_BAR =3'h1
+   , parameter [2:0]     PF2_RBAR_NUM_BAR =3'h1
+   , parameter [2:0]     PF3_RBAR_NUM_BAR =3'h1
+   , parameter [2:0]     PF0_RBAR_BAR_INDEX_0 =3'h0
+   , parameter [2:0]     PF0_RBAR_BAR_INDEX_1 =3'h0
+   , parameter [2:0]     PF0_RBAR_BAR_INDEX_2 =3'h0
+   , parameter [2:0]     PF0_RBAR_BAR_INDEX_3 =3'h0
+   , parameter [2:0]     PF0_RBAR_BAR_INDEX_4 =3'h0
+   , parameter [2:0]     PF0_RBAR_BAR_INDEX_5 =3'h0
+   , parameter [2:0]     PF1_RBAR_BAR_INDEX_0 =3'h0
+   , parameter [2:0]     PF1_RBAR_BAR_INDEX_1 =3'h0
+   , parameter [2:0]     PF1_RBAR_BAR_INDEX_2 =3'h0
+   , parameter [2:0]     PF1_RBAR_BAR_INDEX_3 =3'h0
+   , parameter [2:0]     PF1_RBAR_BAR_INDEX_4 =3'h0
+   , parameter [2:0]     PF1_RBAR_BAR_INDEX_5 =3'h0
+   , parameter [2:0]     PF2_RBAR_BAR_INDEX_0 =3'h0
+   , parameter [2:0]     PF2_RBAR_BAR_INDEX_1 =3'h0
+   , parameter [2:0]     PF2_RBAR_BAR_INDEX_2 =3'h0
+   , parameter [2:0]     PF2_RBAR_BAR_INDEX_3 =3'h0
+   , parameter [2:0]     PF2_RBAR_BAR_INDEX_4 =3'h0
+   , parameter [2:0]     PF2_RBAR_BAR_INDEX_5 =3'h0
+   , parameter [2:0]     PF3_RBAR_BAR_INDEX_0 =3'h0
+   , parameter [2:0]     PF3_RBAR_BAR_INDEX_1 =3'h0
+   , parameter [2:0]     PF3_RBAR_BAR_INDEX_2 =3'h0
+   , parameter [2:0]     PF3_RBAR_BAR_INDEX_3 =3'h0
+   , parameter [2:0]     PF3_RBAR_BAR_INDEX_4 =3'h0
+   , parameter [2:0]     PF3_RBAR_BAR_INDEX_5 =3'h0
+   , parameter [47:0]    PF0_RBAR_CAP_BAR0=48'h0
+   , parameter [47:0]    PF0_RBAR_CAP_BAR1=48'h0
+   , parameter [47:0]    PF0_RBAR_CAP_BAR2=48'h0
+   , parameter [47:0]    PF0_RBAR_CAP_BAR3=48'h0
+   , parameter [47:0]    PF0_RBAR_CAP_BAR4=48'h0
+   , parameter [47:0]    PF0_RBAR_CAP_BAR5=48'h0
+   , parameter [47:0]    PF1_RBAR_CAP_BAR0=48'h0
+   , parameter [47:0]    PF1_RBAR_CAP_BAR1=48'h0
+   , parameter [47:0]    PF1_RBAR_CAP_BAR2=48'h0
+   , parameter [47:0]    PF1_RBAR_CAP_BAR3=48'h0
+   , parameter [47:0]    PF1_RBAR_CAP_BAR4=48'h0
+   , parameter [47:0]    PF1_RBAR_CAP_BAR5=48'h0
+   , parameter [47:0]    PF2_RBAR_CAP_BAR0=48'h0
+   , parameter [47:0]    PF2_RBAR_CAP_BAR1=48'h0
+   , parameter [47:0]    PF2_RBAR_CAP_BAR2=48'h0
+   , parameter [47:0]    PF2_RBAR_CAP_BAR3=48'h0
+   , parameter [47:0]    PF2_RBAR_CAP_BAR4=48'h0
+   , parameter [47:0]    PF2_RBAR_CAP_BAR5=48'h0
+   , parameter [47:0]    PF3_RBAR_CAP_BAR0=48'h0
+   , parameter [47:0]    PF3_RBAR_CAP_BAR1=48'h0
+   , parameter [47:0]    PF3_RBAR_CAP_BAR2=48'h0
+   , parameter [47:0]    PF3_RBAR_CAP_BAR3=48'h0
+   , parameter [47:0]    PF3_RBAR_CAP_BAR4=48'h0
+   , parameter [47:0]    PF3_RBAR_CAP_BAR5=48'h0
+   , parameter           RBAR_ENABLE ="FALSE"
    , parameter           TL2CFG_IF_PARITY_CHK="FALSE"
    , parameter           HEADER_TYPE_OVERRIDE="FALSE"
    , parameter [2:0]     PF0_BAR0_CONTROL=3'b100
@@ -636,6 +690,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
     parameter MSI_INT = 32,
     parameter COMPLETER_MODEL="FALSE",
     parameter SRIOV_EXD_MODE="FALSE",
+    parameter THREE_PORT_SWITCH="FALSE",
     parameter TWO_PORT_SWITCH="FALSE",
     parameter TWO_PORT_CONFIG="X8G3",
     parameter silicon_revision="ES1",
@@ -697,7 +752,11 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
     parameter EXT_SYS_CLK_BUFG = "FALSE",
     parameter ENABLE_MORE = "FALSE",
     parameter DISABLE_BRAM_PIPELINE = "FALSE",
-    parameter DISABLE_EQ_SYNCHRONIZER = "FALSE"
+    parameter ENABLE_MULTIPF_AER = "FALSE",
+    parameter DISABLE_EQ_SYNCHRONIZER = "FALSE",
+    parameter ENABLE_CLKMUX = "FALSE",
+    parameter DMA_2RP = "FALSE",
+    parameter USE_STANDARD_INTERFACES="FALSE"
 /// ----------------------------------------------
 
    ) (
@@ -710,32 +769,33 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
    ,output wire           pl_eq_mismatch
    ,output wire           pl_redo_eq_pending
 
-   ,output wire [AXI4_DATA_WIDTH-1:0] m_axis_cq_tdata
-   ,input  wire [AXI4_DATA_WIDTH-1:0] s_axis_cc_tdata
-   ,input  wire [AXI4_DATA_WIDTH-1:0] s_axis_rq_tdata
-   ,output wire [AXI4_DATA_WIDTH-1:0] m_axis_rc_tdata
-   ,output wire [AXI4_CQ_TUSER_WIDTH-1:0] m_axis_cq_tuser
-   ,input  wire [AXI4_CC_TUSER_WIDTH-1:0] s_axis_cc_tuser
-   ,output wire           m_axis_cq_tlast
-   ,input  wire           s_axis_rq_tlast
-   ,output wire           m_axis_rc_tlast
-   ,input  wire           s_axis_cc_tlast
-   ,input  wire [1:0]     pcie_cq_np_req
-   ,output wire [5:0]     pcie_cq_np_req_count
-   ,input  wire [AXI4_RQ_TUSER_WIDTH-1:0] s_axis_rq_tuser
-   ,output wire [AXI4_RC_TUSER_WIDTH-1:0] m_axis_rc_tuser
-   ,output wire [AXI4_TKEEP_WIDTH-1:0] m_axis_cq_tkeep
-   ,input  wire [AXI4_TKEEP_WIDTH-1:0] s_axis_cc_tkeep
-   ,input  wire [AXI4_TKEEP_WIDTH-1:0] s_axis_rq_tkeep
-   ,output wire [AXI4_TKEEP_WIDTH-1:0] m_axis_rc_tkeep
-   ,output wire           m_axis_cq_tvalid
-   ,input  wire           s_axis_cc_tvalid
-   ,input  wire           s_axis_rq_tvalid
-   ,output wire           m_axis_rc_tvalid
-   ,input  wire           m_axis_cq_tready
-   ,output wire [AXI4_CC_TREADY_WIDTH-1:0] s_axis_cc_tready
-   ,output wire [AXI4_RQ_TREADY_WIDTH-1:0] s_axis_rq_tready
-   ,input  wire           m_axis_rc_tready
+   , output wire [AXI4_DATA_WIDTH-1:0] m_axis_cq_tdata
+   , input  wire [AXI4_DATA_WIDTH-1:0] s_axis_cc_tdata
+   , input  wire [AXI4_DATA_WIDTH-1:0] s_axis_rq_tdata
+   , output wire [AXI4_DATA_WIDTH-1:0] m_axis_rc_tdata
+   , output wire [AXI4_CQ_TUSER_WIDTH-1:0] m_axis_cq_tuser
+   , input  wire [AXI4_CC_TUSER_WIDTH-1:0] s_axis_cc_tuser
+   , output wire           m_axis_cq_tlast
+   , input  wire           s_axis_rq_tlast
+   , output wire           m_axis_rc_tlast
+   , input  wire           s_axis_cc_tlast
+   , input  wire [1:0]     pcie_cq_np_req
+   , output wire [5:0]     pcie_cq_np_req_count
+   , input  wire [AXI4_RQ_TUSER_WIDTH-1:0] s_axis_rq_tuser
+   , output wire [AXI4_RC_TUSER_WIDTH-1:0] m_axis_rc_tuser
+   , output wire [AXI4_TKEEP_WIDTH-1:0] m_axis_cq_tkeep
+   , input  wire [AXI4_TKEEP_WIDTH-1:0] s_axis_cc_tkeep
+   , input  wire [AXI4_TKEEP_WIDTH-1:0] s_axis_rq_tkeep
+   , output wire [AXI4_TKEEP_WIDTH-1:0] m_axis_rc_tkeep
+   , output wire           m_axis_cq_tvalid
+   , input  wire           s_axis_cc_tvalid
+   , input  wire           s_axis_rq_tvalid
+   , output wire           m_axis_rc_tvalid
+   , input  wire           m_axis_cq_tready
+   , output wire [AXI4_CC_TREADY_WIDTH-1:0] s_axis_cc_tready
+   , output wire [AXI4_RQ_TREADY_WIDTH-1:0] s_axis_rq_tready
+   , input  wire           m_axis_rc_tready
+
    ,output wire [5:0]     pcie_rq_seq_num0
    ,output wire           pcie_rq_seq_num_vld0
    ,output wire [5:0]     pcie_rq_seq_num1
@@ -813,6 +873,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
    ,input  wire [7:0]     cfg_ds_port_number
    ,input  wire [7:0]     cfg_ds_bus_number
    ,input  wire [4:0]     cfg_ds_device_number
+   ,input  wire [2:0]     cfg_ds_function_number
    ,output wire [7:0]     cfg_bus_number
    ,input  wire           cfg_power_state_change_ack
    ,output wire           cfg_power_state_change_interrupt
@@ -856,6 +917,14 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
    ,output wire [3:0]     cfg_ext_write_byte_enable
    ,input  wire [31:0]    cfg_ext_read_data
    ,input  wire           cfg_ext_read_data_valid
+   ,output wire [5:0]     rbar_bar_size
+   ,output wire [7:0]     rbar_function_number
+   ,output wire           rbar_write_enable_bar0
+   ,output wire           rbar_write_enable_bar1
+   ,output wire           rbar_write_enable_bar2
+   ,output wire           rbar_write_enable_bar3
+   ,output wire           rbar_write_enable_bar4
+   ,output wire           rbar_write_enable_bar5
    ,output wire [251:0]   cfg_vf_flr_in_process 
    ,input  wire [7:0]     cfg_vf_flr_func_num
    ,input  wire           cfg_vf_flr_done
@@ -1251,7 +1320,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
    ,output       ext_phy_clk_gt_bufgtrstmask
    ,output [8:0] ext_phy_clk_bufgtdiv
    ,output wire                                           phy_rdy_out
-
+   ,input prst_clk 
   );
    wire [1:0]     pipe_rx_char_is_k_wire [0:7];
    wire           pipe_rx_valid_wire [0:7];
@@ -1771,7 +1840,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
    wire conf_req_valid_int;
    wire conf_req_ready_int;
    wire [((PL_LINK_CAP_MAX_LINK_WIDTH *  1)-1):0] ext_ch_gt_drpen_int;
-   wire                                        drp_en_int;
+   wire                                        drp_en_local;
    wire [((PL_LINK_CAP_MAX_LINK_WIDTH*1)-1):0] gt_pcieuserratedone_int;
    wire [((PL_LINK_CAP_MAX_LINK_WIDTH*3)-1):0] gt_loopback_int;
    wire [((PL_LINK_CAP_MAX_LINK_WIDTH*1)-1):0] gt_txprbsforceerr_int;
@@ -1844,11 +1913,24 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pcie4_uscale_core_top
    reg   as_mac_in_detect_user;
    reg   as_mac_in_detect_ff;
    reg   as_mac_in_detect_ff1;
-
+ 
    wire [31:0] acs_cfg_ext_read_data;
    wire        acs_cfg_ext_read_data_valid;
    wire [31:0] cfg_ext_read_data_int;
    wire        cfg_ext_read_data_valid_int;
+   wire  [31:0] rbar_cfg_ext_read_data;
+   wire         rbar_cfg_ext_read_data_valid;
+   //--------------------------------------------------------------------------                   
+   // PCIe DRP Port internal signals
+   //--------------------------------------------------------------------------                   
+   wire         drp_rdy_int;
+   wire  [15:0] drp_do_int;
+   wire         drp_clk_int;
+   wire         drp_en_int;
+   wire         drp_we_int;
+   wire   [9:0] drp_addr_int;
+   wire  [15:0] drp_di_int;
+
 
    assign pipe_rx_char_is_k_del[0] = pipe_rx00_char_is_k;
    assign pipe_rx_char_is_k_del[1] = pipe_rx01_char_is_k;
@@ -2512,7 +2594,6 @@ begin
    ,.SPARE_WORD1(SPARE_WORD1)
    ,.SPARE_WORD2(SPARE_WORD2)
    ,.SPARE_WORD3(SPARE_WORD3)
-
   ) pcie_4_0_pipe_inst ( 
 
 ////////   PIPE Controls ////////////
@@ -3207,7 +3288,7 @@ begin
    ,.cfg_ds_port_number(cfg_ds_port_number[7:0])
    ,.cfg_ds_bus_number(cfg_ds_bus_number[7:0])
    ,.cfg_ds_device_number(cfg_ds_device_number[4:0])
-   ,.cfg_ds_function_number(3'b0)
+   ,.cfg_ds_function_number(cfg_ds_function_number[2:0])
    ,.cfg_bus_number(cfg_bus_number[7:0])
    ,.cfg_power_state_change_ack(cfg_power_state_change_ack_int)
    ,.cfg_power_state_change_interrupt(cfg_power_state_change_interrupt)
@@ -3277,13 +3358,13 @@ begin
    ,.conf_mcap_eos()
    ,.conf_mcap_in_use_by_pcie(mcap_pcie_request)
    ,.conf_mcap_request_by_conf(mcap_external_request_int)
-   ,.drp_clk(drp_clk)
+   ,.drp_clk(drp_clk_int)
    ,.drp_en(drp_en_int)
-   ,.drp_we(drp_we)
-   ,.drp_addr(drp_addr)
-   ,.drp_di(drp_di)
-   ,.drp_rdy(drp_rdy)
-   ,.drp_do(drp_do)
+   ,.drp_we(drp_we_int)
+   ,.drp_addr(drp_addr_int)
+   ,.drp_di(drp_di_int)
+   ,.drp_rdy(drp_rdy_int)
+   ,.drp_do(drp_do_int)
    ,.pipe_clk(pipe_clk)
    ,.core_clk(core_clk)
    ,.user_clk(user_clk)
@@ -3968,7 +4049,6 @@ begin
    ,.SPARE_WORD1(SPARE_WORD1)
    ,.SPARE_WORD2(SPARE_WORD2)
    ,.SPARE_WORD3(SPARE_WORD3)
-
   ) pcie_4_0_pipe_inst ( 
 
     .pipe_rx00_char_is_k(pipe_rx_char_is_k_del[0][1:0])
@@ -4527,7 +4607,7 @@ begin
    ,.cfg_ds_port_number(cfg_ds_port_number[7:0])
    ,.cfg_ds_bus_number(cfg_ds_bus_number[7:0])
    ,.cfg_ds_device_number(cfg_ds_device_number[4:0])
-   ,.cfg_ds_function_number(3'b0)
+   ,.cfg_ds_function_number(cfg_ds_function_number[2:0])
    ,.cfg_bus_number(cfg_bus_number[7:0])
    ,.cfg_power_state_change_ack(cfg_power_state_change_ack_int)
    ,.cfg_power_state_change_interrupt(cfg_power_state_change_interrupt)
@@ -4597,13 +4677,13 @@ begin
    ,.conf_mcap_eos()
    ,.conf_mcap_in_use_by_pcie(mcap_pcie_request)
    ,.conf_mcap_request_by_conf(mcap_external_request_int)
-   ,.drp_clk(drp_clk)
+   ,.drp_clk(drp_clk_int)
    ,.drp_en(drp_en_int)
-   ,.drp_we(drp_we)
-   ,.drp_addr(drp_addr)
-   ,.drp_di(drp_di)
-   ,.drp_rdy(drp_rdy)
-   ,.drp_do(drp_do)
+   ,.drp_we(drp_we_int)
+   ,.drp_addr(drp_addr_int)
+   ,.drp_di(drp_di_int)
+   ,.drp_rdy(drp_rdy_int)
+   ,.drp_do(drp_do_int)
    ,.pipe_clk(pipe_clk)
    ,.core_clk(core_clk)
    ,.user_clk(user_clk)
@@ -4681,7 +4761,9 @@ PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_phy_top #
     .PHY_REFCLK          ( sys_clk_bufg ),      
     .PHY_USERCLK         ( user_clk ),  
     .PHY_MCAPCLK         ( mcap_clk ),  
-    .PHY_GTREFCLK        ( sys_clk_gt ),               
+
+    .PHY_GTREFCLK        ( sys_clk_gt ), 
+         
     .PHY_RST_N           ( sys_rst_n ),           
    
     .PHY_PCLK            ( pipe_clk ),  
@@ -5362,7 +5444,7 @@ assign cfg_pm_aspm_tx_l0s_entry_disable_int = (design_switch) ? cfg_pm_aspm_tx_l
 assign conf_req_valid_int = (design_switch) ? conf_req_valid : 1'b0;
 assign conf_req_ready = (design_switch) ? conf_req_ready_int : 1'b0;
 assign ext_ch_gt_drpen_int = (design_switch) ? ext_ch_gt_drpen : {PL_LINK_CAP_MAX_LINK_WIDTH{1'b0}};
-assign drp_en_int = (design_switch) ? drp_en : 1'b0;
+assign drp_en_local = (design_switch) ? drp_en : 1'b0;
 assign gt_pcieuserratedone_int = (design_switch) ? gt_pcieuserratedone : {PL_LINK_CAP_MAX_LINK_WIDTH{1'b0}};
 assign gt_loopback_int = (design_switch) ? gt_loopback : {(PL_LINK_CAP_MAX_LINK_WIDTH * 3){1'b0}};
 assign gt_txprbsforceerr_int = (design_switch) ? gt_txprbsforceerr : {PL_LINK_CAP_MAX_LINK_WIDTH{1'b0}};
@@ -5388,6 +5470,23 @@ assign pipe_tx0_powerdown = pipe_tx00_powerdown;
   assign acs_cfg_ext_read_data = 32'b0;
   assign acs_cfg_ext_read_data_valid = 1'b0;
 
+  assign rbar_cfg_ext_read_data = 32'b0;
+  assign rbar_cfg_ext_read_data_valid = 1'b0;
+  assign drp_rdy = drp_rdy_int;
+  assign drp_do = drp_do_int;
+  assign drp_clk_int = drp_clk;
+  assign drp_en_int = drp_en_local;
+  assign drp_we_int = drp_we;
+  assign drp_addr_int = drp_addr;
+  assign drp_di_int = drp_di;
+  assign  rbar_bar_size = 6'b0;
+  assign  rbar_function_number = 8'h0;
+  assign  rbar_write_enable_bar0 = 1'b0;
+  assign  rbar_write_enable_bar1 = 1'b0;
+  assign  rbar_write_enable_bar2 = 1'b0;
+  assign  rbar_write_enable_bar3 = 1'b0;
+  assign  rbar_write_enable_bar4 = 1'b0;
+  assign  rbar_write_enable_bar5 = 1'b0;
   localparam   MAX_WATCHDOG_CNT          = 20'h4FFFF;
   localparam   GEN_VALID_AT_WATCHDOG_CNT = 20'h40000; // timeout count rounded to nearest 2^n 
                                            
@@ -5396,14 +5495,14 @@ assign pipe_tx0_powerdown = pipe_tx00_powerdown;
 
   // Mux Control for the two PCIe Extended Capabilities. Only one outstanding transaction is
   // aloud at a time. So a simple select mux on the cfg_ext_read_data is sufficient.
-  assign cfg_ext_read_data_valid_int = acs_cfg_ext_read_data_valid | cfg_ext_read_data_valid | cfg_ext_read_data_valid_dummy;
-  assign cfg_ext_read_data_int       = acs_cfg_ext_read_data_valid ? acs_cfg_ext_read_data : cfg_ext_read_data; 
+  assign cfg_ext_read_data_valid_int = acs_cfg_ext_read_data_valid | cfg_ext_read_data_valid | rbar_cfg_ext_read_data_valid | cfg_ext_read_data_valid_dummy;
+  assign cfg_ext_read_data_int       = acs_cfg_ext_read_data_valid ? acs_cfg_ext_read_data : (rbar_cfg_ext_read_data_valid ? rbar_cfg_ext_read_data: cfg_ext_read_data); 
   
   always @(posedge user_clk)
   begin
     if(cfg_ext_read_received)
       read_rcvd_watchDog_cnt <= 'd0;
-    else if (acs_cfg_ext_read_data_valid | cfg_ext_read_data_valid )
+    else if (acs_cfg_ext_read_data_valid | cfg_ext_read_data_valid | rbar_cfg_ext_read_data_valid )
       read_rcvd_watchDog_cnt <= MAX_WATCHDOG_CNT;
     else if (read_rcvd_watchDog_cnt >= MAX_WATCHDOG_CNT)
       read_rcvd_watchDog_cnt <= read_rcvd_watchDog_cnt;
@@ -5438,5 +5537,7 @@ assign pipe_tx0_powerdown = pipe_tx00_powerdown;
 
   assign store_ltssm     = (ltssm_reg2 != cfg_ltssm_state) ? 1'b1 : 1'b0; 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ 
 endmodule
 

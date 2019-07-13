@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_command_fifo.sv
+//  /   /         Filename           : ddr4_v2_2_7_command_fifo.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -65,7 +65,7 @@
 `timescale 1ps/1ps
 
 
-module ddr4_v2_2_4_command_fifo #
+module ddr4_v2_2_7_command_fifo #
   (
    parameter         C_FAMILY                        = "virtex6",
    parameter integer C_ENABLE_S_VALID_CARRY          = 0,
@@ -179,7 +179,7 @@ module ddr4_v2_2_4_command_fifo #
       
       assign sel_s_valid = ~buffer_Full;
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) s_valid_dummy_inst1
@@ -189,7 +189,7 @@ module ddr4_v2_2_4_command_fifo #
          .COUT(s_valid_dummy1)
          );
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) s_valid_dummy_inst2
@@ -199,7 +199,7 @@ module ddr4_v2_2_4_command_fifo #
          .COUT(s_valid_dummy2)
          );
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) valid_write_inst
@@ -211,7 +211,7 @@ module ddr4_v2_2_4_command_fifo #
       
       assign sel_new_write = ~buffer_Empty;
        
-      ddr4_v2_2_4_carry_latch_or #
+      ddr4_v2_2_7_carry_latch_or #
         (
          .C_FAMILY(C_FAMILY)
          ) new_write_inst
@@ -221,7 +221,7 @@ module ddr4_v2_2_4_command_fifo #
          .O(new_write)
          );
          
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) valid_write_dummy_inst1
@@ -231,7 +231,7 @@ module ddr4_v2_2_4_command_fifo #
          .COUT(valid_Write_dummy1)
          );
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) valid_write_dummy_inst2
@@ -241,7 +241,7 @@ module ddr4_v2_2_4_command_fifo #
          .COUT(valid_Write_dummy2)
          );
       
-      ddr4_v2_2_4_carry_and #
+      ddr4_v2_2_7_carry_and #
         (
          .C_FAMILY(C_FAMILY)
          ) valid_write_dummy_inst3

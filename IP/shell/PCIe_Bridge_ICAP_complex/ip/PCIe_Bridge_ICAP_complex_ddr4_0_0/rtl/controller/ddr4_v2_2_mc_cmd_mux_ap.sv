@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_cmd_mux_ap.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc_cmd_mux_ap.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,28 +58,30 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_cmd_mux_ap module
+//                   ddr4_v2_2_7_mc_cmd_mux_ap module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_cmd_mux_ap # (parameter
+module ddr4_v2_2_7_mc_cmd_mux_ap # (parameter
     ABITS = 18
+   ,RKBITS = 2
+   ,RANK_SLAB = 4
    ,LR_WIDTH = 1
 )(
     output reg       [1:0] winBank
    ,output reg       [1:0] winGroup
    ,output reg [LR_WIDTH-1:0] winLRank
-   ,output reg       [1:0] winRank
+   ,output reg   [RKBITS-1:0] winRank
    ,output reg [ABITS-1:0] winRow
 
    ,input         [3:0] sel
    ,input         [7:0] cmdBank
    ,input         [7:0] cmdGroup
    ,input [4*LR_WIDTH-1:0] cmdLRank
-   ,input         [7:0] cmdRank
+   ,input   [RKBITS*4-1:0] cmdRank
    ,input [4*ABITS-1:0] cmdRow
 );
 
@@ -88,28 +90,28 @@ always @(*) casez (sel)
       winBank = cmdBank[1:0];
       winGroup = cmdGroup[1:0];
       winLRank = cmdLRank[0*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[1:0];
+      winRank = cmdRank[RKBITS*1-1:RKBITS*0];
       winRow = cmdRow[0*ABITS+:ABITS];
    end
    4'bzz1z: begin
       winBank = cmdBank[3:2];
       winGroup = cmdGroup[3:2];
       winLRank = cmdLRank[1*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[3:2];
+      winRank = cmdRank[RKBITS*2-1:RKBITS*1];
       winRow = cmdRow[1*ABITS+:ABITS];
    end
    4'bz1zz: begin
       winBank = cmdBank[5:4];
       winGroup = cmdGroup[5:4];
       winLRank = cmdLRank[2*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[5:4];
+      winRank = cmdRank[RKBITS*3-1:RKBITS*2];
       winRow = cmdRow[2*ABITS+:ABITS];
    end
    4'b1zzz: begin
       winBank = cmdBank[7:6];
       winGroup = cmdGroup[7:6];
       winLRank = cmdLRank[3*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[7:6];
+      winRank = cmdRank[RKBITS*4-1:RKBITS*3];
       winRow = cmdRow[3*ABITS+:ABITS];
    end
    default: begin

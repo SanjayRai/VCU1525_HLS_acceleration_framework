@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_pi.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_pi.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/23 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_pi module
+//                   ddr4_v2_2_7_cal_pi module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_cal_pi # (parameter
+module ddr4_v2_2_7_cal_pi # (parameter
     DBAW = 5
    ,DBYTES = 4
    ,DBYTES_PI = 4
@@ -167,7 +167,7 @@ genvar bnum;
 generate
 
    for (bnum = 0; bnum < DBYTES; bnum++) begin:rdEn
-      ddr4_v2_2_4_cal_rd_en #(
+      ddr4_v2_2_7_cal_rd_en #(
           .RANKS (RANKS)
          ,.RL  (RL)
          ,.EXTRA_CMD_DELAY      (EXTRA_CMD_DELAY)
@@ -195,7 +195,7 @@ generate
          ,.calDone         (calDone)
       );
       
-      ddr4_v2_2_4_cal_rd_en #(
+      ddr4_v2_2_7_cal_rd_en #(
           .RANKS (RANKS)
          ,.RL  (RL)
          ,.EXTRA_CMD_DELAY      (EXTRA_CMD_DELAY)
@@ -228,7 +228,7 @@ endgenerate
 
 
 
-ddr4_v2_2_4_cal_read #(
+ddr4_v2_2_7_cal_read #(
     .DBYTES            (DBYTES)
    ,.DBAW             (DBAW)
    ,.RL               (RL)
@@ -256,7 +256,7 @@ ddr4_v2_2_4_cal_read #(
 ); 
    
 
-ddr4_v2_2_4_cal_write #(     
+ddr4_v2_2_7_cal_write #(     
     .DBYTES  (DBYTES)
    ,.DBAW   (DBAW)
    ,.MEM    (MEM)

@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_mc_odt.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_mc_odt.sv
 // /___/   /\     Date Last Modified : $Date: 2015/04/23 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,14 +58,14 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_cal_mc_odt module
+//                   ddr4_v2_2_7_cal_mc_odt module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_cal_mc_odt #(parameter
+module ddr4_v2_2_7_cal_mc_odt #(parameter
     ODTWR     = 16'h8421
    ,ODTWRDEL  = 5'd9
    ,ODTWRDUR  = 4'd6
@@ -78,6 +78,8 @@ module ddr4_v2_2_4_cal_mc_odt #(parameter
    ,ODTRDODEL = 5'd9
    ,ODTRDODUR = 4'd6
 
+   ,RANKS     = 1
+   ,RNK_BITS  = 2
    ,ODTBITS   = 4
    ,ODTNOP    = 4'b0000
    ,TCQ       = 0.1
@@ -88,7 +90,7 @@ module ddr4_v2_2_4_cal_mc_odt #(parameter
    ,output [ODTBITS*8-1:0] mc_ODT
 
    ,input       casSlot2
-   ,input [1:0] rank
+   ,input [RNK_BITS-1:0] rank
    ,input       winRead
    ,input       winWrite
    ,input       tranSentC 
@@ -142,7 +144,8 @@ wire [31:0] win_odt_pulse       = casSlot2 ? win_odt_pulse_slot2 : win_odt_pulse
 
 // Select ODT pin pattern based on winning command type and rank
 wire [15:0] win_odt_cmd_pat = winRead ? ODTRD : ODTWR;
-wire [ 3:0] win_odt_pat     = { 4 { winRead | winWrite } } & win_odt_cmd_pat[ 4*rank +:4 ]; // spyglass disable W498
+wire [1:0]  rank2odt        = (RANKS <= 4) ? rank : {rank[2],rank[0]};
+wire [ 3:0] win_odt_pat     = { 4 { winRead | winWrite } } & win_odt_cmd_pat[ 4*rank2odt +:4 ]; // spyglass disable W498
 
 genvar odt_pin;
 generate

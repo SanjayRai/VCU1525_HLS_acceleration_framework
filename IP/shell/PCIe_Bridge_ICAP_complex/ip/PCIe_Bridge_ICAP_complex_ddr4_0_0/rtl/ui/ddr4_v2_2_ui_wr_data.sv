@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_ui_wr_data.sv
+//  /   /         Filename              : ddr4_v2_2_7_ui_wr_data.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          : Thu Apr 18 2013
 //  \___\/\___\
@@ -128,7 +128,7 @@
 
 `timescale 1 ps / 1 ps
 
-module ddr4_v2_2_4_ui_wr_data #
+module ddr4_v2_2_7_ui_wr_data #
   (
    parameter TCQ = 100,
    parameter APP_DATA_WIDTH       = 256,
@@ -524,6 +524,6 @@ wire wdf_rdy_ns_cpy;
     else assign raw_not_ecc = wr_buf_out_data[WR_BUF_WIDTH-1-:4];
   endgenerate
 
-endmodule // ddr4_v2_2_4_ui_wr_data
+endmodule // ddr4_v2_2_7_ui_wr_data
 
 

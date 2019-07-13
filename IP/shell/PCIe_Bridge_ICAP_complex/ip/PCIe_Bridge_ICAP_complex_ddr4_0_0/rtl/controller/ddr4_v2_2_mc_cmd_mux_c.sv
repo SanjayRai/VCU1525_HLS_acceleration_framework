@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_mc_cmd_mux_c.sv
+//  /   /         Filename           : ddr4_v2_2_7_mc_cmd_mux_c.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 18 2013
 //  \___\/\___\
@@ -58,15 +58,17 @@
 // Device           : UltraScale
 // Design Name      : DDR4 SDRAM & DDR3 SDRAM
 // Purpose          :
-//                   ddr4_v2_2_4_mc_cmd_mux_c module
+//                   ddr4_v2_2_7_mc_cmd_mux_c module
 // Reference        :
 // Revision History :
 //*****************************************************************************
 
 `timescale 1ns/100ps
 
-module ddr4_v2_2_4_mc_cmd_mux_c # (parameter
+module ddr4_v2_2_7_mc_cmd_mux_c # (parameter
     COLBITS = 10
+   ,RKBITS = 2
+   ,RANK_SLAB = 4
    ,LR_WIDTH = 1
    ,DBAW = 5
 )(
@@ -78,7 +80,7 @@ module ddr4_v2_2_4_mc_cmd_mux_c # (parameter
    ,output reg [COLBITS-1:0] winCol
    ,output reg         [1:0] winGroup
    ,output reg [LR_WIDTH-1:0]winLRank
-   ,output reg         [1:0] winRank
+   ,output reg  [RKBITS-1:0] winRank
    ,output reg               winSize
 
    ,input           [7:0] cmdBank
@@ -89,7 +91,7 @@ module ddr4_v2_2_4_mc_cmd_mux_c # (parameter
    ,input [4*COLBITS-1:0] cmdCol // spyglass disable W498
    ,input           [7:0] cmdGroup
    ,input [4*LR_WIDTH-1:0]cmdLRank
-   ,input           [7:0] cmdRank
+   ,input  [RKBITS*4-1:0] cmdRank
    ,input           [3:0] cmdSize
 
    ,input  [3:0] sel
@@ -105,7 +107,7 @@ always @(*) casez (sel)
       winCol = {cmdCol[(0*COLBITS+3)+:COLBITS-3], cmdSize[0] ? 1'b0 : cmdCol[0*COLBITS+2], 1'b0, cmdInjTxn[0]};
       winGroup = cmdGroup[0*2+:2];
       winLRank = cmdLRank[0*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[0*2+:2];
+      winRank = cmdRank[0*RKBITS+:RKBITS];
       winSize = cmdSize[0];
    end
    4'bzz1z: begin
@@ -117,7 +119,7 @@ always @(*) casez (sel)
       winCol = {cmdCol[(1*COLBITS+3)+:COLBITS-3], cmdSize[1] ? 1'b0 : cmdCol[1*COLBITS+2], 1'b0, cmdInjTxn[1]};
       winGroup = cmdGroup[1*2+:2];
       winLRank = cmdLRank[1*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[1*2+:2];
+      winRank = cmdRank[1*RKBITS+:RKBITS];
       winSize = cmdSize[1];
    end
    4'bz1zz: begin
@@ -129,7 +131,7 @@ always @(*) casez (sel)
       winCol = {cmdCol[(2*COLBITS+3)+:COLBITS-3], cmdSize[2] ? 1'b0 : cmdCol[2*COLBITS+2], 1'b0, cmdInjTxn[2]};
       winGroup = cmdGroup[2*2+:2];
       winLRank = cmdLRank[2*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[2*2+:2];
+      winRank = cmdRank[2*RKBITS+:RKBITS];
       winSize = cmdSize[2];
    end
    4'b1zzz: begin
@@ -141,7 +143,7 @@ always @(*) casez (sel)
       winCol = {cmdCol[(3*COLBITS+3)+:COLBITS-3], cmdSize[3] ? 1'b0 : cmdCol[3*COLBITS+2], 1'b0, cmdInjTxn[3]};
       winGroup = cmdGroup[3*2+:2];
       winLRank = cmdLRank[3*LR_WIDTH+:LR_WIDTH];
-      winRank = cmdRank[3*2+:2];
+      winRank = cmdRank[3*RKBITS+:RKBITS];
       winSize = cmdSize[3];
    end
    default: begin

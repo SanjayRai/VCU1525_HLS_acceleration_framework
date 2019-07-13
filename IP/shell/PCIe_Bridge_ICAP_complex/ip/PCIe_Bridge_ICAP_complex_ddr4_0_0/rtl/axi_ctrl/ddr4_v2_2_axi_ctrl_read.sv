@@ -46,7 +46,7 @@
 // --  
 ///////////////////////////////////////////////////////////////////////////////
 //
-// File name: ddr4_v2_2_4_axi_ctrl_read.v
+// File name: ddr4_v2_2_7_axi_ctrl_read.v
 //
 // Description: AXI Lite Controller
 //
@@ -65,7 +65,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_ctrl_read #
+module ddr4_v2_2_7_axi_ctrl_read #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -117,7 +117,7 @@ wire [C_NUM_REG_WIDTH-1:0]  reg_decode_num;
 // BEGIN RTL
 ///////////////////////////////////////////////////////////////////////////////
 
-ddr4_v2_2_4_axi_ctrl_addr_decode #
+ddr4_v2_2_7_axi_ctrl_addr_decode #
 (
   .C_ADDR_WIDTH     ( C_ADDR_WIDTH     ) ,
   .C_NUM_REG        ( C_NUM_REG        ) ,

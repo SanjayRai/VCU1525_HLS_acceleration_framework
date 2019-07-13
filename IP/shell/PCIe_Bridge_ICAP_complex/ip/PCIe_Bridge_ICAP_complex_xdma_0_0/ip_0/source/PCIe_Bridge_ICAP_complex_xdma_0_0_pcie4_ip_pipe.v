@@ -606,7 +606,7 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pipe
    , parameter [31:0]    SPARE_WORD0=32'h0
    , parameter [31:0]    SPARE_WORD1=32'h0
    , parameter [31:0]    SPARE_WORD2=32'h0
-   , parameter [31:0]    SPARE_WORD3=32'h0
+   , parameter [31:0]    SPARE_WORD3=32'h0   
   ) (
     input  wire [1:0]     pipe_rx00_char_is_k
    ,input  wire [1:0]     pipe_rx01_char_is_k
@@ -1298,6 +1298,14 @@ module PCIe_Bridge_ICAP_complex_xdma_0_0_pcie4_ip_pipe
   wire [31:0]                 pipe_tx13_data_out;
   wire [31:0]                 pipe_tx14_data_out;
   wire [31:0]                 pipe_tx15_data_out;
+
+  wire [251:0]   cfg_vf_flr_in_process_o ;
+  wire [503:0]   cfg_vf_status_o ;
+  wire [755:0]   cfg_vf_power_state_o ;
+  wire [251:0]   cfg_vf_tph_requester_enable_o ;
+  wire [755:0]   cfg_vf_tph_st_mode_o ;
+  wire [251:0]   cfg_interrupt_msix_vf_enable_o ;
+  wire [251:0]   cfg_interrupt_msix_vf_mask_o ;
 
   assign cfg_phy_link_down = cfg_phy_link_down_wire;
 
@@ -2170,11 +2178,11 @@ endgenerate
    ,.CFGINTERRUPTMSIPENDINGSTATUSDATAENABLE(cfg_interrupt_msi_pending_status_data_enable)
    ,.CFGINTERRUPTMSIPENDINGSTATUSFUNCTIONNUM(cfg_interrupt_msi_pending_status_function_num[1:0])
    ,.CFGINTERRUPTMSISELECT(cfg_interrupt_msi_select[1:0])
+   ,.CFGINTERRUPTMSIXENABLE(cfg_interrupt_msix_enable[3:0])
+   ,.CFGINTERRUPTMSIXMASK(cfg_interrupt_msix_mask[3:0])
    ,.CFGINTERRUPTMSIXVECPENDING(cfg_interrupt_msix_vec_pending[1:0])
    ,.CFGINTERRUPTMSIMASKUPDATE(cfg_interrupt_msi_mask_update)
    ,.CFGINTERRUPTMSIMMENABLE(cfg_interrupt_msi_mmenable[11:0])
-   ,.CFGINTERRUPTMSIXENABLE(cfg_interrupt_msix_enable[3:0])
-   ,.CFGINTERRUPTMSIXMASK(cfg_interrupt_msix_mask[3:0])
    ,.CFGINTERRUPTPENDING(cfg_interrupt_pending[3:0])
    ,.CFGINTERRUPTSENT(cfg_interrupt_sent)
    ,.CFGLINKPOWERSTATE(cfg_link_power_state[1:0])
@@ -2978,13 +2986,16 @@ endgenerate
     ,.cfg_ext_write_byte_enable_i(cfg_ext_write_byte_enable[3:0])
     ,.cfg_flr_in_process_i(cfg_flr_in_process[3:0])
 
-    ,.cfg_vf_flr_in_process_o(cfg_vf_flr_in_process[251:0])
-    ,.cfg_vf_status_o(cfg_vf_status[503:0])
-    ,.cfg_vf_power_state_o(cfg_vf_power_state[755:0])
-    ,.cfg_vf_tph_requester_enable_o(cfg_vf_tph_requester_enable[251:0])
-    ,.cfg_vf_tph_st_mode_o(cfg_vf_tph_st_mode[755:0])
-    ,.cfg_interrupt_msix_vf_enable_o(cfg_interrupt_msix_vf_enable[251:0])
-    ,.cfg_interrupt_msix_vf_mask_o(cfg_interrupt_msix_vf_mask[251:0])
+    ,.cfg_vf_flr_done_i (cfg_vf_flr_done)
+    ,.cfg_vf_flr_func_num_i (cfg_vf_flr_func_num)
+
+    ,.cfg_vf_flr_in_process_o(cfg_vf_flr_in_process_o[251:0])
+    ,.cfg_vf_status_o(cfg_vf_status_o[503:0])
+    ,.cfg_vf_power_state_o(cfg_vf_power_state_o[755:0])
+    ,.cfg_vf_tph_requester_enable_o(cfg_vf_tph_requester_enable_o[251:0])
+    ,.cfg_vf_tph_st_mode_o(cfg_vf_tph_st_mode_o[755:0])
+    ,.cfg_interrupt_msix_vf_enable_o(cfg_interrupt_msix_vf_enable_o[251:0])
+    ,.cfg_interrupt_msix_vf_mask_o(cfg_interrupt_msix_vf_mask_o[251:0])
 
   );
 
@@ -3187,5 +3198,30 @@ endgenerate
 
 //
 //
+
+generate if (SRIOV_CAP_ENABLE == 4'h0) begin
+
+assign cfg_vf_flr_in_process = 'h0;
+assign cfg_vf_status         = 'h0; 
+assign cfg_vf_power_state    = 'h0; 
+assign cfg_vf_tph_requester_enable = 'h0;
+assign cfg_vf_tph_st_mode    = 'h0 ;
+assign cfg_interrupt_msix_vf_enable ='h0 ;
+assign cfg_interrupt_msix_vf_mask = 'h0 ;
+ 
+
+end else begin
+
+assign cfg_vf_flr_in_process = cfg_vf_flr_in_process_o;
+assign cfg_vf_status         = cfg_vf_status_o; 
+assign cfg_vf_power_state    = cfg_vf_power_state_o; 
+assign cfg_vf_tph_requester_enable = cfg_vf_tph_requester_enable_o;
+assign cfg_vf_tph_st_mode    = cfg_vf_tph_st_mode_o;
+assign cfg_interrupt_msix_vf_enable = cfg_interrupt_msix_vf_enable_o;
+assign cfg_interrupt_msix_vf_mask = cfg_interrupt_msix_vf_mask_o;
+
+end
+endgenerate
+
 
 endmodule

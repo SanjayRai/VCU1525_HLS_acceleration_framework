@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_ar_channel.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_ar_channel.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -64,7 +64,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_ar_channel #
+module ddr4_v2_2_7_axi_ar_channel #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -188,7 +188,7 @@ always @(posedge clk) begin
 end
 
 // Translate the AXI transaction to the MC transaction(s)
-ddr4_v2_2_4_axi_cmd_translator #
+ddr4_v2_2_7_axi_cmd_translator #
 (
   .C_AXI_ADDR_WIDTH ( C_AXI_ADDR_WIDTH ) ,
   .C_MC_ADDR_WIDTH  ( C_MC_ADDR_WIDTH  ) ,
@@ -215,7 +215,7 @@ axi_mc_cmd_translator_0
   .next_pending  ( next_pending          ) 
 );
 
-ddr4_v2_2_4_axi_cmd_fsm #
+ddr4_v2_2_7_axi_cmd_fsm #
 (
  .C_MC_BURST_LEN   (C_MC_BURST_LEN   ),
  .C_MC_RD_INST     (1                )

@@ -51,7 +51,7 @@
 // /___/  \  /    Vendor                : Xilinx
 // \   \   \/     Version               : 1.1
 //  \   \         Application           : MIG
-//  /   /         Filename              : ddr4_v2_2_4_ui_cmd.sv
+//  /   /         Filename              : ddr4_v2_2_7_ui_cmd.sv
 // /___/   /\     Date Last Modified    : $Date$
 // \   \  /  \    Date Created          : Thu Apr 18 2013
 //  \___\/\___\
@@ -67,7 +67,7 @@
 
 // User interface command port.
 
-module ddr4_v2_2_4_ui_cmd #
+module ddr4_v2_2_7_ui_cmd #
   (
    parameter TCQ                  = 100,
    parameter ADDR_WIDTH           = 33,
@@ -495,6 +495,6 @@ module ddr4_v2_2_4_ui_cmd #
 
   assign data_buf_addr = ~write ? rd_data_buf_addr_r : wr_data_buf_addr;
 
-endmodule // ddr4_v2_2_4_ui_cmd
+endmodule // ddr4_v2_2_7_ui_cmd
 
 

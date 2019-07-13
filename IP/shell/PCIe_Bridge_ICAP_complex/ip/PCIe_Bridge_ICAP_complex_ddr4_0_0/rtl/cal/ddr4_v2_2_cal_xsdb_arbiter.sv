@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_cal_xsdb_arbiter.sv
+//  /   /         Filename           : ddr4_v2_2_7_cal_xsdb_arbiter.sv
 // /___/   /\     Date Last Modified : $Date: 2016/01/11 $
 // \   \  /  \    Date Created       : Mon Jan 11 2016
 //  \___\/\___\
@@ -65,7 +65,7 @@
 
 `timescale 1ps/1ps
 
-module ddr4_v2_2_4_cal_xsdb_arbiter #(
+module ddr4_v2_2_7_cal_xsdb_arbiter #(
 
   parameter SYNC_MTBF = 2,
   parameter TCQ       = 100
@@ -173,11 +173,11 @@ begin
 end
 
 // Converting the slave xsdb signals to fabric clock domain
-ddr4_v2_2_4_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_en_sync (fabric_clk, slave_en_lvl, slave_en_lvl_fclk);
-ddr4_v2_2_4_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_we_sync (fabric_clk, slave_we_r, slave_we_fclk);
-ddr4_v2_2_4_cal_sync #(SYNC_MTBF, 16, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_addr_sync (fabric_clk, slave_addr_r, slave_addr_fclk);
-ddr4_v2_2_4_cal_sync #(SYNC_MTBF, 9, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_di_sync (fabric_clk, slave_di_r, slave_di_fclk);
-ddr4_v2_2_4_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_rdy_cptd_sync (fabric_clk, slave_rdy_cptd_sclk, slave_rdy_cptd_fclk);
+ddr4_v2_2_7_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_en_sync (fabric_clk, slave_en_lvl, slave_en_lvl_fclk);
+ddr4_v2_2_7_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_we_sync (fabric_clk, slave_we_r, slave_we_fclk);
+ddr4_v2_2_7_cal_sync #(SYNC_MTBF, 16, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_addr_sync (fabric_clk, slave_addr_r, slave_addr_fclk);
+ddr4_v2_2_7_cal_sync #(SYNC_MTBF, 9, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_di_sync (fabric_clk, slave_di_r, slave_di_fclk);
+ddr4_v2_2_7_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_FABRIC, TCQ) u_slave_rdy_cptd_sync (fabric_clk, slave_rdy_cptd_sclk, slave_rdy_cptd_fclk);
 
 //converting the xsdb_en level signal to pulse
 always @(posedge fabric_clk)
@@ -258,8 +258,8 @@ always @(posedge fabric_clk) begin
 end
 
 // Converting the fabic xsdb ready into slave clock domain
-ddr4_v2_2_4_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_DBGHUB, TCQ) u_slave_rdy_sync (slave_clk, slave_rdy_lvl_fclk, slave_rdy_lvl_sclk);
-ddr4_v2_2_4_cal_sync #(SYNC_MTBF, 9, INSERT_DELAY, MAX_DELAY_DBGHUB, TCQ) u_slave_do_sync (slave_clk, slave_do_fclk, slave_do_sclk);
+ddr4_v2_2_7_cal_sync #(SYNC_MTBF, 1, INSERT_DELAY, MAX_DELAY_DBGHUB, TCQ) u_slave_rdy_sync (slave_clk, slave_rdy_lvl_fclk, slave_rdy_lvl_sclk);
+ddr4_v2_2_7_cal_sync #(SYNC_MTBF, 9, INSERT_DELAY, MAX_DELAY_DBGHUB, TCQ) u_slave_do_sync (slave_clk, slave_do_fclk, slave_do_sclk);
 
 assign slave_do = {7'b0,slave_do_sclk};
 always @(posedge slave_clk)

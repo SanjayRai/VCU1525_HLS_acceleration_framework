@@ -46,7 +46,7 @@
 // --  
 ///////////////////////////////////////////////////////////////////////////////
 //
-// File name: ddr4_v2_2_4_axi_ctrl_top.v
+// File name: ddr4_v2_2_7_axi_ctrl_top.v
 //
 // Description: AXI Lite Controller
 //
@@ -65,7 +65,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_ctrl_top #
+module ddr4_v2_2_7_axi_ctrl_top #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions
@@ -637,7 +637,7 @@ always @(posedge aclk) begin
 end
 
 // Instantiate AXI4-Lite write channel module
-ddr4_v2_2_4_axi_ctrl_write #
+ddr4_v2_2_7_axi_ctrl_write #
 ( 
   .C_ADDR_WIDTH     ( C_S_AXI_CTRL_ADDR_WIDTH ) ,
   .C_DATA_WIDTH     ( C_S_AXI_CTRL_DATA_WIDTH ) ,
@@ -665,7 +665,7 @@ axi_ctrl_write_0
 );
   
 // Instantiate AXI4-Lite write channel module
-ddr4_v2_2_4_axi_ctrl_read #
+ddr4_v2_2_7_axi_ctrl_read #
 ( 
   .C_ADDR_WIDTH     ( C_S_AXI_CTRL_ADDR_WIDTH ) ,
   .C_DATA_WIDTH     ( C_S_AXI_CTRL_DATA_WIDTH ) ,
@@ -687,7 +687,7 @@ axi_ctrl_read_0
   .reg_bank_array ( reg_data_out  ) 
 );
  
-ddr4_v2_2_4_axi_ctrl_reg_bank #
+ddr4_v2_2_7_axi_ctrl_reg_bank #
 (
   .C_ADDR_WIDTH             ( C_S_AXI_CTRL_ADDR_WIDTH  ) ,
   .C_DATA_WIDTH             ( C_S_AXI_CTRL_DATA_WIDTH  ) ,

@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axic_register_slice.sv
+//  /   /         Filename           : ddr4_v2_2_7_axic_register_slice.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -74,7 +74,7 @@
 
 `timescale 1ps/1ps
 
-module ddr4_v2_2_4_axic_register_slice #
+module ddr4_v2_2_7_axic_register_slice #
   (
    parameter C_FAMILY     = "virtex6",
    parameter C_DATA_WIDTH = 32,

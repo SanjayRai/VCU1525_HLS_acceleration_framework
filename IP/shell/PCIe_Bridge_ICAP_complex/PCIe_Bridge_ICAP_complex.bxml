@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Root MajorVersion="0" MinorVersion="35">
+<Root MajorVersion="0" MinorVersion="37">
   <CompositeFile CompositeFileTopName="PCIe_Bridge_ICAP_complex" CanBeSetAsTop="true" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1528149215"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1528149215"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1528149215"/>
-    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1528149215"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1562956787"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1562956787"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1562956787"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1562956787"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
       <File Name="ip/PCIe_Bridge_ICAP_complex_xlconstant_0_0/PCIe_Bridge_ICAP_complex_xlconstant_0_0.xci" Type="IP">
         <Instance HierarchyPath="xlconstant_0"/>
@@ -175,38 +175,6 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_xbar_0/PCIe_Bridge_ICAP_complex_xbar_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/xbar"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_axi_register_slice_0_3/PCIe_Bridge_ICAP_complex_axi_register_slice_0_3.xci" Type="IP">
-        <Instance HierarchyPath="FROM_SH_AXI_MM_NORTH/axi_register_slice_1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_axi_register_slice_1_1/PCIe_Bridge_ICAP_complex_axi_register_slice_1_1.xci" Type="IP">
-        <Instance HierarchyPath="FROM_SH_AXI_MM_NORTH/axi_register_slice_2"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_axi_register_slice_0_2/PCIe_Bridge_ICAP_complex_axi_register_slice_0_2.xci" Type="IP">
-        <Instance HierarchyPath="FROM_SH_AXI_MM_NORTH/axi_register_slice_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
       <File Name="ip/PCIe_Bridge_ICAP_complex_system_management_wiz_0_0/PCIe_Bridge_ICAP_complex_system_management_wiz_0_0.xci" Type="IP">
         <Instance HierarchyPath="system_management_wiz_0"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
@@ -215,48 +183,64 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_m05_regslice_0/PCIe_Bridge_ICAP_complex_m05_regslice_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m05_couplers/m05_regslice"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_axi_register_slice_1_3/PCIe_Bridge_ICAP_complex_axi_register_slice_1_3.xci" Type="IP">
+        <Instance HierarchyPath="FROM_SH_AXI_MM_NORTH/axi_register_slice_1"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_auto_pc_0/PCIe_Bridge_ICAP_complex_auto_pc_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m05_couplers/auto_pc"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_axi_register_slice_2_0/PCIe_Bridge_ICAP_complex_axi_register_slice_2_0.xci" Type="IP">
+        <Instance HierarchyPath="FROM_SH_AXI_MM_NORTH/axi_register_slice_2"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_m04_regslice_0/PCIe_Bridge_ICAP_complex_m04_regslice_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m04_couplers/m04_regslice"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_axi_register_slice_0_6/PCIe_Bridge_ICAP_complex_axi_register_slice_0_6.xci" Type="IP">
+        <Instance HierarchyPath="FROM_SH_AXI_MM_NORTH/axi_register_slice_0"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_m03_regslice_0/PCIe_Bridge_ICAP_complex_m03_regslice_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m03_couplers/m03_regslice"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_xbar_0/PCIe_Bridge_ICAP_complex_xbar_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/xbar"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_m02_regslice_0/PCIe_Bridge_ICAP_complex_m02_regslice_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m02_couplers/m02_regslice"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_s00_regslice_3/PCIe_Bridge_ICAP_complex_s00_regslice_3.xci" Type="IP">
+        <Instance HierarchyPath="axi_interconnect_0/s00_couplers/s00_regslice"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_m01_regslice_0/PCIe_Bridge_ICAP_complex_m01_regslice_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m01_couplers/m01_regslice"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_auto_cc_0/PCIe_Bridge_ICAP_complex_auto_cc_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_interconnect_0/s00_couplers/auto_cc"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_s00_regslice_4/PCIe_Bridge_ICAP_complex_s00_regslice_4.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/s00_couplers/s00_regslice"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_auto_cc_2/PCIe_Bridge_ICAP_complex_auto_cc_2.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/s00_couplers/auto_cc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
@@ -279,32 +263,48 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_s00_regslice_0/PCIe_Bridge_ICAP_complex_s00_regslice_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/s00_couplers/s00_regslice"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_m01_regslice_0/PCIe_Bridge_ICAP_complex_m01_regslice_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m01_couplers/m01_regslice"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_auto_cc_2/PCIe_Bridge_ICAP_complex_auto_cc_2.xci" Type="IP">
-        <Instance HierarchyPath="axi_pcie3_0_axi_periph/s00_couplers/auto_cc"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_m02_regslice_0/PCIe_Bridge_ICAP_complex_m02_regslice_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m02_couplers/m02_regslice"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_s00_regslice_1/PCIe_Bridge_ICAP_complex_s00_regslice_1.xci" Type="IP">
-        <Instance HierarchyPath="axi_interconnect_0/s00_couplers/s00_regslice"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_m03_regslice_0/PCIe_Bridge_ICAP_complex_m03_regslice_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m03_couplers/m03_regslice"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/PCIe_Bridge_ICAP_complex_auto_cc_0/PCIe_Bridge_ICAP_complex_auto_cc_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_interconnect_0/s00_couplers/auto_cc"/>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_m04_regslice_0/PCIe_Bridge_ICAP_complex_m04_regslice_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m04_couplers/m04_regslice"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_m05_regslice_0/PCIe_Bridge_ICAP_complex_m05_regslice_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m05_couplers/m05_regslice"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip/PCIe_Bridge_ICAP_complex_auto_pc_0/PCIe_Bridge_ICAP_complex_auto_pc_0.xci" Type="IP">
+        <Instance HierarchyPath="axi_pcie3_0_axi_periph/m05_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
@@ -343,6 +343,11 @@
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="HW_HANDOFF"/>
+      </File>
+      <File Name="sim/PCIe_Bridge_ICAP_complex.protoinst">
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SIMULATION"/>
       </File>
     </FileCollection>
   </CompositeFile>

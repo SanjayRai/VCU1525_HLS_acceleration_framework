@@ -46,7 +46,7 @@
 // --  
 ///////////////////////////////////////////////////////////////////////////////
 //
-// File name: ddr4_v2_2_4_axi_ctrl_addr_decode.v
+// File name: ddr4_v2_2_7_axi_ctrl_addr_decode.v
 //
 // Description: AXI Lite Controller
 //
@@ -58,7 +58,7 @@
 `timescale 1ps/1ps
 `default_nettype none
 
-module ddr4_v2_2_4_axi_ctrl_addr_decode #
+module ddr4_v2_2_7_axi_ctrl_addr_decode #
 (
 ///////////////////////////////////////////////////////////////////////////////
 // Parameter Definitions

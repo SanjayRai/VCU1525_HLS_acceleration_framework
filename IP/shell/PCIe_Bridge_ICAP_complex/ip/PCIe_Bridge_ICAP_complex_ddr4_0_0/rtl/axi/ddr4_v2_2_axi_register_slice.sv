@@ -50,7 +50,7 @@
 // /___/  \  /    Vendor             : Xilinx
 // \   \   \/     Version            : 1.1
 //  \   \         Application        : MIG
-//  /   /         Filename           : ddr4_v2_2_4_axi_register_slice.sv
+//  /   /         Filename           : ddr4_v2_2_7_axi_register_slice.sv
 // /___/   /\     Date Last Modified : $Date: 2014/09/03 $
 // \   \  /  \    Date Created       : Thu Apr 17 2014
 //  \___\/\___\
@@ -75,7 +75,7 @@
 
 `timescale 1ps/1ps
 
-module ddr4_v2_2_4_axi_register_slice #
+module ddr4_v2_2_7_axi_register_slice #
   (
    parameter C_FAMILY                            = "virtex6",
    parameter integer C_AXI_ID_WIDTH              = 4,
@@ -360,7 +360,7 @@ module ddr4_v2_2_4_axi_register_slice #
     assign M_AXI_AWREGION = m_aw_data[C_AWREGION_RIGHT+:C_AWREGION_LEN];
     assign M_AXI_AWQOS    = m_aw_data[C_AWQOS_RIGHT+:C_AWQOS_LEN];
     
-    ddr4_v2_2_4_axic_register_slice #
+    ddr4_v2_2_7_axic_register_slice #
       (
        .C_FAMILY(C_FAMILY),
        .C_DATA_WIDTH(C_AW_SIZE),
@@ -403,7 +403,7 @@ module ddr4_v2_2_4_axi_register_slice #
     assign M_AXI_WSTRB    = m_w_data[C_WSTRB_RIGHT+:C_WSTRB_LEN];
     assign M_AXI_WLAST    = m_w_data[C_WLAST_RIGHT+:C_WLAST_LEN];
 
-    ddr4_v2_2_4_axic_register_slice #
+    ddr4_v2_2_7_axic_register_slice #
       (
        .C_FAMILY(C_FAMILY),
        .C_DATA_WIDTH(C_W_SIZE),
@@ -444,7 +444,7 @@ module ddr4_v2_2_4_axi_register_slice #
     assign S_AXI_BID      = s_b_data[C_BID_RIGHT+:C_BID_LEN];
     assign S_AXI_BRESP    = s_b_data[C_BRESP_RIGHT+:C_BRESP_LEN];
 
-    ddr4_v2_2_4_axic_register_slice #
+    ddr4_v2_2_7_axic_register_slice #
       (
        .C_FAMILY(C_FAMILY),
        .C_DATA_WIDTH(C_B_SIZE),
@@ -498,7 +498,7 @@ module ddr4_v2_2_4_axi_register_slice #
     assign M_AXI_ARREGION = m_ar_data[C_ARREGION_RIGHT+:C_ARREGION_LEN];
     assign M_AXI_ARQOS    = m_ar_data[C_ARQOS_RIGHT+:C_ARQOS_LEN];
 
-    ddr4_v2_2_4_axic_register_slice #
+    ddr4_v2_2_7_axic_register_slice #
       (
        .C_FAMILY(C_FAMILY),
        .C_DATA_WIDTH(C_AR_SIZE),
@@ -541,7 +541,7 @@ module ddr4_v2_2_4_axi_register_slice #
     assign S_AXI_RRESP    = s_r_data[C_RRESP_RIGHT+:C_RRESP_LEN];
     assign S_AXI_RLAST    = s_r_data[C_RLAST_RIGHT+:C_RLAST_LEN];
 
-    ddr4_v2_2_4_axic_register_slice #
+    ddr4_v2_2_7_axic_register_slice #
       (
        .C_FAMILY(C_FAMILY),
        .C_DATA_WIDTH(C_R_SIZE),

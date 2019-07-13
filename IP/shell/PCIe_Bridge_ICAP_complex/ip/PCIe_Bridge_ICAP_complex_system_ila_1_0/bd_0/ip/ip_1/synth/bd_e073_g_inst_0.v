@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2018 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2019 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -50,9 +50,9 @@
 // IP VLNV: xilinx.com:ip:gigantic_mux:1.0
 // IP Revision: 1
 
-(* X_CORE_INFO = "bd_e073_g_inst_0_gigantic_mux,Vivado 2018.1" *)
+(* X_CORE_INFO = "bd_e073_g_inst_0_gigantic_mux,Vivado 2019.1" *)
 (* CHECK_LICENSE_TYPE = "bd_e073_g_inst_0,bd_e073_g_inst_0_gigantic_mux,{}" *)
-(* CORE_GENERATION_INFO = "bd_e073_g_inst_0,bd_e073_g_inst_0_gigantic_mux,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=gigantic_mux,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_MUX_0_HAS_BRESP=1,C_MUX_0_HAS_RRESP=1,C_MUX_0_HAS_LOCK=1,C_MUX_0_HAS_PROT=1,C_MUX_0_HAS_CACHE=1,C_MUX_0_HAS_QOS=1,C_MUX_0_HAS_REGION=1,C_MUX_0_HAS_BURST=1,C_MUX_0_HAS_WSTRB=1,C_MUX_0_HAS_TSTRB=1,C_MUX_0_HAS_TKEEP=1,C_MUX_1_HAS_BRESP=1,C_MUX_1_HAS_RRESP=1,C_MUX_1_HAS_LOCK=1,C_MUX_1_HAS_P\
+(* CORE_GENERATION_INFO = "bd_e073_g_inst_0,bd_e073_g_inst_0_gigantic_mux,{x_ipProduct=Vivado 2019.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=gigantic_mux,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_MUX_0_HAS_BRESP=1,C_MUX_0_HAS_RRESP=1,C_MUX_0_HAS_LOCK=1,C_MUX_0_HAS_PROT=1,C_MUX_0_HAS_CACHE=1,C_MUX_0_HAS_QOS=1,C_MUX_0_HAS_REGION=1,C_MUX_0_HAS_BURST=1,C_MUX_0_HAS_WSTRB=1,C_MUX_0_HAS_TSTRB=1,C_MUX_0_HAS_TKEEP=1,C_MUX_1_HAS_BRESP=1,C_MUX_1_HAS_RRESP=1,C_MUX_1_HAS_LOCK=1,C_MUX_1_HAS_P\
 ROT=1,C_MUX_1_HAS_CACHE=1,C_MUX_1_HAS_QOS=1,C_MUX_1_HAS_REGION=1,C_MUX_1_HAS_BURST=1,C_MUX_1_HAS_WSTRB=1,C_MUX_1_HAS_TSTRB=1,C_MUX_1_HAS_TKEEP=1,C_MUX_2_HAS_BRESP=1,C_MUX_2_HAS_RRESP=1,C_MUX_2_HAS_LOCK=1,C_MUX_2_HAS_PROT=1,C_MUX_2_HAS_CACHE=1,C_MUX_2_HAS_QOS=1,C_MUX_2_HAS_REGION=1,C_MUX_2_HAS_BURST=1,C_MUX_2_HAS_WSTRB=1,C_MUX_2_HAS_TSTRB=1,C_MUX_2_HAS_TKEEP=1,C_MUX_3_HAS_BRESP=1,C_MUX_3_HAS_RRESP=1,C_MUX_3_HAS_LOCK=1,C_MUX_3_HAS_PROT=1,C_MUX_3_HAS_CACHE=1,C_MUX_3_HAS_QOS=1,C_MUX_3_HAS_REGION=1,C\
 _MUX_3_HAS_BURST=1,C_MUX_3_HAS_WSTRB=1,C_MUX_3_HAS_TSTRB=1,C_MUX_3_HAS_TKEEP=1,C_NUM_MONITOR_SLOTS=1,C_SLOT_0_TXN_CNTR_EN=1,C_SLOT_1_TXN_CNTR_EN=1,C_SLOT_2_TXN_CNTR_EN=1,C_SLOT_3_TXN_CNTR_EN=1,C_SLOT_4_TXN_CNTR_EN=1,C_SLOT_5_TXN_CNTR_EN=1,C_SLOT_6_TXN_CNTR_EN=1,C_SLOT_7_TXN_CNTR_EN=1,C_SLOT_8_TXN_CNTR_EN=1,C_SLOT_9_TXN_CNTR_EN=1,C_SLOT_10_TXN_CNTR_EN=1,C_SLOT_11_TXN_CNTR_EN=1,C_SLOT_12_TXN_CNTR_EN=1,C_SLOT_13_TXN_CNTR_EN=1,C_SLOT_14_TXN_CNTR_EN=1,C_SLOT_15_TXN_CNTR_EN=1,C_SLOT_0_MAX_RD_BURSTS=1,\
 C_SLOT_0_MAX_WR_BURSTS=1,C_SLOT_1_MAX_RD_BURSTS=5,C_SLOT_1_MAX_WR_BURSTS=5,C_SLOT_2_MAX_RD_BURSTS=5,C_SLOT_2_MAX_WR_BURSTS=5,C_SLOT_3_MAX_RD_BURSTS=5,C_SLOT_3_MAX_WR_BURSTS=5,C_SLOT_4_MAX_RD_BURSTS=5,C_SLOT_4_MAX_WR_BURSTS=5,C_SLOT_5_MAX_RD_BURSTS=5,C_SLOT_5_MAX_WR_BURSTS=5,C_SLOT_6_MAX_RD_BURSTS=5,C_SLOT_6_MAX_WR_BURSTS=5,C_SLOT_7_MAX_RD_BURSTS=5,C_SLOT_7_MAX_WR_BURSTS=5,C_SLOT_8_MAX_RD_BURSTS=5,C_SLOT_8_MAX_WR_BURSTS=5,C_SLOT_9_MAX_RD_BURSTS=5,C_SLOT_9_MAX_WR_BURSTS=5,C_SLOT_10_MAX_RD_BURSTS=5\
@@ -162,10 +162,10 @@ module bd_e073_g_inst_0 (
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME signal_clock, ASSOCIATED_RESET aresetn, ASSOCIATED_BUSIF m_slot_0_axi:m_slot_1_axi:m_slot_2_axi:m_slot_3_axi:m_slot_4_axi:m_slot_5_axi:m_slot_6_axi:m_slot_7_axi:m_slot_8_axi:m_slot_9_axi:m_slot_10_axi:m_slot_11_axi:m_slot_12_axi:m_slot_13_axi:m_slot_14_axi:m_slot_15_axi:m_slot_0_axis:m_slot_1_axis:m_slot_2_axis:m_slot_3_axis:m_slot_4_axis:m_slot_5_axis:m_slot_6_axis:m_slot_7_axis:m_slot_8_axis:m_slot_9_axis:m_slot_10_axis:m_slot_11_axis:m_slot_12_axis:m_slot_13_axis:m_slot_14_a\
 xis:m_slot_15_axis:slot_0_axi:slot_1_axi:slot_2_axi:slot_3_axi:slot_4_axi:slot_5_axi:slot_6_axi:slot_7_axi:slot_8_axi:slot_9_axi:slot_10_axi:slot_11_axi:slot_12_axi:slot_13_axi:slot_14_axi:slot_15_axi:slot_0_axis:slot_1_axis:slot_2_axis:slot_3_axis:slot_4_axis:slot_5_axis:slot_6_axis:slot_7_axis:slot_8_axis:slot_9_axis:slot_10_axis:slot_11_axis:slot_12_axis:slot_13_axis:slot_14_axis:slot_15_axis:mux_0_axis:mux_1_axis:mux_2_axis:mux_3_axis:mux_0_axi:mux_1_axi:mux_2_axi:mux_3_axi, FREQ_HZ 25000000\
-0, PHASE 0.000, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk" *)
+0, PHASE 0.000, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 signal_clock CLK" *)
 input wire aclk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME signal_reset, POLARITY ACTIVE_LOW" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME signal_reset, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 signal_reset RST" *)
 input wire aresetn;
 output wire [1 : 0] m_slot_0_axi_b_cnt;
@@ -209,7 +209,7 @@ input wire [1 : 0] slot_0_axi_rresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi RVALID" *)
 input wire slot_0_axi_rvalid;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME slot_0_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 250000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, NUM_READ_\
-THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
+THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi RREADY" *)
 input wire slot_0_axi_rready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWADDR" *)
@@ -249,7 +249,7 @@ output wire [1 : 0] m_slot_0_axi_rresp;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi RVALID" *)
 output wire m_slot_0_axi_rvalid;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_slot_0_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 250000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN PCIe_Bridge_ICAP_complex_xdma_0_0_axi_aclk, NUM_REA\
-D_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *)
+D_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi RREADY" *)
 output wire m_slot_0_axi_rready;
 
