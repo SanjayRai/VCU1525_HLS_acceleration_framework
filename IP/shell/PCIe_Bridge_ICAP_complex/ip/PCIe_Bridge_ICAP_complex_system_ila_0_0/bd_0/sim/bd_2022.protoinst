@@ -1,0 +1,9 @@
+{
+	"version": "1.0",
+	"modules": {
+		"bd_2022": {
+			"proto_instances": {
+			}
+		}
+	}
+}

@@ -1,0 +1,83 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "commentid":"",
+   "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 TLS
+#  -string -flagsOSRD
+preplace port pcie_mgt -pg 1 -lvl 7 -x 2440 -y 1230 -defaultsOSRD
+preplace port c1_ddr4 -pg 1 -lvl 7 -x 2440 -y 200 -defaultsOSRD
+preplace port S_AXI_MM_FROM_HLS_PR_NORTH -pg 1 -lvl 0 -x -80 -y 520 -defaultsOSRD
+preplace port M_AXI_LITE_TO_HLS_PR_NORTH -pg 1 -lvl 7 -x 2440 -y 980 -defaultsOSRD
+preplace port C1_SYS_CLK -pg 1 -lvl 0 -x -80 -y 230 -defaultsOSRD
+preplace port M_AXI_MM_TO_HLS_PR_NORTH -pg 1 -lvl 7 -x 2440 -y 1150 -defaultsOSRD
+preplace port clk_out_250M -pg 1 -lvl 7 -x 2440 -y 1060 -defaultsOSRD
+preplace port DDR4_sys_rst -pg 1 -lvl 0 -x -80 -y 250 -defaultsOSRD
+preplace port sys_rst_n -pg 1 -lvl 0 -x -80 -y 1290 -defaultsOSRD
+preplace port sys_clk_gt -pg 1 -lvl 0 -x -80 -y 1270 -defaultsOSRD
+preplace port sys_clk -pg 1 -lvl 0 -x -80 -y 1250 -defaultsOSRD
+preplace port clk_out_125M -pg 1 -lvl 7 -x 2440 -y 1250 -defaultsOSRD
+preplace port clk_out_PROG -pg 1 -lvl 7 -x 2440 -y 630 -defaultsOSRD
+preplace portBus axi_reset_n_out -pg 1 -lvl 7 -x 2440 -y 1390 -defaultsOSRD
+preplace inst TO_SH_AXI_MM_NORTH -pg 1 -lvl 2 -x 499 -y 550 -defaultsOSRD
+preplace inst FROM_SH_AXI_LITE_NORTH -pg 1 -lvl 4 -x 1561 -y 980 -defaultsOSRD
+preplace inst FROM_SH_AXI_MM_NORTH -pg 1 -lvl 4 -x 1561 -y 1150 -defaultsOSRD
+preplace inst system_management_wiz_0 -pg 1 -lvl 6 -x 2260 -y 1600 -defaultsOSRD
+preplace inst axi_bram_ctrl_0 -pg 1 -lvl 4 -x 1561 -y 490 -defaultsOSRD
+preplace inst axi_bram_ctrl_0_bram -pg 1 -lvl 5 -x 1947 -y 490 -defaultsOSRD
+preplace inst axi_gpio_0 -pg 1 -lvl 4 -x 1561 -y 800 -defaultsOSRD
+preplace inst axi_hwicap_0 -pg 1 -lvl 4 -x 1561 -y 1500 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 3 -x 1046 -y 380 -defaultsOSRD
+preplace inst axi_pcie3_0_axi_periph -pg 1 -lvl 3 -x 1046 -y 730 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 4 -x 1561 -y 1320 -defaultsOSRD
+preplace inst clk_wiz_PROG -pg 1 -lvl 4 -x 1561 -y 640 -defaultsOSRD
+preplace inst ddr4_1 -pg 1 -lvl 4 -x 1561 -y 270 -defaultsOSRD
+preplace inst rst_ddr4_0_300M -pg 1 -lvl 2 -x 499 -y 350 -defaultsOSRD
+preplace inst rst_125M -pg 1 -lvl 4 -x 1561 -y 1686 -defaultsOSRD
+preplace inst system_ila_AXI_MM -pg 1 -lvl 4 -x 1561 -y 80 -defaultsOSRD
+preplace inst system_ila_AXIL -pg 1 -lvl 3 -x 1046 -y 1040 -defaultsOSRD
+preplace inst xdma_0 -pg 1 -lvl 2 -x 499 -y 1280 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 1 -x 100 -y 1350 -defaultsOSRD
+preplace netloc axi_pcie3_0_axi_aclk 1 1 6 200 450 690 1140 1240 1060 NJ 1060 NJ 1060 NJ
+preplace netloc axi_pcie3_0_axi_aresetn 1 1 3 210 460 740 1160 1240
+preplace netloc ddr4_0_c0_ddr4_ui_clk 1 1 4 210 250 700 240 1290 410 1790
+preplace netloc ddr4_0_c0_ddr4_ui_clk_sync_rst 1 1 4 200 210 NJ 210 1270J 400 1770
+preplace netloc rst_ddr4_0_300M_peripheral_aresetn 1 2 2 710 250 1210
+preplace netloc sys_rst_1 1 0 4 NJ 250 190J 230 NJ 230 1260J
+preplace netloc xlconstant_0_dout 1 1 3 190 1500 NJ 1500 NJ
+preplace netloc sys_rst_n_1 1 0 2 NJ 1290 NJ
+preplace netloc sys_clk_gt_1 1 0 2 NJ 1270 NJ
+preplace netloc sys_clk_1 1 0 2 NJ 1250 NJ
+preplace netloc clk_wiz_0_clk_out_125M 1 2 5 750 260 1220 1390 1790 1310 2090J 1250 NJ
+preplace netloc clk_wiz_0_clk_out_62_5M 1 3 2 1290 1786 1770
+preplace netloc rst_ddr4_0_300M1_peripheral_aresetn 1 2 5 760 1120 1270 1400 1780 1400 2100J 1390 NJ
+preplace netloc xlslice_0_Dout 1 1 4 210 1130 NJ 1130 1290 890 1770
+preplace netloc clk_wiz_1_clk_out1 1 4 3 NJ 630 NJ 630 NJ
+preplace netloc ddr4_1_addn_ui_clkout1 1 3 2 1290 1250 1780
+preplace netloc xdma_0_user_lnk_up 1 2 2 NJ 1250 1200
+preplace netloc S00_AXI_1 1 2 1 720 550n
+preplace netloc axi_interconnect_0_M00_AXI 1 3 1 1200 60n
+preplace netloc axi_pcie3_0_axi_periph_M01_AXI 1 3 1 1240 690n
+preplace netloc axi_pcie3_0_axi_periph_M03_AXI 1 3 1 1210 730n
+preplace netloc axi_pcie3_0_axi_periph_M02_AXI 1 3 1 1230 710n
+preplace netloc axi_pcie3_0_axi_periph_M00_AXI 1 3 1 1230 250n
+preplace netloc axi_pcie3_0_axi_periph_M04_AXI 1 3 1 1260 610n
+preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 4 1 N 480
+preplace netloc axi_bram_ctrl_0_BRAM_PORTB 1 4 1 N 500
+preplace netloc axi_pcie3_0_axi_periph_M05_AXI 1 3 1 1250 470n
+preplace netloc S00_AXI_2 1 2 1 680 320n
+preplace netloc xdma_0_M_AXI 1 2 2 730 1150 1280J
+preplace netloc axi_pcie3_0_axi_periph_M06_AXI 1 3 3 1200J 1230 NJ 1230 2080
+preplace netloc xdma_0_pcie_mgt 1 2 5 680J 1240 NJ 1240 NJ 1240 2090J 1230 NJ
+preplace netloc ddr4_0_C0_DDR4 1 4 3 NJ 200 NJ 200 NJ
+preplace netloc M_AXI_MM_FROM_HLS_PR_0_1 1 0 2 NJ 520 NJ
+preplace netloc FROM_SH_AXI_LITE_rp_AXI_LITE_TO_HLS_PR_0 1 4 3 NJ 980 NJ 980 NJ
+preplace netloc C0_SYS_CLK_1 1 0 4 NJ 230 180J 220 NJ 220 1280J
+preplace netloc axi_register_slice_2_M_AXI 1 4 3 NJ 1150 NJ 1150 NJ
+levelinfo -pg 1 -80 100 499 1046 1561 1947 2260 2440
+pagesize -pg 1 -db -bbox -sgen -370 0 2720 2310
+"
+}
+{
+   "da_axi4_cnt":"5",
+   "da_board_cnt":"1",
+   "da_bram_cntlr_cnt":"4"
+}
