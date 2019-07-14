@@ -18,7 +18,7 @@ build_complete:
 	cd vivado_batch_SDX_ACCL_MATRIX_MULT_8X8;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
 	cd vivado_batch_SDX_ACCL_KERNEL_PASSTHRU;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
 	cd vivado_batch_SDX_ACCL_KERNEL_FP_VECTOR_MULT;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
-	cd bitfiles; tar -zcvf VU9P_AXI_ICAP_PR_DESIGN_bitfiles.tar.gz 
+	cd bitfiles; tar -zcvf VU9P_AXI_ICAP_PR_DESIGN_bitfiles.tar.gz shell/ role/ 
 build_all:
 	cd IP/role; make create_all_ip 
 	cd vivado_batch_shell;vivado -mode batch -source vivado_batch.tcl;cp *_partial*.bin; cp *.bi* ../bitfiles/shell; cp *.ltx ../bitfiles/shell; cp *.mcs ../bitfiles/shell; cp *.prm ../bitfiles/shell  
@@ -29,7 +29,7 @@ build_all:
 	cd vivado_batch_SDX_ACCL_MATRIX_MULT_8X8;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
 	cd vivado_batch_SDX_ACCL_KERNEL_PASSTHRU;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
 	cd vivado_batch_SDX_ACCL_KERNEL_FP_VECTOR_MULT;vivado -mode batch -source vivado_batch.tcl; cp *_partial*.bin ../bitfiles/role
-	cd bitfiles; tar -zcvf VU9P_AXI_ICAP_PR_DESIGN_bitfiles.tar.gz 
+	cd bitfiles; tar -zcvf VU9P_AXI_ICAP_PR_DESIGN_bitfiles.tar.gz shell/ role/ 
 clean:
 	-cd checkpoints; rm *.dcp
 	-cd bitfiles; rm VU9P_AXI_ICAP_PR_DESIGN_bitfiles.tar.gz 
