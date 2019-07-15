@@ -25,7 +25,7 @@ upvar 1 $ARGV_0 ROLE_NAME
     ../src/role_NORTH/role_NORTH.sv
     }
 
-    read_xdc "
+    read_xdc -mode out_of_context -ref role_NORTH "
     ../src/role_NORTH/xdc/role_NORTH.xdc
     "
 
